@@ -1,0 +1,13 @@
+{
+  "id": "filters",
+  "label": "Headless filters",
+  "defaultEnabled": false,
+  "readme": "optional/filters/README.md",
+  "deps": [],
+  "env": [],
+  "files": [
+    { "from": "optional/filters/src/lib/filters/url-state.ts", "to": "src/lib/filters/url-state.ts" }
+  ],
+  "cleanupTargets": ["src/lib/filters"],
+  "validationChecks": ["filter-url-state"]
+}

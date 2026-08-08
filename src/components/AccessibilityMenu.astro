@@ -1,0 +1,18 @@
+---
+import AccessibilityMenu from '@ooopsstudio/accessibility-astro/AccessibilityMenu.astro';
+
+type Props = {
+  position?: 'bottom-left' | 'bottom-right';
+  label?: string;
+};
+
+const { position = 'bottom-left', label = 'Accessibility' } = Astro.props;
+---
+
+<AccessibilityMenu
+  position={position}
+  label={label}
+  storageKey="ooops.accessibility.preferences.v1"
+  includeBaseStyles={true}
+  includeGlobalEffects={false}
+/>

@@ -1,0 +1,26 @@
+---
+import Select from '@ooopsstudio/ui-astro/Select.astro';
+import type { SelectOption } from '@ooopsstudio/ui-primitives';
+import EditorBoundary from '../editor/EditorBoundary.astro';
+
+type Props = {
+  id: string;
+  name?: string;
+  label?: string;
+  description?: string;
+  error?: string;
+  value?: string;
+  placeholder?: string;
+  options?: SelectOption[];
+  required?: boolean;
+  disabled?: boolean;
+  allowEmpty?: boolean;
+  portal?: boolean;
+  class?: string;
+  editorId?: string;
+};
+
+const { options = [], editorId, ...props } = Astro.props;
+---
+
+<EditorBoundary editorId={editorId} manifestId="select"><Select {...props} options={options} /></EditorBoundary>

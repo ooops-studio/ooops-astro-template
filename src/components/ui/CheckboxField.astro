@@ -1,0 +1,20 @@
+---
+import Checkbox from '@ooopsstudio/ui-astro/Checkbox.astro';
+import EditorBoundary from '../editor/EditorBoundary.astro';
+
+type Props = Parameters<typeof Checkbox>[0] & { editorId?: string };
+const { editorId, ...props } = Astro.props as Props;
+---
+
+<EditorBoundary editorId={editorId} manifestId="checkbox"><Checkbox {...props} /></EditorBoundary>
+
+<style is:global>
+  .ooops-checkbox { --checkbox-size: 20px; display: grid; gap: 8px; }
+  .ooops-checkbox > [data-part='label'] { display: grid; grid-template-columns: var(--checkbox-size) minmax(0, 1fr); align-items: start; gap: 12px; cursor: pointer; }
+  .ooops-checkbox [data-part='control'] { position: absolute; inline-size: 1px; block-size: 1px; clip-path: inset(50%); }
+  .ooops-checkbox [data-part='indicator'] { display: grid; place-items: center; width: var(--checkbox-size); height: var(--checkbox-size); border: 1px solid var(--color-border); border-radius: 6px; background: var(--color-surface); }
+  .ooops-checkbox[data-state='checked'] [data-part='indicator'] { border-color: var(--color-accent); background: var(--color-accent); }
+  .ooops-checkbox:has([data-part='control']:focus-visible) [data-part='indicator'] { box-shadow: 0 0 0 3px var(--color-focus-ring); }
+  .ooops-checkbox [data-part='description'] { color: var(--color-muted); font-size: 13px; }
+  .ooops-checkbox [data-part='error'] { color: var(--color-danger); font-size: 13px; }
+</style>

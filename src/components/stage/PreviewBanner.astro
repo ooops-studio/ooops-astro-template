@@ -1,0 +1,62 @@
+<aside class="preview-banner" role="status" data-stage-preview-banner hidden>
+  <span>Preview mode</span>
+  <a href="/api/preview/exit" data-stage-preview-exit>Exit preview</a>
+</aside>
+
+<script>
+  const previewSessionKey = 'ooops.stage.preview.active';
+
+  const installPreviewBanner = () => {
+    const banner = document.querySelector<HTMLElement>('[data-stage-preview-banner]');
+    const exitLink = banner?.querySelector<HTMLAnchorElement>('[data-stage-preview-exit]');
+    if (!banner || !exitLink) return;
+
+    const url = new URL(window.location.href);
+    if (url.searchParams.get('stagePreview') === '1') {
+      sessionStorage.setItem(previewSessionKey, '1');
+    }
+    if (sessionStorage.getItem(previewSessionKey) !== '1') return;
+
+    banner.hidden = false;
+    for (const parameter of ['preview', 'stagePreview', 'token', 'secret']) {
+      url.searchParams.delete(parameter);
+    }
+    const redirect = `${url.pathname}${url.search}${url.hash}` || '/';
+    exitLink.href = `/api/preview/exit?redirect=${encodeURIComponent(redirect)}`;
+    exitLink.addEventListener('click', () => sessionStorage.removeItem(previewSessionKey), { once: true });
+  };
+
+  installPreviewBanner();
+  document.addEventListener('astro:page-load', installPreviewBanner);
+</script>
+
+<style>
+  .preview-banner {
+    position: fixed;
+    inset-inline: var(--space-4);
+    top: var(--space-4);
+    z-index: 80;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    width: fit-content;
+    margin-inline: auto;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+  }
+
+  .preview-banner[hidden] {
+    display: none;
+  }
+
+  .preview-banner a {
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+</style>

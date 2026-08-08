@@ -1,0 +1,11 @@
+{
+  "id": "posts",
+  "label": "Posts example",
+  "defaultEnabled": true,
+  "readme": "docs/content-models.md",
+  "deps": [],
+  "env": [],
+  "files": [],
+  "cleanupTargets": ["src/pages/posts", "src/lib/posts"],
+  "validationChecks": ["posts-routes"]
+}

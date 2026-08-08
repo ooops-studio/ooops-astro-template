@@ -1,0 +1,18 @@
+{
+  "id": "preview",
+  "label": "Stage preview",
+  "defaultEnabled": true,
+  "readme": "optional/preview/README.md",
+  "deps": ["@ooopsstudio/stage-cloudflare"],
+  "env": [
+    { "name": "STAGE_PREVIEW_TOKEN", "required": true },
+    { "name": "STAGE_PREVIEW_SECRET", "required": true }
+  ],
+  "files": [
+    { "from": "optional/preview/functions/api/preview.ts", "to": "functions/api/preview.ts" },
+    { "from": "optional/preview/functions/api/preview/exit.ts", "to": "functions/api/preview/exit.ts" }
+  ],
+  "cleanupTargets": ["functions/api/preview.ts", "functions/api/preview/exit.ts"],
+  "validationChecks": ["stage-preview-signature"],
+  "cloudflare": "Set STAGE_PREVIEW_TOKEN and STAGE_PREVIEW_SECRET in Pages env vars."
+}

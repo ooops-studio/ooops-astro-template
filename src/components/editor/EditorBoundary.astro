@@ -1,0 +1,16 @@
+---
+type Props = {
+  editorId?: string;
+  manifestId: string;
+  sourceFile?: string;
+};
+
+const { editorId, manifestId, sourceFile } = Astro.props;
+const enabled = import.meta.env.DEV && import.meta.env.OOOPS_EDITOR_MODE === '1' && Boolean(editorId);
+---
+
+{enabled ? (
+  <div data-ooops-editor-id={editorId} data-ooops-editor-component={manifestId} data-ooops-editor-source={sourceFile} style="display: contents">
+    <slot />
+  </div>
+) : <slot />}

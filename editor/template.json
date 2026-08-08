@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 2,
+  "id": "ooops-astro-template",
+  "framework": {
+    "name": "astro",
+    "range": ">=7 <8",
+    "output": "static"
+  },
+  "paths": {
+    "sourceRoot": "src",
+    "routesRoot": "src/pages",
+    "components": "editor/components.json",
+    "designTokens": "editor/design-tokens.json",
+    "generatedCss": "src/styles/tokens.css",
+    "instanceOverrides": "src/styles/editor-overrides.css"
+  },
+  "themes": [
+    {"id": "light", "mode": "light"},
+    {"id": "dark", "mode": "dark"},
+    {"id": "system", "mode": "system"}
+  ],
+  "breakpoints": [
+    {"id": "desktop", "minWidth": 1025},
+    {"id": "tablet", "minWidth": 721, "maxWidth": 1024},
+    {"id": "mobile", "maxWidth": 720}
+  ],
+  "providers": [
+    {"id": "stage", "package": "@ooopsstudio/stage-api", "mode": "read-only"}
+  ],
+  "routes": [
+    {"id": "home", "source": "src/pages/index.astro", "pathname": "/", "dynamic": false},
+    {"id": "contact", "source": "src/pages/contact.astro", "pathname": "/contact", "dynamic": false},
+    {"id": "posts", "source": "src/pages/posts/index.astro", "pathname": "/posts", "dynamic": false},
+    {"id": "post", "source": "src/pages/posts/[slug].astro", "pathname": "/posts/[slug]", "dynamic": true},
+    {"id": "not-found", "source": "src/pages/404.astro", "pathname": "/404", "dynamic": false},
+    {"id": "server-error", "source": "src/pages/500.astro", "pathname": "/500", "dynamic": false}
+  ],
+  "components": "editor/components.json",
+  "bindings": "editor/components.json"
+}

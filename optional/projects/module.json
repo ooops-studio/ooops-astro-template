@@ -1,0 +1,11 @@
+{
+  "id": "projects",
+  "label": "Projects example",
+  "defaultEnabled": false,
+  "readme": "docs/content-models.md",
+  "deps": [],
+  "env": [],
+  "files": [],
+  "cleanupTargets": [],
+  "validationChecks": ["projects-example"]
+}

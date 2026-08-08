@@ -1,0 +1,13 @@
+{
+  "id": "gallery",
+  "label": "Headless gallery",
+  "defaultEnabled": false,
+  "readme": "optional/gallery/README.md",
+  "deps": [],
+  "env": [],
+  "files": [
+    { "from": "optional/gallery/src/lib/gallery/headless.ts", "to": "src/lib/gallery/headless.ts" }
+  ],
+  "cleanupTargets": ["src/lib/gallery"],
+  "validationChecks": ["gallery-keyboard-state"]
+}

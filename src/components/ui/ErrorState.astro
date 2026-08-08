@@ -1,0 +1,113 @@
+---
+import Button from './Button.astro';
+import EditorBoundary from '../editor/EditorBoundary.astro';
+
+type Props = {
+  title: string;
+  description?: string;
+  actionHref?: string;
+  actionLabel?: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+  variant?: 'empty' | 'error' | 'offline';
+  class?: string;
+  editorId?: string;
+};
+
+const {
+  title,
+  description = '',
+  actionHref,
+  actionLabel = 'Try again',
+  secondaryHref,
+  secondaryLabel = 'Contact support',
+  variant = 'empty',
+  class: className = '',
+  editorId
+} = Astro.props;
+---
+
+<EditorBoundary editorId={editorId} manifestId="error-state"><section class:list={['error-state', `error-state-${variant}`, className]} aria-live={variant === 'error' ? 'polite' : undefined}>
+  <div class="error-state-icon" aria-hidden="true">
+    {variant === 'offline' ? '!' : variant === 'error' ? 'x' : '-'}
+  </div>
+  <div class="error-state-content">
+    <h2>{title}</h2>
+    {description ? <p>{description}</p> : null}
+    {actionHref || secondaryHref ? (
+      <div class="error-state-actions">
+        {actionHref ? <Button href={actionHref} variant={variant === 'error' ? 'primary' : 'secondary'}>{actionLabel}</Button> : null}
+        {secondaryHref ? <Button href={secondaryHref} variant="secondary">{secondaryLabel}</Button> : null}
+      </div>
+    ) : null}
+  </div>
+</section></EditorBoundary>
+
+<style>
+  .error-state {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .error-state-icon {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface-muted);
+    color: var(--color-muted);
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .error-state-error {
+    border-color: var(--color-danger-border);
+    background: color-mix(in srgb, var(--color-danger-soft) 42%, var(--color-surface));
+  }
+
+  .error-state-error .error-state-icon {
+    border-color: var(--color-danger-border);
+    background: var(--color-danger-soft);
+    color: var(--color-danger);
+  }
+
+  .error-state-offline .error-state-icon {
+    border-color: color-mix(in srgb, var(--color-accent) 42%, var(--color-border));
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+  }
+
+  .error-state-content {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .error-state-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .error-state h2,
+  .error-state p {
+    margin: 0;
+  }
+
+  .error-state p {
+    color: var(--color-muted);
+  }
+
+  @media (max-width: 560px) {
+    .error-state {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

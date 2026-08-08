@@ -1,0 +1,7 @@
+---
+import Tooltip from '@ooopsstudio/ui-astro/Tooltip.astro';
+import EditorBoundary from '../editor/EditorBoundary.astro';
+type Props = Parameters<typeof Tooltip>[0] & { editorId?: string };
+const { editorId, ...props } = Astro.props as Props;
+---
+<EditorBoundary editorId={editorId} manifestId="tooltip"><Tooltip {...props}><slot /></Tooltip></EditorBoundary>

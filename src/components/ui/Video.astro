@@ -1,0 +1,8 @@
+---
+import EditorBoundary from '../editor/EditorBoundary.astro';
+type Props = { src: string; description?: string; decorative?: boolean; poster?: string; autoplay?: boolean; muted?: boolean; loop?: boolean; controls?: boolean; playsinline?: boolean; class?: string; editorId?: string; editorSource?: string };
+const { src, description, decorative = false, poster, autoplay = false, muted = autoplay, loop = false, controls = true, playsinline = true, class: className, editorId, editorSource } = Astro.props;
+if (!decorative && !description) throw new Error('Meaningful videos require a description.');
+if (!/\.(?:mp4|webm)(?:\?.*)?$/i.test(src)) throw new Error('Video supports MP4 and WebM assets only.');
+---
+<EditorBoundary editorId={editorId} manifestId="video" sourceFile={editorSource}><figure class:list={['ui-video', className]} data-part="root" aria-hidden={decorative ? 'true' : undefined}><video {src} {poster} {autoplay} {muted} {loop} {controls} {playsinline} data-part="media"></video>{!decorative && description ? <figcaption data-part="description">{description}</figcaption> : null}</figure></EditorBoundary>

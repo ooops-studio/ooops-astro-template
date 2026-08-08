@@ -1,0 +1,15 @@
+.astro/
+.cache/
+dist/
+node_modules/
+.svelte-kit/
+.playwright-cli/
+playwright-report/
+test-results/
+.env
+.env.*
+!.env.example
+
+.DS_Store
+.eslintcache
+npm-debug.log*

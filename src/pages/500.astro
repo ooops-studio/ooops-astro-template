@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ErrorState from '../components/ui/ErrorState.astro';
+import { siteUrl } from '../lib/stage/env';
+
+const seo = {
+  title: 'Something went wrong',
+  description: 'The site could not finish loading this page.',
+  canonical: `${siteUrl}/500`,
+  robots: { index: false, follow: false },
+  type: 'website'
+};
+---
+
+<BaseLayout {seo}>
+  <ErrorState
+    variant="error"
+    title="Something went wrong"
+    description="The page could not be rendered. Try again or return to the homepage."
+    actionHref="/"
+    actionLabel="Go home"
+  />
+</BaseLayout>

@@ -1,0 +1,105 @@
+@layer reset {
+  html {
+    box-sizing: border-box;
+    min-width: 320px;
+    text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+
+  body {
+    min-height: 100vh;
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-family-body);
+    text-rendering: optimizelegibility;
+  }
+
+  :where(h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd) {
+    margin: 0;
+  }
+
+  :where(ul:not([role='list']), ol:not([role='list'])) {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  :where(button, input, select, textarea) {
+    margin: 0;
+    font: inherit;
+  }
+
+  :where(button) {
+    cursor: pointer;
+  }
+
+  input[type='search']::-webkit-search-decoration,
+  input[type='search']::-webkit-search-cancel-button {
+    appearance: none;
+  }
+
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    margin: 0;
+    appearance: none;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  :where(img, picture, video, canvas, svg) {
+    display: block;
+    max-width: 100%;
+  }
+
+  img,
+  video {
+    height: auto;
+  }
+
+  table {
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+
+  :where(:focus:not(:focus-visible)) {
+    outline: none;
+  }
+
+  :where(:focus-visible) {
+    outline: 2px solid currentcolor;
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--color-selection-bg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms;
+      animation-duration: 0.01ms;
+      animation-iteration-count: 1;
+      scroll-behavior: auto;
+    }
+  }
+
+  [hidden] {
+    display: none;
+  }
+}

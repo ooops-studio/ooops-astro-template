@@ -1,0 +1,31 @@
+---
+import CookieBanner from '@ooopsstudio/analytics-consent-astro/CookieBanner.astro';
+import type { OptionalConsentCategory } from '@ooopsstudio/analytics-consent';
+
+const truthy = (value: string | undefined, fallback = false) => {
+  if (value === undefined || value === '') return fallback;
+  return ['1', 'true', 'yes', 'on'].includes(value.toLowerCase());
+};
+
+const analyticsConfigured = Boolean(
+  import.meta.env.PUBLIC_STAGE_ANALYTICS_SCRIPT_URL && import.meta.env.PUBLIC_STAGE_ANALYTICS_WEBSITE_ID
+);
+const requiresConsent = truthy(import.meta.env.PUBLIC_STAGE_ANALYTICS_REQUIRES_CONSENT, true);
+const performanceEnabled = truthy(import.meta.env.PUBLIC_STAGE_ANALYTICS_PERFORMANCE_ENABLED, false);
+const replayEnabled = truthy(import.meta.env.PUBLIC_STAGE_ANALYTICS_REPLAY_ENABLED, false);
+const enabled = analyticsConfigured && (requiresConsent || performanceEnabled || replayEnabled);
+const categories: OptionalConsentCategory[] = [
+  ...(performanceEnabled ? ['performance' as const] : []),
+  ...(replayEnabled ? ['replay' as const] : [])
+];
+---
+
+<CookieBanner
+  enabled={enabled}
+  id="stage-analytics-consent"
+  variant="compact"
+  position="bottom-right"
+  theme="auto"
+  categories={categories}
+  className="stage-consent"
+/>

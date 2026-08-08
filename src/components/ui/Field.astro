@@ -1,0 +1,7 @@
+---
+import Field from '@ooopsstudio/ui-astro/Field.astro';
+import EditorBoundary from '../editor/EditorBoundary.astro';
+type Props = Parameters<typeof Field>[0] & { editorId?: string };
+const { editorId, ...props } = Astro.props as Props;
+---
+<EditorBoundary editorId={editorId} manifestId="field"><Field {...props}><slot /><slot name="prefix" slot="prefix" /><slot name="suffix" slot="suffix" /></Field></EditorBoundary>

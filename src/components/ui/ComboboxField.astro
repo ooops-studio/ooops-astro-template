@@ -1,0 +1,7 @@
+---
+import Combobox from '@ooopsstudio/ui-astro/Combobox.astro';
+import EditorBoundary from '../editor/EditorBoundary.astro';
+type Props = Parameters<typeof Combobox>[0] & { editorId?: string };
+const { editorId, ...props } = Astro.props as Props;
+---
+<EditorBoundary editorId={editorId} manifestId="combobox"><Combobox {...props}><slot /></Combobox></EditorBoundary>

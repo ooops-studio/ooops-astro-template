@@ -1,0 +1,69 @@
+---
+import { imageSrcSet, mediaAlt, mediaUrl, normalizeAssetUrl, stageImageWidths } from '../../lib/stage/content-helpers';
+
+type Props = {
+  asset?: unknown;
+  src?: string | null;
+  alt?: string;
+  fallbackSrc?: string;
+  width?: number | string;
+  height?: number | string;
+  sizes?: string;
+  srcset?: string;
+  responsive?: boolean;
+  priority?: boolean;
+  loading?: 'lazy' | 'eager';
+  decoding?: 'async' | 'sync' | 'auto';
+  class?: string;
+};
+
+const {
+  asset,
+  src,
+  alt,
+  fallbackSrc = '/assets/images/fallback-image.svg',
+  width,
+  height,
+  sizes = '(min-width: 960px) 50vw, 100vw',
+  srcset,
+  responsive = true,
+  priority = false,
+  loading = 'lazy',
+  decoding = 'async',
+  class: className = ''
+} = Astro.props;
+
+const resolvedSrc = normalizeAssetUrl(src || '') || mediaUrl(asset) || fallbackSrc;
+const resolvedAlt = alt ?? mediaAlt(asset, '');
+const resolvedLoading = priority ? 'eager' : loading;
+const resolvedFetchPriority = priority ? 'high' : undefined;
+const resolvedSrcset = srcset ?? (responsive && resolvedSrc !== fallbackSrc ? imageSrcSet(resolvedSrc, stageImageWidths) : null);
+
+if (import.meta.env.DEV && asset && !resolvedAlt) {
+  console.warn('[StageImage] Missing alt text for Stage media asset.', asset);
+}
+---
+
+<img
+  class:list={['stage-image', className]}
+  src={resolvedSrc}
+  alt={resolvedAlt}
+  srcset={resolvedSrcset}
+  width={width}
+  height={height}
+  sizes={sizes}
+  loading={resolvedLoading}
+  fetchpriority={resolvedFetchPriority}
+  decoding={decoding}
+/>
+
+<style>
+  .stage-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--stage-image-radius, var(--radius-md));
+    object-fit: var(--stage-image-fit, cover);
+    background: var(--color-surface-muted);
+  }
+</style>

@@ -1,0 +1,40 @@
+---
+import Input from '@ooopsstudio/ui-astro/Input.astro';
+import EditorBoundary from '../editor/EditorBoundary.astro';
+
+type Props = {
+  id: string;
+  name?: string;
+  label?: string;
+  description?: string;
+  hint?: string;
+  error?: string;
+  type?: 'text' | 'email' | 'url' | 'tel' | 'password' | 'search' | 'number' | 'date' | 'datetime-local' | 'time' | 'color';
+  value?: string | number;
+  placeholder?: string;
+  autocomplete?: string;
+  required?: boolean;
+  disabled?: boolean;
+  readonly?: boolean;
+  clearable?: boolean;
+  revealable?: boolean;
+  class?: string;
+  editorId?: string;
+};
+
+const {value, editorId, ...props} = Astro.props;
+const normalizedValue = value === undefined ? undefined : String(value);
+---
+
+<EditorBoundary editorId={editorId} manifestId="input"><Input {...props} value={normalizedValue} /></EditorBoundary>
+
+<style is:global>
+  .ooops-input { display: grid; gap: 8px; }
+  .ooops-input [data-part='label'] { color: var(--color-text); font-size: 14px; font-weight: 800; }
+  .ooops-input :is([data-part='description'], [data-part='hint'], [data-part='error']) { color: var(--color-muted); font-size: 13px; line-height: 1.45; }
+  .ooops-input [data-part='error'] { color: var(--color-danger); }
+  .ooops-input [data-part='input-shell'] { display: flex; align-items: center; }
+  .ooops-input [data-part='control'] { width: 100%; min-height: 44px; padding-inline: 14px; border: 1px solid var(--color-border); border-radius: var(--input-radius, 8px); background: var(--color-surface); color: var(--color-text); font: inherit; }
+  .ooops-input [data-part='control']:focus { border-color: var(--color-accent); outline: 3px solid var(--color-focus-ring); outline-offset: 0; }
+  .ooops-input[data-invalid='true'] [data-part='control'] { border-color: var(--color-danger-strong); }
+</style>

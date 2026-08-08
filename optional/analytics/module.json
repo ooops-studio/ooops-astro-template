@@ -1,0 +1,25 @@
+{
+  "id": "analytics",
+  "label": "Analytics consent",
+  "defaultEnabled": true,
+  "readme": "optional/analytics/README.md",
+  "deps": ["@ooopsstudio/analytics-consent", "@ooopsstudio/analytics-consent-astro"],
+  "env": [
+    { "name": "PUBLIC_STAGE_ANALYTICS_SCRIPT_URL", "required": false },
+    { "name": "PUBLIC_STAGE_ANALYTICS_WEBSITE_ID", "required": false },
+    { "name": "PUBLIC_STAGE_ANALYTICS_REQUIRES_CONSENT", "required": false, "example": "true" },
+    { "name": "PUBLIC_STAGE_ANALYTICS_RESPECT_DNT", "required": false, "example": "true" },
+    { "name": "PUBLIC_STAGE_ANALYTICS_PERFORMANCE_ENABLED", "required": false, "example": "false" },
+    { "name": "PUBLIC_STAGE_ANALYTICS_REPLAY_ENABLED", "required": false, "example": "false" },
+    { "name": "PUBLIC_STAGE_ANALYTICS_REPLAY_SCRIPT_URL", "required": false },
+    { "name": "PUBLIC_STAGE_ANALYTICS_REPLAY_SAMPLE_RATE", "required": false, "example": "0.05" },
+    { "name": "PUBLIC_STAGE_ANALYTICS_REPLAY_MASK_LEVEL", "required": false, "example": "moderate" },
+    { "name": "PUBLIC_STAGE_ANALYTICS_REPLAY_MAX_DURATION_MS", "required": false, "example": "600000" },
+    { "name": "PUBLIC_STAGE_ANALYTICS_REPLAY_BLOCK_SELECTOR", "required": false, "example": "[data-private], [data-sensitive]" },
+    { "name": "PUBLIC_STAGE_ANALYTICS_EXCLUDED_PATHS", "required": false, "example": "/preview" },
+    { "name": "PUBLIC_STAGE_ANALYTICS_INTERNAL_REFERRER_DOMAINS", "required": false }
+  ],
+  "files": [],
+  "cleanupTargets": [],
+  "validationChecks": ["analytics-env-optional"]
+}

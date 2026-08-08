@@ -1,0 +1,33 @@
+---
+type NavItem = {
+  href: string;
+  label: string;
+  external?: boolean;
+};
+
+type Props = {
+  brand?: string;
+  navItems?: NavItem[];
+};
+
+const {
+  brand = 'Stage Astro Site',
+  navItems = [
+    { href: '/', label: 'Home' },
+    { href: '/posts', label: 'Posts' },
+    { href: 'http://localhost:4274/developers/api', label: 'Docs', external: true },
+    { href: 'https://github.com/ooops-studio/ooops-astro-template', label: 'Template', external: true }
+  ]
+} = Astro.props;
+---
+
+<header class="site-header">
+  <a class="site-brand" href="/">{brand}</a>
+  <nav class="site-nav" aria-label="Primary">
+    {navItems.map((item) => (
+      <a href={item.href} target={item.external ? '_blank' : undefined} rel={item.external ? 'noreferrer' : undefined}>
+        {item.label}
+      </a>
+    ))}
+  </nav>
+</header>

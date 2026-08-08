@@ -1,0 +1,11 @@
+{
+  "id": "svelteIslands",
+  "label": "Svelte island examples",
+  "defaultEnabled": true,
+  "readme": "docs/svelte-islands.md",
+  "deps": ["@astrojs/svelte", "svelte"],
+  "env": [],
+  "files": [],
+  "cleanupTargets": ["src/components/islands"],
+  "validationChecks": ["svelte-island-example"]
+}

@@ -1,0 +1,68 @@
+---
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import '@ooopsstudio/ui-astro/base.css';
+import AccessibilityHead from '@ooopsstudio/accessibility-astro/AccessibilityHead.astro';
+import SkipLink from '@ooopsstudio/accessibility-astro/SkipLink.astro';
+import AccessibilityMenu from '../components/AccessibilityMenu.astro';
+import Container from '../components/ui/Container.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import AnalyticsConsent from '../components/stage/AnalyticsConsent.astro';
+import PreviewBanner from '../components/stage/PreviewBanner.astro';
+import StageAnalytics from '../components/stage/StageAnalytics.astro';
+import type { SeoPayload } from '../lib/stage/types';
+
+type Props = {
+  seo: SeoPayload;
+  lang?: string;
+};
+
+const { seo, lang = 'en' } = Astro.props;
+const title = seo.title;
+const description = seo.description;
+const robots = seo.robots ? `${seo.robots.index ? 'index' : 'noindex'},${seo.robots.follow ? 'follow' : 'nofollow'}` : null;
+const jsonLdPayloads = Array.isArray(seo.jsonLd) ? seo.jsonLd : seo.jsonLd ? [seo.jsonLd] : [];
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <ClientRouter />
+    <AccessibilityHead includeGlobalEffects={true} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {seo.canonical ? <link rel="canonical" href={seo.canonical} /> : null}
+    {seo.alternates?.map((alternate) => <link rel="alternate" hreflang={alternate.locale} href={alternate.href} />)}
+    {robots ? <meta name="robots" content={robots} /> : null}
+    {seo.googleSiteVerification ? <meta name="google-site-verification" content={seo.googleSiteVerification} /> : null}
+    {seo.siteName ? <meta property="og:site_name" content={seo.siteName} /> : null}
+    <meta property="og:type" content={seo.type || 'website'} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {seo.canonical ? <meta property="og:url" content={seo.canonical} /> : null}
+    {seo.ogImage ? <meta property="og:image" content={seo.ogImage} /> : null}
+    <meta name="twitter:card" content={seo.ogImage ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {seo.twitterHandle ? <meta name="twitter:site" content={seo.twitterHandle} /> : null}
+    {seo.ogImage ? <meta name="twitter:image" content={seo.ogImage} /> : null}
+    {jsonLdPayloads.map((payload) => <script is:inline type="application/ld+json" set:html={JSON.stringify(payload)} />)}
+  </head>
+  <body>
+    <SkipLink href="#main-content" label="Skip to content" />
+    <Container>
+      <Header />
+      <main id="main-content" tabindex="-1">
+        <slot />
+      </main>
+      <Footer />
+    </Container>
+    <AccessibilityMenu />
+    <PreviewBanner />
+    <AnalyticsConsent />
+    <StageAnalytics />
+  </body>
+</html>

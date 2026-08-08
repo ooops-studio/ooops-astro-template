@@ -1,0 +1,24 @@
+---
+import Dialog from '@ooopsstudio/ui-astro/Dialog.astro';
+import EditorBoundary from '../editor/EditorBoundary.astro';
+
+type Props = {
+  id: string;
+  title: string;
+  description?: string;
+  triggerLabel?: string;
+  confirmLabel?: string;
+  cancelLabel?: string;
+  tone?: 'primary' | 'danger';
+  open?: boolean;
+  busy?: boolean;
+  closeOnBackdrop?: boolean;
+  closeOnEscape?: boolean;
+  class?: string;
+  editorId?: string;
+};
+
+const { editorId, ...props } = Astro.props;
+---
+
+<EditorBoundary editorId={editorId} manifestId="dialog"><Dialog {...props}><slot /></Dialog></EditorBoundary>

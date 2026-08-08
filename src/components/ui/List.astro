@@ -1,0 +1,8 @@
+---
+import EditorBoundary from '../editor/EditorBoundary.astro';
+type Item = { label: string; href?: string };
+type Props = { items: Item[]; ordered?: boolean; class?: string; editorId?: string; editorSource?: string };
+const { items, ordered = false, class: className, editorId, editorSource } = Astro.props;
+const Tag = ordered ? 'ol' : 'ul';
+---
+<EditorBoundary editorId={editorId} manifestId="list" sourceFile={editorSource}><Tag class:list={['ui-list', className]} data-part="root">{items.map((item) => <li data-part="item">{item.href ? <a href={item.href} data-part="link">{item.label}</a> : item.label}</li>)}</Tag></EditorBoundary>

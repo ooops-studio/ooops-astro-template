@@ -1,0 +1,49 @@
+---
+import StageImage from "../../components/stage/StageImage.astro";
+import Section from "../../components/ui/Section.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getPosts } from "../../lib/posts/client";
+import { siteUrl } from "../../lib/stage/env";
+
+const posts = await getPosts();
+const seo = {
+  title: "Posts",
+  description: "Latest posts from this Stage-powered site.",
+  canonical: `${siteUrl}/posts`,
+  type: "website",
+};
+---
+
+<BaseLayout {seo}>
+  <Section spacing="sm">
+    <div class="grid">
+      {
+        posts.map((post) => (
+          <article class="card">
+            {post.heroImageUrl ? (
+              <a href={`/posts/${post.slug}`} aria-label={`Read ${post.title}`}>
+                <StageImage
+                  src={post.heroImageUrl}
+                  alt={post.heroImageAlt}
+                  width="640"
+                  height="420"
+                />
+              </a>
+            ) : null}
+            <div>
+              <span class="meta">
+                {post.publishedAt
+                  ? new Date(post.publishedAt).toLocaleDateString("en")
+                  : "Post"}
+              </span>
+              <h2>
+                <a href={`/posts/${post.slug}`}>{post.title}</a>
+              </h2>
+              <p>{post.excerpt}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </Section>
+</BaseLayout>

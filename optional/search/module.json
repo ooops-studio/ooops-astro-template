@@ -1,0 +1,15 @@
+{
+  "id": "search",
+  "label": "Headless search",
+  "defaultEnabled": false,
+  "readme": "optional/search/README.md",
+  "deps": [],
+  "env": [],
+  "files": [
+    { "from": "optional/search/scripts/build-search-index.mjs", "to": "scripts/build-search-index.mjs" },
+    { "from": "optional/search/src/lib/search/headless.ts", "to": "src/lib/search/headless.ts" },
+    { "from": "optional/search/src/components/search/SearchExample.svelte", "to": "src/components/search/SearchExample.svelte" }
+  ],
+  "cleanupTargets": ["scripts/build-search-index.mjs", "src/lib/search", "src/components/search"],
+  "validationChecks": ["search-index"]
+}

@@ -1,0 +1,13 @@
+---
+import ReferenceScene from '../components/scenes/ReferenceScene.astro';
+import Section from '../components/ui/Section.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout seo={{title: 'Interactive scene WebGL 2', description: 'Forced WebGL 2 scene diagnostic.', canonical: '/interactive-scene-webgl2', robots: {index: false, follow: false}}}>
+  <Section spacing="lg">
+    <h1>Interactive scene WebGL 2</h1>
+    <ReferenceScene backend="webgl2" />
+    <a href="/interactive-scene">Return to reference scene</a>
+  </Section>
+</BaseLayout>

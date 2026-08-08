@@ -1,0 +1,7 @@
+---
+import Slider from '@ooopsstudio/ui-astro/Slider.astro';
+import EditorBoundary from '../editor/EditorBoundary.astro';
+type Props = Parameters<typeof Slider>[0] & { editorId?: string };
+const { editorId, ...props } = Astro.props as Props;
+---
+<EditorBoundary editorId={editorId} manifestId="slider"><Slider {...props}><slot /></Slider></EditorBoundary>

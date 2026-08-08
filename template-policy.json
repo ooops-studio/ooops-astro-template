@@ -1,0 +1,90 @@
+{
+  "runtime": {
+    "node": ">=22.14.0",
+    "packageManager": "pnpm@11.13.1"
+  },
+  "astro": {
+    "major": 7,
+    "output": "static"
+  },
+  "editor": {
+    "schemaVersion": 2,
+    "templateManifest": "editor/template.json",
+    "componentRegistry": "editor/components.json",
+    "designTokens": "editor/design-tokens.json",
+    "generatedCss": "src/styles/tokens.css",
+    "markerEnvironment": "OOOPS_EDITOR_MODE",
+    "stageBindings": "read-only"
+  },
+  "locales": {
+    "default": "en",
+    "prefixDefault": false
+  },
+  "forbiddenFeatures": ["rss"],
+  "canonicalPackages": {
+    "@ooopsstudio/stage-api": "^0.1.0",
+    "@ooopsstudio/stage-astro": "^0.1.0",
+    "@ooopsstudio/stage-cloudflare": "^0.1.0",
+    "@ooopsstudio/analytics-consent": "^0.1.0",
+    "@ooopsstudio/analytics-consent-astro": "^0.1.0",
+    "@ooopsstudio/accessibility": "^0.1.0",
+    "@ooopsstudio/accessibility-astro": "^0.1.0",
+    "@ooopsstudio/editor-contracts": "^0.2.0",
+    "@ooopsstudio/ui-primitives": "^0.1.0",
+    "@ooopsstudio/ui-astro": "^0.1.0"
+  },
+  "optionalCanonicalPackages": {
+    "interactiveScene": {
+      "@ooopsstudio/scene-core": "^0.1.0",
+      "@ooopsstudio/scene-three": "^0.1.0",
+      "@ooopsstudio/scene-astro": "^0.1.0",
+      "three": "^0.185.0"
+    }
+  },
+  "ownedImports": {
+    "src/lib/stage/client.ts": ["@ooopsstudio/stage-api", "@ooopsstudio/stage-astro"],
+    "src/components/stage/AnalyticsConsent.astro": ["@ooopsstudio/analytics-consent-astro/CookieBanner.astro"],
+    "src/components/stage/StageAnalytics.astro": ["@ooopsstudio/analytics-consent-astro/AnalyticsRuntime.astro"],
+    "src/components/AccessibilityMenu.astro": ["@ooopsstudio/accessibility-astro/AccessibilityMenu.astro"],
+    "src/layouts/BaseLayout.astro": ["@ooopsstudio/accessibility-astro/AccessibilityHead.astro", "@ooopsstudio/accessibility-astro/SkipLink.astro"],
+    "src/components/ui/SelectField.astro": ["@ooopsstudio/ui-astro/Select.astro"],
+    "src/components/ui/InputField.astro": ["@ooopsstudio/ui-astro/Input.astro"],
+    "src/components/ui/TextareaField.astro": ["@ooopsstudio/ui-astro/Textarea.astro"],
+    "src/components/ui/CheckboxField.astro": ["@ooopsstudio/ui-astro/Checkbox.astro"],
+    "src/components/ui/RadioGroupField.astro": ["@ooopsstudio/ui-astro/RadioGroup.astro"],
+    "src/components/ui/SwitchField.astro": ["@ooopsstudio/ui-astro/Switch.astro"],
+    "src/components/ui/ComboboxField.astro": ["@ooopsstudio/ui-astro/Combobox.astro"],
+    "src/components/ui/MultiSelectField.astro": ["@ooopsstudio/ui-astro/MultiSelect.astro"],
+    "src/components/ui/DropdownMenu.astro": ["@ooopsstudio/ui-astro/DropdownMenu.astro"],
+    "src/components/ui/Tooltip.astro": ["@ooopsstudio/ui-astro/Tooltip.astro"],
+    "src/components/ui/Tabs.astro": ["@ooopsstudio/ui-astro/Tabs.astro"],
+    "src/components/ui/Accordion.astro": ["@ooopsstudio/ui-astro/Accordion.astro"],
+    "src/components/ui/SliderField.astro": ["@ooopsstudio/ui-astro/Slider.astro"],
+    "src/components/ui/NumberInputField.astro": ["@ooopsstudio/ui-astro/NumberInput.astro"],
+    "src/components/ui/SegmentedControl.astro": ["@ooopsstudio/ui-astro/SegmentedControl.astro"],
+    "src/components/ui/Dialog.astro": ["@ooopsstudio/ui-astro/Dialog.astro"],
+    "src/components/ui/Modal.astro": ["@ooopsstudio/ui-astro/Modal.astro"],
+    "src/components/ui/Popover.astro": ["@ooopsstudio/ui-astro/Popover.astro"],
+    "src/lib/editor/registry.ts": ["@ooopsstudio/editor-contracts", "@ooopsstudio/ui-primitives/editor", "@ooopsstudio/accessibility-astro/editor"]
+  },
+  "ownershipGuardrails": {
+    "uiWrapperRoot": "src/components/ui/",
+    "forbiddenUiControllerPatterns": [
+      "createInputController",
+      "createTextareaController",
+      "createCheckboxController",
+      "createRadioGroupController",
+      "createSwitchController",
+      "createComboboxController",
+      "createMultiSelectController",
+      "createMenuController",
+      "createTooltipController",
+      "createTabsController",
+      "createAccordionController",
+      "createSliderController",
+      "createNumberInputController",
+      "createSegmentedControlController",
+      "createFocusTrap"
+    ]
+  }
+}

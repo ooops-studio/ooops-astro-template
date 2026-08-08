@@ -1,0 +1,29 @@
+---
+import Popover from '@ooopsstudio/ui-astro/Popover.astro';
+import EditorBoundary from '../editor/EditorBoundary.astro';
+
+type Props = {
+  id: string;
+  triggerLabel?: string;
+  open?: boolean;
+  placement?: 'top' | 'bottom' | 'left' | 'right';
+  align?: 'start' | 'center' | 'end';
+  role?: 'dialog' | 'region' | 'menu' | 'listbox';
+  ariaLabel?: string;
+  closeOnOutside?: boolean;
+  closeOnOutsideFocus?: boolean;
+  closeOnEscape?: boolean;
+  focusOnOpen?: boolean;
+  trapFocus?: boolean;
+  portal?: boolean;
+  class?: string;
+  editorId?: string;
+};
+
+const { editorId, ...props } = Astro.props;
+---
+
+<EditorBoundary editorId={editorId} manifestId="popover"><Popover {...props}>
+  {Astro.slots.has('trigger') ? <Fragment slot="trigger"><slot name="trigger" /></Fragment> : null}
+  <slot />
+</Popover></EditorBoundary>

@@ -1,0 +1,18 @@
+{
+  "id": "newsletter",
+  "label": "Newsletter via Stage Forms",
+  "defaultEnabled": false,
+  "readme": "optional/newsletter/README.md",
+  "deps": ["@ooopsstudio/stage-api"],
+  "env": [
+    { "name": "PUBLIC_STAGE_API_BASE_URL", "required": true, "example": "http://stage.localhost:4275" },
+    { "name": "PUBLIC_NEWSLETTER_FORM_TOKEN", "required": true }
+  ],
+  "files": [
+    { "from": "optional/newsletter/functions/api/newsletter.ts", "to": "functions/api/newsletter.ts" },
+    { "from": "optional/newsletter/src/components/newsletter/NewsletterForm.astro", "to": "src/components/newsletter/NewsletterForm.astro" },
+    { "from": "optional/newsletter/src/components/newsletter/NewsletterEnhancement.svelte", "to": "src/components/newsletter/NewsletterEnhancement.svelte" }
+  ],
+  "cleanupTargets": ["functions/api/newsletter.ts", "src/components/newsletter"],
+  "validationChecks": ["newsletter-form-token"]
+}

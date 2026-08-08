@@ -1,0 +1,11 @@
+---
+import { ArrowRight, Check, ExternalLink, Mail, Menu, Search, X } from '@lucide/astro';
+import EditorBoundary from '../editor/EditorBoundary.astro';
+type IconName = 'arrow-right' | 'check' | 'external-link' | 'mail' | 'menu' | 'search' | 'x';
+type Props = { name: IconName; label?: string; decorative?: boolean; size?: number; strokeWidth?: number; class?: string; editorId?: string; editorSource?: string };
+const { name, label, decorative = !label, size = 20, strokeWidth = 2, class: className, editorId, editorSource } = Astro.props;
+if (!decorative && !label) throw new Error('Meaningful icons require a label.');
+const icons = { 'arrow-right': ArrowRight, check: Check, 'external-link': ExternalLink, mail: Mail, menu: Menu, search: Search, x: X };
+const IconComponent = icons[name];
+---
+<EditorBoundary editorId={editorId} manifestId="icon" sourceFile={editorSource}><span class:list={['ui-icon', className]} role={decorative ? undefined : 'img'} aria-hidden={decorative ? 'true' : undefined} aria-label={decorative ? undefined : label} data-part="root"><IconComponent {size} stroke-width={strokeWidth} /></span></EditorBoundary>

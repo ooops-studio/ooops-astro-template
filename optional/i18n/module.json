@@ -1,0 +1,11 @@
+{
+  "id": "i18n",
+  "label": "i18n helpers",
+  "defaultEnabled": false,
+  "readme": "docs/i18n.md",
+  "deps": ["@ooopsstudio/stage-astro"],
+  "env": [],
+  "files": [],
+  "cleanupTargets": [],
+  "validationChecks": ["i18n-routing"]
+}

@@ -1,0 +1,204 @@
+{
+  "formatVersion": "stage-template-bundle/v1",
+  "name": "Stage Astro Site Template Starter",
+  "contentTypes": [
+    {
+      "kind": "single",
+      "apiId": "homepage",
+      "displayName": "Homepage",
+      "description": "Homepage copy and SEO fields for the Astro template.",
+      "publicMode": "public_readable",
+      "reviewWorkflowMode": "disabled",
+      "includeSeoFields": false,
+      "fields": [
+        {
+          "apiId": "heading",
+          "displayName": "Heading",
+          "kind": "text",
+          "isRequired": true
+        },
+        {
+          "apiId": "description",
+          "displayName": "Description",
+          "kind": "rich_text",
+          "isRequired": true
+        },
+        {
+          "apiId": "seo-title",
+          "displayName": "SEO title",
+          "kind": "text"
+        },
+        {
+          "apiId": "seo-description",
+          "displayName": "SEO description",
+          "kind": "text"
+        },
+        {
+          "apiId": "canonical-path-override",
+          "displayName": "Canonical path override",
+          "kind": "text"
+        },
+        {
+          "apiId": "robots-index",
+          "displayName": "Robots index",
+          "kind": "boolean"
+        },
+        {
+          "apiId": "robots-follow",
+          "displayName": "Robots follow",
+          "kind": "boolean"
+        },
+        {
+          "apiId": "google-site-verification",
+          "displayName": "Google site verification",
+          "kind": "text"
+        },
+        {
+          "apiId": "twitter-handle",
+          "displayName": "Twitter handle",
+          "kind": "text"
+        }
+      ]
+    },
+    {
+      "kind": "collection",
+      "apiId": "posts",
+      "displayName": "Posts",
+      "description": "Blog/news collection used by the included posts pages.",
+      "publicMode": "public_readable",
+      "reviewWorkflowMode": "disabled",
+      "hasSlug": true,
+      "taggable": true,
+      "fields": [
+        {
+          "apiId": "title",
+          "displayName": "Title",
+          "kind": "text",
+          "isRequired": true,
+          "isSearchable": true
+        },
+        {
+          "apiId": "slug",
+          "displayName": "Slug",
+          "kind": "slug",
+          "isRequired": true,
+          "isUnique": true,
+          "isSortable": true
+        },
+        {
+          "apiId": "excerpt",
+          "displayName": "Excerpt",
+          "kind": "text"
+        },
+        {
+          "apiId": "hero-image",
+          "displayName": "Hero image",
+          "kind": "media"
+        },
+        {
+          "apiId": "body",
+          "displayName": "Body",
+          "kind": "rich_text",
+          "isRequired": true
+        },
+        {
+          "apiId": "seo-title",
+          "displayName": "SEO title",
+          "kind": "text"
+        },
+        {
+          "apiId": "seo-description",
+          "displayName": "SEO description",
+          "kind": "text"
+        }
+      ]
+    }
+  ],
+  "singles": [
+    {
+      "apiId": "homepage",
+      "publish": true,
+      "payload": {
+        "heading": {
+          "value": "Build a Stage-powered Astro site",
+          "localized": {}
+        },
+        "description": {
+          "value": "This template gives you a secure Stage API connection, starter CMS content, SEO metadata, sitemap support, and optional modules you can copy in when needed.",
+          "localized": {}
+        },
+        "seo-title": {
+          "value": "Stage Astro Site Template",
+          "localized": {}
+        },
+        "seo-description": {
+          "value": "A minimal Astro template for public websites powered by Stage CMS.",
+          "localized": {}
+        },
+        "robots-index": {
+          "value": true,
+          "localized": {}
+        },
+        "robots-follow": {
+          "value": true,
+          "localized": {}
+        }
+      }
+    }
+  ],
+  "collections": [
+    {
+      "apiId": "posts",
+      "entries": [
+        {
+          "title": "Hello from Stage",
+          "slug": "hello-from-stage",
+          "publish": true,
+          "payload": {
+            "title": {
+              "value": "Hello from Stage",
+              "localized": {}
+            },
+            "excerpt": {
+              "value": "A starter post created by the Stage Astro template bootstrap.",
+              "localized": {}
+            },
+            "body": {
+              "value": "This starter collection entry is safe to delete after you connect your own content model.",
+              "localized": {}
+            },
+            "seo-title": {
+              "value": "Hello from Stage",
+              "localized": {}
+            },
+            "seo-description": {
+              "value": "Starter content for a Stage-powered Astro site.",
+              "localized": {}
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "forms": [
+    {
+      "key": "newsletter",
+      "title": "Newsletter signup",
+      "description": "Collect newsletter subscribers from the public site.",
+      "navigationMode": "free",
+      "publicShareEnabled": true,
+      "thankYouTitle": "You're subscribed",
+      "thankYouMessage": "Thanks for signing up.",
+      "publish": true,
+      "fields": [
+        {
+          "apiId": "email",
+          "displayName": "Email",
+          "kind": "email",
+          "isRequired": true
+        }
+      ]
+    }
+  ],
+  "webhooks": []
+}

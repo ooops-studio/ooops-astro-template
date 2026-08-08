@@ -1,0 +1,34 @@
+---
+type Props = {
+  spacing?: "sm" | "md" | "lg";
+  id?: string;
+  class?: string;
+  editorId?: string;
+  editorSource?: string;
+};
+
+import EditorBoundary from '../editor/EditorBoundary.astro';
+
+const { spacing = "md", id, class: className = "", editorId, editorSource } = Astro.props;
+const classes = ["ui-section", `ui-section-${spacing}`, className]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<EditorBoundary editorId={editorId} manifestId="section" sourceFile={editorSource}><section id={id} class={classes}>
+  <slot />
+</section></EditorBoundary>
+
+<style>
+  .ui-section-sm {
+    --section-spacing: 32px;
+  }
+
+  .ui-section-md {
+    --section-spacing: 56px;
+  }
+
+  .ui-section-lg {
+    --section-spacing: 88px;
+  }
+</style>

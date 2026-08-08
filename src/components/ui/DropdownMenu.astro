@@ -1,0 +1,7 @@
+---
+import DropdownMenu from '@ooopsstudio/ui-astro/DropdownMenu.astro';
+import EditorBoundary from '../editor/EditorBoundary.astro';
+type Props = Parameters<typeof DropdownMenu>[0] & { editorId?: string };
+const { editorId, ...props } = Astro.props as Props;
+---
+<EditorBoundary editorId={editorId} manifestId="dropdown-menu"><DropdownMenu {...props}><slot /><slot name="trigger" slot="trigger" /></DropdownMenu></EditorBoundary>

@@ -1,0 +1,7 @@
+---
+import Switch from '@ooopsstudio/ui-astro/Switch.astro';
+import EditorBoundary from '../editor/EditorBoundary.astro';
+type Props = Parameters<typeof Switch>[0] & { editorId?: string };
+const { editorId, ...props } = Astro.props as Props;
+---
+<EditorBoundary editorId={editorId} manifestId="switch"><Switch {...props}><slot /></Switch></EditorBoundary>

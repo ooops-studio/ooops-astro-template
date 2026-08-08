@@ -1,0 +1,188 @@
+---
+type Props = {
+  href?: string;
+  label?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  imagePosition?: 'before' | 'after';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
+  size?: 'sm' | 'md' | 'lg';
+  fullWidth?: boolean;
+  disabled?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  target?: string;
+  rel?: string;
+  ariaLabel?: string;
+  class?: string;
+  editorId?: string;
+  editorSource?: string;
+};
+
+import EditorBoundary from '../editor/EditorBoundary.astro';
+
+const {
+  href,
+  label = '',
+  imageSrc = '',
+  imageAlt = '',
+  imagePosition = 'before',
+  variant = 'primary',
+  size = 'md',
+  fullWidth = false,
+  disabled = false,
+  type = 'button',
+  target,
+  rel,
+  ariaLabel,
+  class: className = '',
+  editorId,
+  editorSource
+} = Astro.props;
+
+const hasImage = Boolean(imageSrc);
+const hasLabel = Boolean(label.trim());
+const iconOnly = hasImage && !hasLabel;
+const resolvedAriaLabel = ariaLabel || (iconOnly ? imageAlt || label : undefined);
+const resolvedImageAlt = iconOnly ? '' : imageAlt;
+
+const classes = [
+  'ui-button',
+  `ui-button-${variant}`,
+  `ui-button-${size}`,
+  fullWidth && 'ui-button-full',
+  iconOnly && 'ui-button-icon-only',
+  className
+]
+  .filter(Boolean)
+  .join(' ');
+
+const safeRel = target === '_blank' ? rel || 'noreferrer' : rel;
+---
+
+<EditorBoundary editorId={editorId} manifestId="button" sourceFile={editorSource}>{href ? (
+  <a class={classes} href={disabled ? undefined : href} target={target} rel={safeRel} aria-disabled={disabled} aria-label={resolvedAriaLabel}>
+    {hasImage && imagePosition === 'before' ? <img class="ui-button-image" src={imageSrc} alt={resolvedImageAlt} loading="lazy" /> : null}
+    {hasLabel ? <span class="ui-button-label">{label}</span> : <slot />}
+    {hasImage && imagePosition === 'after' ? <img class="ui-button-image" src={imageSrc} alt={resolvedImageAlt} loading="lazy" /> : null}
+  </a>
+) : (
+  <button class={classes} type={type} disabled={disabled} aria-label={resolvedAriaLabel}>
+    {hasImage && imagePosition === 'before' ? <img class="ui-button-image" src={imageSrc} alt={resolvedImageAlt} loading="lazy" /> : null}
+    {hasLabel ? <span class="ui-button-label">{label}</span> : <slot />}
+    {hasImage && imagePosition === 'after' ? <img class="ui-button-image" src={imageSrc} alt={resolvedImageAlt} loading="lazy" /> : null}
+  </button>
+)}</EditorBoundary>
+
+<style>
+  .ui-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: fit-content;
+    min-height: var(--button-height);
+    padding-inline: var(--button-padding);
+    border: 1px solid var(--button-border);
+    border-radius: var(--button-radius, 999px);
+    background: var(--button-bg);
+    color: var(--button-color);
+    font: inherit;
+    font-size: var(--button-font-size);
+    font-weight: 800;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      border-color 160ms ease,
+      background 160ms ease,
+      color 160ms ease,
+      transform 160ms ease;
+  }
+
+  .ui-button:hover {
+    transform: translateY(-1px);
+  }
+
+  .ui-button:focus-visible {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 3px;
+  }
+
+  .ui-button[disabled],
+  .ui-button[aria-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.58;
+    transform: none;
+  }
+
+  .ui-button-sm {
+    --button-height: 36px;
+    --button-padding: 14px;
+    --button-font-size: 14px;
+  }
+
+  .ui-button-md {
+    --button-height: 44px;
+    --button-padding: 18px;
+    --button-font-size: 15px;
+  }
+
+  .ui-button-lg {
+    --button-height: 52px;
+    --button-padding: 22px;
+    --button-font-size: 16px;
+  }
+
+  .ui-button-full {
+    width: 100%;
+  }
+
+  .ui-button-icon-only {
+    width: var(--button-height);
+    padding-inline: 0;
+  }
+
+  .ui-button-image {
+    flex: 0 0 auto;
+    width: var(--button-image-size, 1.1em);
+    height: var(--button-image-size, 1.1em);
+    object-fit: contain;
+  }
+
+  .ui-button-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .ui-button-primary {
+    --button-bg: var(--color-accent);
+    --button-border: var(--color-accent);
+    --button-color: var(--color-accent-contrast);
+  }
+
+  .ui-button-secondary {
+    --button-bg: var(--color-surface);
+    --button-border: var(--color-border);
+    --button-color: var(--color-text);
+  }
+
+  .ui-button-secondary:hover,
+  .ui-button-ghost:hover {
+    --button-border: color-mix(in srgb, var(--color-accent) 48%, var(--color-border));
+    --button-color: var(--color-accent);
+  }
+
+  .ui-button-ghost {
+    --button-bg: transparent;
+    --button-border: transparent;
+    --button-color: var(--color-text);
+  }
+
+  .ui-button-danger {
+    --button-bg: var(--color-danger-soft);
+    --button-border: var(--color-danger-border);
+    --button-color: var(--color-danger);
+  }
+</style>

@@ -1,0 +1,19 @@
+---
+import Textarea from '@ooopsstudio/ui-astro/Textarea.astro';
+import EditorBoundary from '../editor/EditorBoundary.astro';
+
+type Props = Parameters<typeof Textarea>[0] & { editorId?: string };
+const { editorId, ...props } = Astro.props as Props;
+---
+
+<EditorBoundary editorId={editorId} manifestId="textarea"><Textarea {...props} /></EditorBoundary>
+
+<style is:global>
+  .ooops-textarea { display: grid; gap: 8px; }
+  .ooops-textarea [data-part='label'] { color: var(--color-text); font-size: 14px; font-weight: 800; }
+  .ooops-textarea :is([data-part='description'], [data-part='hint'], [data-part='error']) { color: var(--color-muted); font-size: 13px; line-height: 1.45; }
+  .ooops-textarea [data-part='error'] { color: var(--color-danger); }
+  .ooops-textarea [data-part='control'] { width: 100%; min-height: 120px; padding: 12px 14px; border: 1px solid var(--color-border); border-radius: var(--input-radius, 8px); background: var(--color-surface); color: var(--color-text); font: inherit; line-height: 1.5; resize: vertical; }
+  .ooops-textarea [data-part='control']:focus { border-color: var(--color-accent); outline: 3px solid var(--color-focus-ring); outline-offset: 0; }
+  .ooops-textarea[data-invalid='true'] [data-part='control'] { border-color: var(--color-danger-strong); }
+</style>

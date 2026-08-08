@@ -1,0 +1,7 @@
+---
+import Accordion from '@ooopsstudio/ui-astro/Accordion.astro';
+import EditorBoundary from '../editor/EditorBoundary.astro';
+type Props = Parameters<typeof Accordion>[0] & { editorId?: string };
+const { editorId, ...props } = Astro.props as Props;
+---
+<EditorBoundary editorId={editorId} manifestId="accordion"><Accordion {...props}><slot /></Accordion></EditorBoundary>

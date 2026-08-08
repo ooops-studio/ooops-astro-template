@@ -1,0 +1,13 @@
+{
+  "id": "accessibilityMenu",
+  "label": "Accessibility menu",
+  "defaultEnabled": false,
+  "readme": "optional/accessibility-menu/README.md",
+  "deps": ["@ooopsstudio/accessibility", "@ooopsstudio/accessibility-astro"],
+  "env": [],
+  "files": [
+    { "from": "optional/accessibility-menu/src/components/accessibility/AccessibilityPreferences.astro", "to": "src/components/accessibility/AccessibilityPreferences.astro" }
+  ],
+  "cleanupTargets": ["src/components/accessibility"],
+  "validationChecks": ["accessibility-preferences"]
+}

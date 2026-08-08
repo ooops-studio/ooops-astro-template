@@ -1,0 +1,13 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": [
+    "astro",
+    "javascript",
+    "typescript"
+  ],
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true
+}

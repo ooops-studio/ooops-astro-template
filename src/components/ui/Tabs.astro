@@ -1,0 +1,7 @@
+---
+import Tabs from '@ooopsstudio/ui-astro/Tabs.astro';
+import EditorBoundary from '../editor/EditorBoundary.astro';
+type Props = Parameters<typeof Tabs>[0] & { editorId?: string };
+const { editorId, ...props } = Astro.props as Props;
+---
+<EditorBoundary editorId={editorId} manifestId="tabs"><Tabs {...props}><slot /></Tabs></EditorBoundary>

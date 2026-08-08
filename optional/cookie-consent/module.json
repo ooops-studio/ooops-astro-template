@@ -1,0 +1,13 @@
+{
+  "id": "cookieConsent",
+  "label": "Cookie/consent UI",
+  "defaultEnabled": false,
+  "readme": "optional/cookie-consent/README.md",
+  "deps": ["@ooopsstudio/analytics-consent-astro"],
+  "env": [],
+  "files": [
+    { "from": "optional/cookie-consent/src/components/consent/ConsentBanner.astro", "to": "src/components/consent/ConsentBanner.astro" }
+  ],
+  "cleanupTargets": ["src/components/consent"],
+  "validationChecks": ["consent-ui"]
+}

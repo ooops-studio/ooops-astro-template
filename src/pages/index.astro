@@ -1,0 +1,28 @@
+---
+import Button from '../components/ui/Button.astro';
+import IslandStatus from '../components/islands/IslandStatus.svelte';
+import Section from '../components/ui/Section.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getHome } from '../lib/stage/homepage';
+
+const home = await getHome();
+const headingLines = home.heading === 'Build a Stage-powered Astro site'
+  ? ['Build a', 'Stage-powered', 'Astro site']
+  : [home.heading];
+---
+
+<BaseLayout seo={home.seo}>
+  <Section spacing="lg" class="hero" editorId="home-hero" editorSource="src/pages/index.astro">
+    <span class="eyebrow">Stage CMS + Astro</span>
+    <h1>
+      {headingLines.map((line) => <span>{line}</span>)}
+    </h1>
+    <p>{home.description}</p>
+    <div class="hero-actions">
+      <Button href="http://localhost:4274/developers/api" target="_blank" editorId="home-docs" editorSource="src/pages/index.astro">Read docs</Button>
+      <Button href="/contact" variant="secondary" editorId="home-contact" editorSource="src/pages/index.astro">Contact</Button>
+      <IslandStatus client:idle />
+    </div>
+    <!-- ooops-editor-region:home-main -->
+  </Section>
+</BaseLayout>

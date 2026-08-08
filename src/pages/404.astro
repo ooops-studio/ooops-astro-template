@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ErrorState from '../components/ui/ErrorState.astro';
+import { siteUrl } from '../lib/stage/env';
+
+const seo = {
+  title: 'Page not found',
+  description: 'The page you are looking for does not exist.',
+  canonical: `${siteUrl}/404`,
+  robots: { index: false, follow: true },
+  type: 'website'
+};
+---
+
+<BaseLayout {seo}>
+  <ErrorState
+    variant="empty"
+    title="Page not found"
+    description="The page you are looking for does not exist or has moved."
+    actionHref="/"
+    actionLabel="Go home"
+  />
+</BaseLayout>

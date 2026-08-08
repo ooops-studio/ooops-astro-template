@@ -1,0 +1,5 @@
+* text=auto eol=lf
+*.astro linguist-language=Astro
+*.ts linguist-language=TypeScript
+*.js linguist-language=JavaScript
+*.md linguist-language=Markdown

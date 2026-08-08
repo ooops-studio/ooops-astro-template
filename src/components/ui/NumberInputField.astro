@@ -1,0 +1,7 @@
+---
+import NumberInput from '@ooopsstudio/ui-astro/NumberInput.astro';
+import EditorBoundary from '../editor/EditorBoundary.astro';
+type Props = Parameters<typeof NumberInput>[0] & { editorId?: string };
+const { editorId, ...props } = Astro.props as Props;
+---
+<EditorBoundary editorId={editorId} manifestId="number-input"><NumberInput {...props}><slot /></NumberInput></EditorBoundary>

@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+import CheckboxField from '../components/ui/CheckboxField.astro';
+import Dialog from '../components/ui/Dialog.astro';
+import InputField from '../components/ui/InputField.astro';
+import Section from '../components/ui/Section.astro';
+import SelectField from '../components/ui/SelectField.astro';
+import TextareaField from '../components/ui/TextareaField.astro';
+import {siteUrl} from '../lib/stage/env';
+
+const seo = {
+  title: 'Contact | Stage Astro Site',
+  description: 'Contact form powered by the canonical Ooops UI components.',
+  canonical: `${siteUrl}/contact`,
+  type: 'website' as const
+};
+const topics = [
+  {value: 'project', label: 'New project'},
+  {value: 'support', label: 'Support'},
+  {value: 'other', label: 'Other'}
+];
+---
+
+<BaseLayout {seo}>
+  <Section spacing="md" class="contact-page" editorId="contact-section">
+    <a href="/" data-astro-prefetch>Back home</a>
+    <header class="contact-heading">
+      <span class="eyebrow">Contact</span>
+      <h1>Tell us what you need</h1>
+      <p>Use the form below and we will respond with the next practical step.</p>
+    </header>
+    <form id="contact-form" class="contact-form">
+      <InputField id="contact-name" name="name" label="Name" autocomplete="name" required editorId="contact-name" />
+      <InputField id="contact-email" name="email" type="email" label="Email" autocomplete="email" required editorId="contact-email" />
+      <SelectField id="contact-topic" name="topic" label="Topic" options={topics} required editorId="contact-topic" />
+      <TextareaField id="contact-message" name="message" label="Message" rows={3} minRows={3} maxRows={6} autoResize required editorId="contact-message" />
+      <CheckboxField id="contact-consent" name="consent" label="I agree to be contacted" required editorId="contact-consent" />
+      <div class="contact-actions">
+        <Button type="submit" label="Send request" editorId="contact-submit" />
+        <Dialog id="contact-privacy" title="Privacy note" triggerLabel="Privacy note" confirmLabel="Understood" cancelLabel="Close" editorId="contact-privacy">
+          <p>Only the information needed to respond to this request is collected.</p>
+        </Dialog>
+      </div>
+    </form>
+    <output id="contact-result" class="contact-result" aria-live="polite"></output>
+  </Section>
+
+  <script>
+    const installContactForm = () => {
+      const form = document.querySelector<HTMLFormElement>('#contact-form')
+      const output = document.querySelector<HTMLOutputElement>('#contact-result')
+      if (!form || !output || form.dataset.mounted === 'true') return
+      form.dataset.mounted = 'true'
+      const abort = new AbortController()
+      form.addEventListener('submit', (event) => {
+        event.preventDefault()
+        if (!form.reportValidity()) return
+        output.value = [...new FormData(form).entries()]
+          .map(([key, value]) => `${key}=${String(value)}`)
+          .join('&')
+      }, {signal: abort.signal})
+      document.addEventListener('astro:before-swap', () => abort.abort(), {once: true, signal: abort.signal})
+    }
+    installContactForm()
+    document.addEventListener('astro:page-load', installContactForm)
+  </script>
+</BaseLayout>
+
+<style>
+  .contact-page { display: grid; gap: var(--space-7); max-width: 760px; }
+  .contact-heading, .contact-form { display: grid; gap: var(--space-4); }
+  .contact-heading :is(h1, p) { margin: 0; }
+  .contact-form { padding-block: var(--space-4); }
+  .contact-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+  .contact-result { min-height: 1.5em; overflow-wrap: anywhere; color: var(--color-muted); }
+</style>

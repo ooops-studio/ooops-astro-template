@@ -1,0 +1,14 @@
+{
+  "id": "mediaPlayer",
+  "label": "Headless media player",
+  "defaultEnabled": false,
+  "readme": "optional/media-player/README.md",
+  "deps": [],
+  "env": [],
+  "files": [
+    { "from": "optional/media-player/src/lib/media-player/headless.ts", "to": "src/lib/media-player/headless.ts" },
+    { "from": "optional/media-player/src/components/media-player/PlayerExample.svelte", "to": "src/components/media-player/PlayerExample.svelte" }
+  ],
+  "cleanupTargets": ["src/lib/media-player", "src/components/media-player"],
+  "validationChecks": ["media-player-state"]
+}

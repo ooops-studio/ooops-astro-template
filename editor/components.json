@@ -1,0 +1,1034 @@
+{
+  "schemaVersion": 2,
+  "manifests": [
+    {
+      "schemaVersion": 2,
+      "id": "button",
+      "label": "Button",
+      "category": "actions",
+      "owner": "ooops-astro-template",
+      "insertable": true,
+      "adapters": {
+        "astro": "ooops-astro-template/Button.astro"
+      },
+      "props": [
+        {
+          "id": "href",
+          "label": "Link",
+          "schema": {
+            "kind": "string"
+          },
+          "editable": true,
+          "control": "text"
+        },
+        {
+          "id": "label",
+          "label": "Label",
+          "schema": {
+            "kind": "string"
+          },
+          "editable": true,
+          "control": "text"
+        },
+        {
+          "id": "imageSrc",
+          "label": "Image source",
+          "schema": {
+            "kind": "string"
+          },
+          "editable": true,
+          "control": "text"
+        },
+        {
+          "id": "imageAlt",
+          "label": "Image alternative text",
+          "schema": {
+            "kind": "string"
+          },
+          "editable": true,
+          "control": "text"
+        },
+        {
+          "id": "variant",
+          "label": "Variant",
+          "schema": {
+            "kind": "enum",
+            "values": [
+              "primary",
+              "secondary",
+              "ghost",
+              "danger"
+            ]
+          },
+          "default": "primary",
+          "editable": true,
+          "control": "enum"
+        },
+        {
+          "id": "size",
+          "label": "Size",
+          "schema": {
+            "kind": "enum",
+            "values": [
+              "sm",
+              "md",
+              "lg"
+            ]
+          },
+          "default": "md",
+          "editable": true,
+          "control": "enum"
+        },
+        {
+          "id": "fullWidth",
+          "label": "Full width",
+          "schema": {
+            "kind": "boolean"
+          },
+          "default": false,
+          "editable": true,
+          "control": "boolean"
+        },
+        {
+          "id": "disabled",
+          "label": "Disabled",
+          "schema": {
+            "kind": "boolean"
+          },
+          "default": false,
+          "editable": true,
+          "control": "boolean"
+        }
+      ],
+      "slots": [
+        {
+          "id": "default",
+          "label": "Content",
+          "min": 0,
+          "max": 1,
+          "editable": true
+        }
+      ],
+      "events": [
+        {
+          "id": "click",
+          "label": "Click"
+        }
+      ],
+      "parts": [
+        {
+          "id": "root",
+          "selector": ".ui-button",
+          "states": [
+            "hover",
+            "focus-visible",
+            "active",
+            "disabled"
+          ],
+          "forceableStates": [
+            "hover",
+            "focus-visible",
+            "active",
+            "disabled"
+          ],
+          "styleProperties": [
+            "background-color",
+            "border-color",
+            "border-radius",
+            "border-width",
+            "box-shadow",
+            "color",
+            "flex-basis",
+            "flex-grow",
+            "flex-shrink",
+            "font-family",
+            "font-size",
+            "font-variation-settings",
+            "font-weight",
+            "gap",
+            "height",
+            "letter-spacing",
+            "line-height",
+            "max-inline-size",
+            "opacity",
+            "order",
+            "overflow",
+            "padding-inline",
+            "text-wrap",
+            "width"
+          ],
+          "responsive": true,
+          "typography": {
+            "fluidSize": true,
+            "variableAxes": [
+              {"tag": "wght", "label": "Weight", "min": 100, "max": 900, "step": 1, "default": 800},
+              {"tag": "wdth", "label": "Width", "min": 75, "max": 125, "step": 1, "default": 100}
+            ],
+            "textFit": true,
+            "maxLineLength": true,
+            "wrapping": ["wrap", "nowrap", "balance", "pretty"]
+          },
+          "positioning": {
+            "editable": true,
+            "modes": [
+              "static",
+              "relative",
+              "absolute",
+              "sticky",
+              "fixed"
+            ],
+            "offsets": [
+              "inset-block-start",
+              "inset-block-end",
+              "inset-inline-start",
+              "inset-inline-end"
+            ],
+            "responsive": true,
+            "zIndex": {
+              "editable": true,
+              "tokens": [
+                "z-index-base",
+                "z-index-raised",
+                "z-index-sticky",
+                "z-index-dropdown",
+                "z-index-overlay",
+                "z-index-modal",
+                "z-index-toast"
+              ],
+              "allowCustom": false
+            }
+          }
+        },
+        {
+          "id": "label",
+          "selector": ".ui-button-label",
+          "states": [],
+          "styleProperties": [
+            "color",
+            "font-family",
+            "font-size",
+            "font-variation-settings",
+            "font-weight",
+            "letter-spacing",
+            "line-height",
+            "max-inline-size",
+            "text-wrap"
+          ],
+          "responsive": true,
+          "typography": {
+            "fluidSize": true,
+            "variableAxes": [
+              {"tag": "wght", "label": "Weight", "min": 100, "max": 900, "step": 1, "default": 700},
+              {"tag": "wdth", "label": "Width", "min": 75, "max": 125, "step": 1, "default": 100}
+            ],
+            "textFit": true,
+            "maxLineLength": true,
+            "wrapping": ["wrap", "nowrap", "balance", "pretty"]
+          },
+          "positioning": {
+            "editable": true,
+            "modes": [
+              "static",
+              "relative"
+            ],
+            "offsets": [
+              "inset-block-start",
+              "inset-block-end",
+              "inset-inline-start",
+              "inset-inline-end"
+            ],
+            "responsive": true,
+            "zIndex": {
+              "editable": true,
+              "tokens": [
+                "z-index-base",
+                "z-index-raised"
+              ],
+              "allowCustom": false
+            }
+          }
+        },
+        {
+          "id": "image",
+          "selector": ".ui-button-image",
+          "states": [],
+          "styleProperties": [
+            "height",
+            "width"
+          ],
+          "responsive": true,
+          "positioning": {
+            "editable": true,
+            "modes": [
+              "static",
+              "relative"
+            ],
+            "offsets": [
+              "inset-block-start",
+              "inset-block-end",
+              "inset-inline-start",
+              "inset-inline-end"
+            ],
+            "responsive": true,
+            "zIndex": {
+              "editable": true,
+              "tokens": [
+                "z-index-base",
+                "z-index-raised"
+              ],
+              "allowCustom": false
+            }
+          }
+        }
+      ],
+      "variants": [
+        "primary",
+        "secondary",
+        "ghost",
+        "danger",
+        "sm",
+        "md",
+        "lg"
+      ]
+    },
+    {
+      "schemaVersion": 2,
+      "id": "container",
+      "label": "Container",
+      "category": "layout",
+      "owner": "ooops-astro-template",
+      "insertable": true,
+      "adapters": {
+        "astro": "ooops-astro-template/Container.astro"
+      },
+      "props": [
+        {
+          "id": "size",
+          "label": "Size",
+          "schema": {
+            "kind": "enum",
+            "values": [
+              "sm",
+              "md",
+              "lg",
+              "full"
+            ]
+          },
+          "default": "lg",
+          "editable": true,
+          "control": "enum"
+        }
+      ],
+      "slots": [
+        {
+          "id": "default",
+          "label": "Content",
+          "min": 0,
+          "max": 128,
+          "editable": true
+        }
+      ],
+      "events": [],
+      "parts": [
+        {
+          "id": "root",
+          "selector": ".ui-container",
+          "states": [],
+          "styleProperties": [
+            "max-height",
+            "max-width",
+            "min-height",
+            "min-width",
+            "overflow",
+            "padding-inline",
+            "width"
+          ],
+          "responsive": true,
+          "positioning": {
+            "editable": true,
+            "modes": [
+              "static",
+              "relative",
+              "absolute",
+              "sticky",
+              "fixed"
+            ],
+            "offsets": [
+              "inset-block-start",
+              "inset-block-end",
+              "inset-inline-start",
+              "inset-inline-end"
+            ],
+            "responsive": true,
+            "zIndex": {
+              "editable": true,
+              "tokens": [
+                "z-index-base",
+                "z-index-raised",
+                "z-index-sticky",
+                "z-index-dropdown",
+                "z-index-overlay",
+                "z-index-modal",
+                "z-index-toast"
+              ],
+              "allowCustom": false
+            }
+          }
+        }
+      ],
+      "variants": [
+        "sm",
+        "md",
+        "lg",
+        "full"
+      ]
+    },
+    {
+      "schemaVersion": 2,
+      "id": "section",
+      "label": "Section",
+      "category": "layout",
+      "owner": "ooops-astro-template",
+      "insertable": true,
+      "adapters": {
+        "astro": "ooops-astro-template/Section.astro"
+      },
+      "props": [
+        {
+          "id": "id",
+          "label": "Anchor ID",
+          "schema": {
+            "kind": "string"
+          },
+          "editable": true,
+          "control": "text"
+        },
+        {
+          "id": "spacing",
+          "label": "Spacing",
+          "schema": {
+            "kind": "enum",
+            "values": [
+              "sm",
+              "md",
+              "lg"
+            ]
+          },
+          "default": "md",
+          "editable": true,
+          "control": "enum"
+        }
+      ],
+      "slots": [
+        {
+          "id": "default",
+          "label": "Content",
+          "min": 0,
+          "max": 128,
+          "editable": true
+        }
+      ],
+      "events": [],
+      "parts": [
+        {
+          "id": "root",
+          "selector": ".ui-section",
+          "states": [],
+          "styleProperties": [
+            "background-color",
+            "background-image",
+            "background-position",
+            "background-repeat",
+            "background-size",
+            "border-color",
+            "border-radius",
+            "border-style",
+            "border-width",
+            "box-shadow",
+            "clip-path",
+            "color",
+            "margin-block",
+            "max-height",
+            "max-width",
+            "min-height",
+            "min-width",
+            "overflow",
+            "padding-block",
+            "padding-inline"
+          ],
+          "responsive": true,
+          "positioning": {
+            "editable": true,
+            "modes": [
+              "static",
+              "relative",
+              "absolute",
+              "sticky",
+              "fixed"
+            ],
+            "offsets": [
+              "inset-block-start",
+              "inset-block-end",
+              "inset-inline-start",
+              "inset-inline-end"
+            ],
+            "responsive": true,
+            "zIndex": {
+              "editable": true,
+              "tokens": [
+                "z-index-base",
+                "z-index-raised",
+                "z-index-sticky",
+                "z-index-dropdown",
+                "z-index-overlay",
+                "z-index-modal",
+                "z-index-toast"
+              ],
+              "allowCustom": false
+            }
+          }
+        }
+      ],
+      "variants": [
+        "sm",
+        "md",
+        "lg"
+      ]
+    },
+    {
+      "schemaVersion": 2,
+      "id": "error-state",
+      "label": "Error state",
+      "category": "feedback",
+      "owner": "ooops-astro-template",
+      "insertable": true,
+      "adapters": {
+        "astro": "ooops-astro-template/ErrorState.astro"
+      },
+      "props": [
+        {
+          "id": "title",
+          "label": "Title",
+          "schema": {
+            "kind": "string"
+          },
+          "required": true,
+          "editable": true,
+          "control": "text"
+        },
+        {
+          "id": "description",
+          "label": "Description",
+          "schema": {
+            "kind": "string"
+          },
+          "editable": true,
+          "control": "text"
+        },
+        {
+          "id": "actionHref",
+          "label": "Primary action link",
+          "schema": {
+            "kind": "string"
+          },
+          "editable": true,
+          "control": "text"
+        },
+        {
+          "id": "actionLabel",
+          "label": "Primary action label",
+          "schema": {
+            "kind": "string"
+          },
+          "default": "Try again",
+          "editable": true,
+          "control": "text"
+        },
+        {
+          "id": "variant",
+          "label": "Variant",
+          "schema": {
+            "kind": "enum",
+            "values": [
+              "empty",
+              "error",
+              "offline"
+            ]
+          },
+          "default": "empty",
+          "editable": true,
+          "control": "enum"
+        }
+      ],
+      "slots": [],
+      "events": [],
+      "parts": [
+        {
+          "id": "root",
+          "selector": ".error-state",
+          "states": [
+            "empty",
+            "error",
+            "offline"
+          ],
+          "styleProperties": [
+            "background-color",
+            "border-color",
+            "border-radius",
+            "border-width",
+            "color",
+            "gap",
+            "padding"
+          ],
+          "responsive": true,
+          "positioning": {
+            "editable": true,
+            "modes": [
+              "static",
+              "relative",
+              "absolute",
+              "sticky",
+              "fixed"
+            ],
+            "offsets": [
+              "inset-block-start",
+              "inset-block-end",
+              "inset-inline-start",
+              "inset-inline-end"
+            ],
+            "responsive": true,
+            "zIndex": {
+              "editable": true,
+              "tokens": [
+                "z-index-base",
+                "z-index-raised",
+                "z-index-sticky",
+                "z-index-dropdown",
+                "z-index-overlay",
+                "z-index-modal",
+                "z-index-toast"
+              ],
+              "allowCustom": false
+            }
+          }
+        },
+        {
+          "id": "icon",
+          "selector": ".error-state-icon",
+          "states": [
+            "empty",
+            "error",
+            "offline"
+          ],
+          "styleProperties": [
+            "background-color",
+            "border-color",
+            "border-radius",
+            "color",
+            "height",
+            "width"
+          ],
+          "responsive": true,
+          "positioning": {
+            "editable": true,
+            "modes": [
+              "static",
+              "relative"
+            ],
+            "offsets": [
+              "inset-block-start",
+              "inset-block-end",
+              "inset-inline-start",
+              "inset-inline-end"
+            ],
+            "responsive": true,
+            "zIndex": {
+              "editable": true,
+              "tokens": [
+                "z-index-base",
+                "z-index-raised"
+              ],
+              "allowCustom": false
+            }
+          }
+        },
+        {
+          "id": "content",
+          "selector": ".error-state-content",
+          "states": [],
+          "styleProperties": [
+            "color",
+            "gap"
+          ],
+          "responsive": true,
+          "positioning": {
+            "editable": true,
+            "modes": [
+              "static",
+              "relative"
+            ],
+            "offsets": [
+              "inset-block-start",
+              "inset-block-end",
+              "inset-inline-start",
+              "inset-inline-end"
+            ],
+            "responsive": true,
+            "zIndex": {
+              "editable": true,
+              "tokens": [
+                "z-index-base",
+                "z-index-raised"
+              ],
+              "allowCustom": false
+            }
+          }
+        }
+      ],
+      "variants": [
+        "empty",
+        "error",
+        "offline"
+      ]
+    },
+    {
+      "schemaVersion": 2,
+      "id": "icon",
+      "label": "Icon",
+      "category": "media",
+      "owner": "ooops-astro-template",
+      "insertable": true,
+      "adapters": {"astro": "ooops-astro-template/Icon.astro"},
+      "props": [
+        {"id": "name", "label": "Icon", "schema": {"kind": "enum", "values": ["arrow-right", "check", "external-link", "mail", "menu", "search", "x"]}, "required": true, "default": "arrow-right", "editable": true, "control": "enum"},
+        {"id": "label", "label": "Accessible label", "schema": {"kind": "string"}, "editable": true, "control": "text"},
+        {"id": "decorative", "label": "Decorative", "schema": {"kind": "boolean"}, "default": true, "editable": true, "control": "boolean"},
+        {"id": "size", "label": "Size", "schema": {"kind": "number", "min": 8, "max": 256, "step": 1}, "default": 20, "editable": true, "control": "number"}
+      ],
+      "slots": [], "events": [],
+      "parts": [{"id": "root", "selector": ".ui-icon", "states": [], "styleProperties": ["color", "filter", "height", "opacity", "transform", "width"], "responsive": true, "positioning": {"editable": true, "modes": ["static", "relative", "absolute", "sticky", "fixed"], "offsets": ["inset-block-start", "inset-block-end", "inset-inline-start", "inset-inline-end"], "responsive": true, "zIndex": {"editable": true, "tokens": ["z-index-base", "z-index-raised", "z-index-sticky"], "allowCustom": false}}}],
+      "variants": []
+    },
+    {
+      "schemaVersion": 2,
+      "id": "video",
+      "label": "Video",
+      "category": "media",
+      "owner": "ooops-astro-template",
+      "insertable": true,
+      "adapters": {"astro": "ooops-astro-template/Video.astro"},
+      "props": [
+        {"id": "src", "label": "Video asset", "schema": {"kind": "string"}, "required": true, "editable": true, "control": "asset", "asset": {"kinds": ["video"], "delivery": ["public-copy"]}},
+        {"id": "description", "label": "Description", "schema": {"kind": "string"}, "editable": true, "control": "text"},
+        {"id": "poster", "label": "Poster", "schema": {"kind": "string"}, "editable": true, "control": "asset", "asset": {"kinds": ["image"], "delivery": ["astro-import", "public-copy"], "altTextProp": "description", "decorativeProp": "decorative"}},
+        {"id": "decorative", "label": "Decorative", "schema": {"kind": "boolean"}, "default": false, "editable": true, "control": "boolean"},
+        {"id": "controls", "label": "Controls", "schema": {"kind": "boolean"}, "default": true, "editable": true, "control": "boolean"},
+        {"id": "autoplay", "label": "Autoplay", "schema": {"kind": "boolean"}, "default": false, "editable": true, "control": "boolean"},
+        {"id": "loop", "label": "Loop", "schema": {"kind": "boolean"}, "default": false, "editable": true, "control": "boolean"}
+      ],
+      "slots": [], "events": [],
+      "parts": [
+        {"id": "root", "selector": ".ui-video", "states": [], "styleProperties": ["aspect-ratio", "background-color", "border-color", "border-radius", "border-style", "border-width", "box-shadow", "filter", "height", "max-height", "max-width", "opacity", "overflow", "transform", "width"], "responsive": true, "positioning": {"editable": true, "modes": ["static", "relative", "absolute", "sticky", "fixed"], "offsets": ["inset-block-start", "inset-block-end", "inset-inline-start", "inset-inline-end"], "responsive": true, "zIndex": {"editable": true, "tokens": ["z-index-base", "z-index-raised", "z-index-sticky"], "allowCustom": false}}},
+        {"id": "media", "selector": ".ui-video video", "states": [], "styleProperties": ["aspect-ratio", "height", "object-fit", "object-position", "width"], "responsive": true, "positioning": {"editable": true, "modes": ["static", "relative"], "offsets": [], "responsive": true, "zIndex": {"editable": false, "tokens": [], "allowCustom": false}}}
+      ],
+      "variants": []
+    },
+    {
+      "schemaVersion": 2,
+      "id": "list",
+      "label": "List",
+      "category": "content",
+      "owner": "ooops-astro-template",
+      "insertable": true,
+      "adapters": {"astro": "ooops-astro-template/List.astro"},
+      "props": [
+        {"id": "items", "label": "Items", "schema": {"kind": "array", "max": 100, "item": {"kind": "object", "fields": [{"id": "label", "label": "Label", "required": true, "schema": {"kind": "string"}}, {"id": "href", "label": "Link", "schema": {"kind": "string"}}]}}, "required": true, "editable": true},
+        {"id": "ordered", "label": "Ordered", "schema": {"kind": "boolean"}, "default": false, "editable": true, "control": "boolean"}
+      ],
+      "slots": [], "events": [],
+      "parts": [
+        {"id": "root", "selector": ".ui-list", "states": [], "styleProperties": ["align-content", "align-items", "color", "column-gap", "display", "flex-direction", "flex-wrap", "font-family", "font-size", "font-variation-settings", "gap", "grid-auto-columns", "grid-auto-flow", "grid-auto-rows", "grid-template-columns", "grid-template-rows", "justify-content", "justify-items", "letter-spacing", "line-height", "margin", "margin-block", "margin-inline", "max-inline-size", "overflow", "padding", "padding-block", "padding-inline", "row-gap", "text-wrap"], "responsive": true, "positioning": {"editable": true, "modes": ["static", "relative", "absolute", "sticky", "fixed"], "offsets": ["inset-block-start", "inset-block-end", "inset-inline-start", "inset-inline-end"], "responsive": true, "zIndex": {"editable": true, "tokens": ["z-index-base", "z-index-raised", "z-index-sticky"], "allowCustom": false}}, "typography": {"fluidSize": true, "variableAxes": [{"tag": "wght", "label": "Weight", "min": 100, "max": 900, "step": 1, "default": 400}, {"tag": "wdth", "label": "Width", "min": 75, "max": 125, "step": 1, "default": 100}], "textFit": false, "maxLineLength": true, "wrapping": ["wrap", "balance", "pretty"]}},
+        {"id": "item", "selector": ".ui-list [data-part='item']", "states": [], "styleProperties": ["align-self", "color", "flex-basis", "flex-grow", "flex-shrink", "font-family", "font-size", "font-variation-settings", "font-weight", "grid-column", "grid-column-end", "grid-column-start", "grid-row", "grid-row-end", "grid-row-start", "justify-self", "letter-spacing", "line-height", "margin-block-start", "margin-inline-end", "max-inline-size", "order", "padding-block-end", "padding-inline-start", "text-wrap"], "responsive": true, "positioning": {"editable": true, "modes": ["static", "relative"], "offsets": [], "responsive": true, "zIndex": {"editable": false, "tokens": [], "allowCustom": false}}, "typography": {"fluidSize": true, "variableAxes": [{"tag": "wght", "label": "Weight", "min": 100, "max": 900, "step": 1, "default": 400}, {"tag": "wdth", "label": "Width", "min": 75, "max": 125, "step": 1, "default": 100}], "textFit": false, "maxLineLength": true, "wrapping": ["wrap", "balance", "pretty"]}}
+      ],
+      "variants": []
+    },
+    {
+      "schemaVersion": 2,
+      "id": "video-embed",
+      "label": "YouTube or Vimeo",
+      "category": "media",
+      "owner": "ooops-astro-template",
+      "insertable": true,
+      "adapters": {"astro": "ooops-astro-template/VideoEmbed.astro"},
+      "props": [
+        {"id": "url", "label": "YouTube or Vimeo URL", "schema": {"kind": "string"}, "required": true, "editable": true, "control": "text"},
+        {"id": "title", "label": "Accessible title", "schema": {"kind": "string"}, "required": true, "editable": true, "control": "text"},
+        {"id": "aspectRatio", "label": "Aspect ratio", "schema": {"kind": "string"}, "default": "16 / 9", "editable": true, "control": "text"}
+      ],
+      "slots": [], "events": [],
+      "parts": [{"id": "root", "selector": ".ui-video-embed", "states": [], "styleProperties": ["aspect-ratio", "filter", "height", "max-height", "max-width", "opacity", "transform", "width"], "responsive": true, "positioning": {"editable": true, "modes": ["static", "relative", "absolute", "sticky", "fixed"], "offsets": ["inset-block-start", "inset-block-end", "inset-inline-start", "inset-inline-end"], "responsive": true, "zIndex": {"editable": true, "tokens": ["z-index-base", "z-index-raised", "z-index-sticky"], "allowCustom": false}}}],
+      "variants": []
+    }
+  ],
+  "components": [
+    {
+      "id": "button",
+      "source": "src/components/ui/Button.astro",
+      "manifest": "editor/components.json",
+      "manifestId": "button",
+      "editorIdProp": "editorId",
+      "behavior": "template",
+      "styleSources": ["src/components/ui/Button.astro"]
+    },
+    {
+      "id": "container",
+      "source": "src/components/ui/Container.astro",
+      "manifest": "editor/components.json",
+      "manifestId": "container",
+      "editorIdProp": "editorId",
+      "behavior": "template",
+      "styleSources": ["src/components/ui/Container.astro"]
+    },
+    {
+      "id": "section",
+      "source": "src/components/ui/Section.astro",
+      "manifest": "editor/components.json",
+      "manifestId": "section",
+      "editorIdProp": "editorId",
+      "behavior": "template",
+      "styleSources": ["src/components/ui/Section.astro"]
+    },
+    {
+      "id": "error-state",
+      "source": "src/components/ui/ErrorState.astro",
+      "manifest": "editor/components.json",
+      "manifestId": "error-state",
+      "editorIdProp": "editorId",
+      "behavior": "template",
+      "styleSources": ["src/components/ui/ErrorState.astro"]
+    },
+    {
+      "id": "icon", "source": "src/components/ui/Icon.astro", "manifest": "editor/components.json", "manifestId": "icon", "editorIdProp": "editorId", "behavior": "template", "styleSources": ["src/styles/global.css"],
+      "insertion": {"name": "Icon", "exportName": "default", "defaultProps": {"name": "arrow-right", "decorative": true}}
+    },
+    {
+      "id": "video", "source": "src/components/ui/Video.astro", "manifest": "editor/components.json", "manifestId": "video", "editorIdProp": "editorId", "behavior": "template", "styleSources": ["src/styles/global.css"],
+      "insertion": {"name": "Video", "exportName": "default", "defaultProps": {"src": "/media/video.mp4", "description": "Describe the video"}}
+    },
+    {
+      "id": "list", "source": "src/components/ui/List.astro", "manifest": "editor/components.json", "manifestId": "list", "editorIdProp": "editorId", "behavior": "template", "styleSources": ["src/styles/global.css"],
+      "insertion": {"name": "List", "exportName": "default", "defaultProps": {"items": [{"label": "List item"}], "ordered": false}}
+    },
+    {
+      "id": "video-embed", "source": "src/components/ui/VideoEmbed.astro", "manifest": "editor/components.json", "manifestId": "video-embed", "editorIdProp": "editorId", "behavior": "template", "styleSources": ["src/styles/global.css"],
+      "insertion": {"name": "VideoEmbed", "exportName": "default", "defaultProps": {"url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ", "title": "Embedded video"}}
+    },
+    {
+      "id": "field",
+      "source": "src/components/ui/Field.astro",
+      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifestId": "field",
+      "editorIdProp": "editorId",
+      "behavior": "canonical"
+    },
+    {
+      "id": "input",
+      "source": "src/components/ui/InputField.astro",
+      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifestId": "input",
+      "editorIdProp": "editorId",
+      "behavior": "canonical"
+    },
+    {
+      "id": "textarea",
+      "source": "src/components/ui/TextareaField.astro",
+      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifestId": "textarea",
+      "editorIdProp": "editorId",
+      "behavior": "canonical"
+    },
+    {
+      "id": "checkbox",
+      "source": "src/components/ui/CheckboxField.astro",
+      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifestId": "checkbox",
+      "editorIdProp": "editorId",
+      "behavior": "canonical"
+    },
+    {
+      "id": "radio-group",
+      "source": "src/components/ui/RadioGroupField.astro",
+      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifestId": "radio-group",
+      "editorIdProp": "editorId",
+      "behavior": "canonical"
+    },
+    {
+      "id": "switch",
+      "source": "src/components/ui/SwitchField.astro",
+      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifestId": "switch",
+      "editorIdProp": "editorId",
+      "behavior": "canonical"
+    },
+    {
+      "id": "combobox",
+      "source": "src/components/ui/ComboboxField.astro",
+      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifestId": "combobox",
+      "editorIdProp": "editorId",
+      "behavior": "canonical"
+    },
+    {
+      "id": "multi-select",
+      "source": "src/components/ui/MultiSelectField.astro",
+      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifestId": "multi-select",
+      "editorIdProp": "editorId",
+      "behavior": "canonical"
+    },
+    {
+      "id": "dropdown-menu",
+      "source": "src/components/ui/DropdownMenu.astro",
+      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifestId": "dropdown-menu",
+      "editorIdProp": "editorId",
+      "behavior": "canonical"
+    },
+    {
+      "id": "tooltip",
+      "source": "src/components/ui/Tooltip.astro",
+      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifestId": "tooltip",
+      "editorIdProp": "editorId",
+      "behavior": "canonical"
+    },
+    {
+      "id": "tabs",
+      "source": "src/components/ui/Tabs.astro",
+      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifestId": "tabs",
+      "editorIdProp": "editorId",
+      "behavior": "canonical"
+    },
+    {
+      "id": "accordion",
+      "source": "src/components/ui/Accordion.astro",
+      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifestId": "accordion",
+      "editorIdProp": "editorId",
+      "behavior": "canonical"
+    },
+    {
+      "id": "slider",
+      "source": "src/components/ui/SliderField.astro",
+      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifestId": "slider",
+      "editorIdProp": "editorId",
+      "behavior": "canonical"
+    },
+    {
+      "id": "number-input",
+      "source": "src/components/ui/NumberInputField.astro",
+      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifestId": "number-input",
+      "editorIdProp": "editorId",
+      "behavior": "canonical"
+    },
+    {
+      "id": "segmented-control",
+      "source": "src/components/ui/SegmentedControl.astro",
+      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifestId": "segmented-control",
+      "editorIdProp": "editorId",
+      "behavior": "canonical"
+    },
+    {
+      "id": "select",
+      "source": "src/components/ui/SelectField.astro",
+      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifestId": "select",
+      "editorIdProp": "editorId",
+      "behavior": "canonical"
+    },
+    {
+      "id": "dialog",
+      "source": "src/components/ui/Dialog.astro",
+      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifestId": "dialog",
+      "editorIdProp": "editorId",
+      "behavior": "canonical"
+    },
+    {
+      "id": "modal",
+      "source": "src/components/ui/Modal.astro",
+      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifestId": "modal",
+      "editorIdProp": "editorId",
+      "behavior": "canonical"
+    },
+    {
+      "id": "popover",
+      "source": "src/components/ui/Popover.astro",
+      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifestId": "popover",
+      "editorIdProp": "editorId",
+      "behavior": "canonical"
+    },
+    {
+      "id": "accessibility-head",
+      "source": "src/layouts/BaseLayout.astro",
+      "manifest": "@ooopsstudio/accessibility-astro/editor",
+      "manifestId": "accessibility-head",
+      "behavior": "canonical"
+    },
+    {
+      "id": "accessibility-menu",
+      "source": "src/components/AccessibilityMenu.astro",
+      "manifest": "@ooopsstudio/accessibility-astro/editor",
+      "manifestId": "accessibility-menu",
+      "behavior": "canonical"
+    },
+    {
+      "id": "skip-link",
+      "source": "src/layouts/BaseLayout.astro",
+      "manifest": "@ooopsstudio/accessibility-astro/editor",
+      "manifestId": "skip-link",
+      "behavior": "canonical"
+    }
+  ],
+  "bindings": [
+    {
+      "id": "homepage-title",
+      "provider": "stage",
+      "mode": "read-only",
+      "resource": "single",
+      "apiId": "homepage",
+      "fieldPath": "title",
+      "target": "src/pages/index.astro#hero-title"
+    },
+    {
+      "id": "homepage-intro",
+      "provider": "stage",
+      "mode": "read-only",
+      "resource": "single",
+      "apiId": "homepage",
+      "fieldPath": "intro",
+      "target": "src/pages/index.astro#hero-intro"
+    },
+    {
+      "id": "post-title",
+      "provider": "stage",
+      "mode": "read-only",
+      "resource": "collection",
+      "apiId": "posts",
+      "fieldPath": "title",
+      "target": "src/pages/posts/[slug].astro#post-title"
+    }
+  ],
+  "scenes": [],
+  "extensions": [],
+  "regions": [
+    {"id": "home-main", "routeId": "home", "source": "src/pages/index.astro", "editorId": "home-hero", "slot": "default", "allowedComponents": ["button", "icon", "video", "list", "video-embed"], "min": 0, "max": 24}
+  ]
+}

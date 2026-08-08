@@ -1,0 +1,11 @@
+---
+type Props = {
+  text?: string;
+};
+
+const { text = 'Powered by Stage CMS and Astro.' } = Astro.props;
+---
+
+<footer class="site-footer">
+  {text}
+</footer>

@@ -1,0 +1,40 @@
+---
+type Props = {
+  size?: 'sm' | 'md' | 'lg' | 'full';
+  class?: string;
+  editorId?: string;
+};
+
+import EditorBoundary from '../editor/EditorBoundary.astro';
+
+const { size = 'lg', class: className = '', editorId } = Astro.props;
+const classes = ['ui-container', `ui-container-${size}`, className].filter(Boolean).join(' ');
+---
+
+<EditorBoundary editorId={editorId} manifestId="container"><div class={classes}>
+  <slot />
+</div></EditorBoundary>
+
+<style>
+  .ui-container {
+    width: min(100% - 32px, var(--container-max, 1120px));
+    margin-inline: auto;
+  }
+
+  .ui-container-sm {
+    --container-max: 720px;
+  }
+
+  .ui-container-md {
+    --container-max: 920px;
+  }
+
+  .ui-container-lg {
+    --container-max: 1120px;
+  }
+
+  .ui-container-full {
+    width: 100%;
+    max-width: none;
+  }
+</style>

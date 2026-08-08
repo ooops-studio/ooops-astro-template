@@ -1,0 +1,77 @@
+{
+  "name": "ooops-astro-template",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ooops-studio/ooops-astro-template.git"
+  },
+  "homepage": "https://github.com/ooops-studio/ooops-astro-template#readme",
+  "bugs": {
+    "url": "https://github.com/ooops-studio/ooops-astro-template/issues"
+  },
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "packageManager": "pnpm@11.13.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "pnpm typecheck && astro build",
+    "check": "pnpm typecheck && pnpm check:template",
+    "check:content-health": "node scripts/check-content-health.mjs",
+    "check:openapi": "node scripts/check-openapi-contract.mjs",
+    "check:template": "node scripts/check-stage-api-contracts.mjs",
+    "generate:editor": "node scripts/generate-editor.mjs",
+    "check:editor": "node scripts/check-editor.mjs",
+    "check:stage-api-contracts": "node scripts/check-stage-api-contracts.mjs",
+    "example:newsletter-submit": "tsx examples/newsletter-submit.ts",
+    "example:read-content": "tsx examples/read-content.ts",
+    "lint": "eslint . --cache --cache-location .cache/eslint",
+    "preview": "astro preview",
+    "setup:client": "node scripts/setup-client-project.mjs",
+    "setup:module": "node scripts/setup-module.mjs",
+    "stage:bootstrap": "node scripts/stage-bootstrap.mjs",
+    "test:i18n": "tsx scripts/test-i18n-helpers.mjs",
+    "test:newsletter": "node scripts/test-newsletter-module.mjs",
+    "test:modules": "node scripts/test-template-modules.mjs",
+    "test:e2e": "pnpm build && playwright test",
+    "test:editor:e2e": "playwright test --config playwright.editor.config.ts",
+    "test:signatures": "tsx scripts/test-stage-signature.mjs",
+    "test:webhook": "node scripts/test-stage-webhook-signature.mjs",
+    "typecheck": "astro check",
+    "validate": "pnpm lint && pnpm validate:env && pnpm check:editor && pnpm check && pnpm check:openapi && pnpm check:content-health && pnpm test:i18n && pnpm test:signatures && pnpm test:newsletter && pnpm test:modules && pnpm build",
+    "validate:env": "node scripts/validate-env.mjs"
+  },
+  "dependencies": {
+    "@astrojs/svelte": "^9.0.1",
+    "@ooopsstudio/accessibility": "^0.1.0",
+    "@ooopsstudio/accessibility-astro": "^0.1.0",
+    "@ooopsstudio/analytics-consent": "^0.1.0",
+    "@ooopsstudio/analytics-consent-astro": "^0.1.0",
+    "@ooopsstudio/editor-contracts": "^0.2.0",
+    "@ooopsstudio/editor-astro": "^0.1.0",
+    "@ooopsstudio/stage-api": "^0.1.0",
+    "@ooopsstudio/stage-astro": "^0.1.0",
+    "@ooopsstudio/stage-cloudflare": "^0.1.0",
+    "@ooopsstudio/ui-astro": "^0.1.0",
+    "@ooopsstudio/ui-primitives": "^0.1.0",
+    "astro": "^7.1.4",
+    "@lucide/astro": "^1.28.0",
+    "svelte": "^5.56.4"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@axe-core/playwright": "^4.12.1",
+    "@eslint/js": "^9.39.1",
+    "@playwright/test": "^1.62.0",
+    "@types/node": "^22.0.0",
+    "esbuild": "^0.28.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-astro": "^1.3.1",
+    "globals": "^16.4.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.45.0"
+  }
+}

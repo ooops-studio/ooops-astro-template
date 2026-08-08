@@ -1,0 +1,54 @@
+---
+type Props = {
+  action?: string;
+};
+
+const { action = '/api/newsletter' } = Astro.props;
+const state = Astro.url.searchParams.get('newsletter');
+const isSuccess = state === 'success';
+const isError = state === 'error';
+---
+
+<form class="newsletter-form" method="post" action={action} data-newsletter-form>
+  <div class="newsletter-status" role="status" aria-live="polite">
+    {isSuccess ? <p>Thanks. You are subscribed.</p> : null}
+    {isError ? <p>Something went wrong. Please try again.</p> : null}
+  </div>
+  <div class="newsletter-field">
+    <label for="newsletter-email">Email</label>
+    <input id="newsletter-email" name="email" type="email" autocomplete="email" required />
+  </div>
+  <input class="newsletter-honeypot" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" />
+  <button type="submit">Subscribe</button>
+</form>
+
+<style>
+  .newsletter-form {
+    display: grid;
+    gap: var(--space-3);
+    max-width: 420px;
+  }
+
+  .newsletter-field {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .newsletter-status:empty {
+    display: none;
+  }
+
+  .newsletter-status p {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .newsletter-honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+  }
+</style>

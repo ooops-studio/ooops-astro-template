@@ -1,0 +1,31 @@
+---
+import StageImage from '../../components/stage/StageImage.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPost, getPosts } from '../../lib/posts/client';
+
+export const getStaticPaths = async () => {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.slug } }));
+};
+
+const { slug } = Astro.params;
+const post = slug ? await getPost(slug) : null;
+
+if (!post) {
+  return Astro.redirect('/');
+}
+---
+
+<BaseLayout seo={post.seo}>
+  <article class="section">
+    <div class="rich-text">
+      <span class="meta">{post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en') : 'Post'}</span>
+      <h1>{post.title}</h1>
+      <p>{post.excerpt}</p>
+      {post.heroImageUrl ? (
+        <StageImage src={post.heroImageUrl} alt={post.heroImageAlt} width="1200" height="760" loading="eager" />
+      ) : null}
+      <div set:html={post.body} />
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,27 @@
+---
+import Modal from '@ooopsstudio/ui-astro/Modal.astro';
+import EditorBoundary from '../editor/EditorBoundary.astro';
+
+type Props = {
+  id: string;
+  title?: string;
+  description?: string;
+  triggerLabel?: string;
+  ariaLabel?: string;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  open?: boolean;
+  closeLabel?: string;
+  closeOnBackdrop?: boolean;
+  closeOnEscape?: boolean;
+  showCloseButton?: boolean;
+  class?: string;
+  editorId?: string;
+};
+
+const { editorId, ...props } = Astro.props;
+---
+
+<EditorBoundary editorId={editorId} manifestId="modal"><Modal {...props}>
+  <slot />
+  {Astro.slots.has('footer') ? <Fragment slot="footer"><slot name="footer" /></Fragment> : null}
+</Modal></EditorBoundary>
