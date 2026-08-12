@@ -6,6 +6,11 @@ import { spawnSync } from 'node:child_process';
 const projectDir = await mkdtemp(join(tmpdir(), 'ooops-analytics-consumer-'));
 
 const files = {
+  'pnpm-workspace.yaml': `minimumReleaseAge: 0
+
+allowBuilds:
+  esbuild: true
+`,
   'package.json': JSON.stringify({
     name: 'ooops-analytics-published-consumer-fixture',
     private: true,
