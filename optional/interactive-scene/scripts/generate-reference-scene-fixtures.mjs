@@ -1,8 +1,9 @@
 import {mkdirSync, writeFileSync} from 'node:fs'
 import {resolve} from 'node:path'
+import {fileURLToPath} from 'node:url'
 import {deflateSync} from 'node:zlib'
 
-const root = resolve(new URL('../../..', import.meta.url).pathname)
+const root = fileURLToPath(new URL('../../..', import.meta.url))
 const output = resolve(root, 'optional/interactive-scene/public/assets/scenes')
 mkdirSync(output, {recursive: true})
 

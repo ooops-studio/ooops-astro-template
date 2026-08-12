@@ -1,3 +1,5 @@
+import { fileURLToPath } from 'node:url';
+
 import { defineConfig } from 'astro/config';
 import svelte from '@astrojs/svelte';
 import ooopsEditor from '@ooopsstudio/editor-astro';
@@ -8,7 +10,7 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
-        $lib: new URL('./src/lib', import.meta.url).pathname
+        $lib: fileURLToPath(new URL('./src/lib', import.meta.url))
       }
     }
   }

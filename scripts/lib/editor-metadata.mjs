@@ -1,5 +1,6 @@
 import {readFileSync} from 'node:fs'
 import {resolve} from 'node:path'
+import {fileURLToPath} from 'node:url'
 
 import {
 	parseDesignTokenManifest,
@@ -7,7 +8,7 @@ import {
 	parseTemplateManifest
 } from '@ooopsstudio/editor-contracts'
 
-export const root = resolve(new URL('../..', import.meta.url).pathname)
+export const root = fileURLToPath(new URL('../..', import.meta.url))
 
 const readJson = (path) => JSON.parse(readFileSync(resolve(root, path), 'utf8'))
 
