@@ -2,8 +2,7 @@ import AxeBuilder from '@axe-core/playwright'
 import {expect, test} from '@playwright/test'
 
 test.beforeEach(async({page}) => {
-	await page.goto('/')
-	await page.getByRole('link', {name: 'Contact'}).click()
+	await page.goto('/contact/')
 	await expect(page).toHaveURL(/\/contact\/?$/)
 })
 

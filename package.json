@@ -35,6 +35,7 @@
     "test:i18n": "tsx scripts/test-i18n-helpers.mjs",
     "test:newsletter": "node scripts/test-newsletter-module.mjs",
     "test:modules": "node scripts/test-template-modules.mjs",
+    "test:stage:integration": "node scripts/test-stage-content-forms-integration.mjs",
     "test:e2e": "pnpm build && playwright test",
     "test:analytics:e2e": "PUBLIC_STAGE_ANALYTICS_SCRIPT_URL=http://127.0.0.1:4402/umami.js PUBLIC_STAGE_ANALYTICS_WEBSITE_ID=astro-template-e2e PUBLIC_STAGE_ANALYTICS_PERFORMANCE_ENABLED=true PUBLIC_STAGE_ANALYTICS_RESPECT_DNT=true pnpm build && playwright test --config playwright.analytics.config.ts",
     "test:analytics:consumer": "node scripts/test-published-analytics-consumer.mjs",
