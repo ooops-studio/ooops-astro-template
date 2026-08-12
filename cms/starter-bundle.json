@@ -1,5 +1,5 @@
 {
-  "formatVersion": "stage-template-bundle/v1",
+  "formatVersion": "cms-template-bundle/v1",
   "name": "CMS Astro Site Template Starter",
   "contentTypes": [
     {

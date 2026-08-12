@@ -14,8 +14,8 @@ overrides:
   esbuild: ^0.28.1
   '@ooopsstudio/accessibility': file:../ooops-accessibility/packages/accessibility
   '@ooopsstudio/accessibility-astro': file:../ooops-accessibility/packages/accessibility-astro
-  '@ooopsstudio/cms-api': file:../ooops-suite-stage-packages/packages/cms-api
-  '@ooopsstudio/cms-astro': file:../ooops-suite-stage-packages/packages/cms-astro
-  '@ooopsstudio/cms-cloudflare': file:../ooops-suite-stage-packages/packages/cms-cloudflare
+  '@ooopsstudio/cms-api': file:../ooops-cms-packages/packages/cms-api
+  '@ooopsstudio/cms-astro': file:../ooops-cms-packages/packages/cms-astro
+  '@ooopsstudio/cms-cloudflare': file:../ooops-cms-packages/packages/cms-cloudflare
   '@ooopsstudio/ui-primitives': file:../ooops-ui/packages/ui-primitives
   '@ooopsstudio/ui-astro': file:../ooops-ui/packages/ui-astro

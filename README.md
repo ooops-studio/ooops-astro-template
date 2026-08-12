@@ -354,8 +354,6 @@ Examples live in `examples/`:
 
 - `read-content.ts`
 - `newsletter-submit.ts`
-- `media-upload.ts`
-- `forms-and-webhooks.ts`
 - `seo-and-analytics.ts`
 
 Run:

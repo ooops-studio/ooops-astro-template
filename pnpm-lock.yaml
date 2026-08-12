@@ -8,9 +8,9 @@ overrides:
   esbuild: ^0.28.1
   '@ooopsstudio/accessibility': file:../ooops-accessibility/packages/accessibility
   '@ooopsstudio/accessibility-astro': file:../ooops-accessibility/packages/accessibility-astro
-  '@ooopsstudio/cms-api': file:../ooops-suite-stage-packages/packages/cms-api
-  '@ooopsstudio/cms-astro': file:../ooops-suite-stage-packages/packages/cms-astro
-  '@ooopsstudio/cms-cloudflare': file:../ooops-suite-stage-packages/packages/cms-cloudflare
+  '@ooopsstudio/cms-api': file:../ooops-cms-packages/packages/cms-api
+  '@ooopsstudio/cms-astro': file:../ooops-cms-packages/packages/cms-astro
+  '@ooopsstudio/cms-cloudflare': file:../ooops-cms-packages/packages/cms-cloudflare
   '@ooopsstudio/ui-primitives': file:../ooops-ui/packages/ui-primitives
   '@ooopsstudio/ui-astro': file:../ooops-ui/packages/ui-astro
 
@@ -37,14 +37,14 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))
       '@ooopsstudio/cms-api':
-        specifier: file:../ooops-suite-stage-packages/packages/cms-api
-        version: file:../ooops-suite-stage-packages/packages/cms-api
+        specifier: file:../ooops-cms-packages/packages/cms-api
+        version: file:../ooops-cms-packages/packages/cms-api
       '@ooopsstudio/cms-astro':
-        specifier: file:../ooops-suite-stage-packages/packages/cms-astro
-        version: file:../ooops-suite-stage-packages/packages/cms-astro
+        specifier: file:../ooops-cms-packages/packages/cms-astro
+        version: file:../ooops-cms-packages/packages/cms-astro
       '@ooopsstudio/cms-cloudflare':
-        specifier: file:../ooops-suite-stage-packages/packages/cms-cloudflare
-        version: file:../ooops-suite-stage-packages/packages/cms-cloudflare
+        specifier: file:../ooops-cms-packages/packages/cms-cloudflare
+        version: file:../ooops-cms-packages/packages/cms-cloudflare
       '@ooopsstudio/ui-astro':
         specifier: file:../ooops-ui/packages/ui-astro
         version: file:../ooops-ui/packages/ui-astro(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))
@@ -1015,17 +1015,17 @@ packages:
     resolution: {integrity: sha512-dZbLUtspKSlIev1bbv9miNYnrNGUDWQyexrBfBLg4FZtcudBXJDu5JKr3VWpxlvMHpdvFlt9N3uLNY/3G/M7Qw==}
     engines: {node: '>=20'}
 
-  '@ooopsstudio/cms-api@file:../ooops-suite-stage-packages/packages/cms-api':
-    resolution: {directory: ../ooops-suite-stage-packages/packages/cms-api, type: directory}
-    engines: {node: '>=20'}
+  '@ooopsstudio/cms-api@file:../ooops-cms-packages/packages/cms-api':
+    resolution: {directory: ../ooops-cms-packages/packages/cms-api, type: directory}
+    engines: {node: '>=22.14.0'}
 
-  '@ooopsstudio/cms-astro@file:../ooops-suite-stage-packages/packages/cms-astro':
-    resolution: {directory: ../ooops-suite-stage-packages/packages/cms-astro, type: directory}
-    engines: {node: '>=20'}
+  '@ooopsstudio/cms-astro@file:../ooops-cms-packages/packages/cms-astro':
+    resolution: {directory: ../ooops-cms-packages/packages/cms-astro, type: directory}
+    engines: {node: '>=22.14.0'}
 
-  '@ooopsstudio/cms-cloudflare@file:../ooops-suite-stage-packages/packages/cms-cloudflare':
-    resolution: {directory: ../ooops-suite-stage-packages/packages/cms-cloudflare, type: directory}
-    engines: {node: '>=20'}
+  '@ooopsstudio/cms-cloudflare@file:../ooops-cms-packages/packages/cms-cloudflare':
+    resolution: {directory: ../ooops-cms-packages/packages/cms-cloudflare, type: directory}
+    engines: {node: '>=22.14.0'}
 
   '@ooopsstudio/ui-astro@file:../ooops-ui/packages/ui-astro':
     resolution: {directory: ../ooops-ui/packages/ui-astro, type: directory}
@@ -3744,13 +3744,13 @@ snapshots:
 
   '@ooopsstudio/analytics-consent@0.3.0': {}
 
-  '@ooopsstudio/cms-api@file:../ooops-suite-stage-packages/packages/cms-api': {}
+  '@ooopsstudio/cms-api@file:../ooops-cms-packages/packages/cms-api': {}
 
-  '@ooopsstudio/cms-astro@file:../ooops-suite-stage-packages/packages/cms-astro':
+  '@ooopsstudio/cms-astro@file:../ooops-cms-packages/packages/cms-astro':
     dependencies:
-      '@ooopsstudio/cms-api': file:../ooops-suite-stage-packages/packages/cms-api
+      '@ooopsstudio/cms-api': file:../ooops-cms-packages/packages/cms-api
 
-  '@ooopsstudio/cms-cloudflare@file:../ooops-suite-stage-packages/packages/cms-cloudflare': {}
+  '@ooopsstudio/cms-cloudflare@file:../ooops-cms-packages/packages/cms-cloudflare': {}
 
   '@ooopsstudio/ui-astro@file:../ooops-ui/packages/ui-astro(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))':
     dependencies:
