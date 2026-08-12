@@ -122,7 +122,7 @@ export function syncModuleDependencies(packageJson, manifests, enabledModules) {
   return packageJson;
 }
 
-export function syncModuleOverrides(workspaceSource, manifests, enabledModules, packageSource = 'local') {
+export function syncModuleOverrides(workspaceSource, manifests, enabledModules, packageSource = 'published') {
   const start = '  # ooops optional modules:start';
   const end = '  # ooops optional modules:end';
   const pattern = new RegExp(`\\n?${start}[\\s\\S]*?${end}\\n?`, 'm');
@@ -176,7 +176,7 @@ export function getEnabledModulesFromConfig() {
   return modules;
 }
 
-export function renderSetupMarkdown({ projectName, manifests, enabledModules, packageSource = 'local' }) {
+export function renderSetupMarkdown({ projectName, manifests, enabledModules, packageSource = 'published' }) {
   const enabled = manifests.filter((manifest) => enabledModules[manifest.id]);
   const envRows = [
     { module: 'core', name: 'OOOPS_STAGE_API_BASE_URL', required: true },

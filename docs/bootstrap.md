@@ -99,7 +99,6 @@ If you want the local template to send pageviews to Stage Analytics, add browser
 ```env
 PUBLIC_STAGE_ANALYTICS_SCRIPT_URL=http://localhost:3001/script.js
 PUBLIC_STAGE_ANALYTICS_WEBSITE_ID=your_stage_analytics_website_id
-PUBLIC_STAGE_ANALYTICS_REQUIRES_CONSENT=true
 PUBLIC_STAGE_ANALYTICS_RESPECT_DNT=true
 ```
 

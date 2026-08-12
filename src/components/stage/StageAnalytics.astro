@@ -1,5 +1,6 @@
 ---
 import AnalyticsRuntime from '@ooopsstudio/analytics-consent-astro/AnalyticsRuntime.astro';
+import StageAnalyticsTeardown from './StageAnalyticsTeardown.astro';
 
 const truthy = (value: string | undefined, fallback = false) => {
   if (value === undefined || value === '') return fallback;
@@ -24,13 +25,14 @@ const replayMaskLevel = import.meta.env.PUBLIC_STAGE_ANALYTICS_REPLAY_MASK_LEVEL
   : 'moderate';
 ---
 
+<StageAnalyticsTeardown />
 <AnalyticsRuntime
   id="stage-analytics-runtime"
   enabled={Boolean(scriptUrl && websiteId)}
   src={scriptUrl}
   websiteId={websiteId}
-  noticeVersion="1"
-  policyVersion="1"
+  noticeVersion="consent-v3"
+  policyVersion="privacy-v1"
   respectDoNotTrack={truthy(import.meta.env.PUBLIC_STAGE_ANALYTICS_RESPECT_DNT, true)}
   performanceEnabled={truthy(import.meta.env.PUBLIC_STAGE_ANALYTICS_PERFORMANCE_ENABLED, false)}
   replaySrc={import.meta.env.PUBLIC_STAGE_ANALYTICS_REPLAY_SCRIPT_URL || ''}
@@ -48,4 +50,5 @@ const replayMaskLevel = import.meta.env.PUBLIC_STAGE_ANALYTICS_REPLAY_MASK_LEVEL
     internalReferrerDomains: listValue(import.meta.env.PUBLIC_STAGE_ANALYTICS_INTERNAL_REFERRER_DOMAINS)
   }}
   beforeSendName="__ooopsStageTemplateBeforeSend"
+  teardownGlobal="__ooopsStageTemplateUmamiTeardown"
 />

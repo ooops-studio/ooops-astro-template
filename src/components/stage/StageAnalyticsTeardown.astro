@@ -1,0 +1,51 @@
+<script is:inline>
+  (() => {
+    const providerKey = /^umami(?:[._:-]|$)/i;
+    const clearStorage = (storage) => {
+      try {
+        for (let index = storage.length - 1; index >= 0; index -= 1) {
+          const key = storage.key(index);
+          if (key && providerKey.test(key)) storage.removeItem(key);
+        }
+      } catch {
+        // Storage can be unavailable in privacy-restricted browser contexts.
+      }
+    };
+
+    const clearCookies = () => {
+      const names = document.cookie
+        .split(';')
+        .map((item) => item.trim().split('=')[0])
+        .filter((name) => name && providerKey.test(name));
+      const paths = ['/', window.location.pathname || '/'];
+      const domains = ['', `; Domain=${window.location.hostname}`];
+      names.forEach((name) => {
+        paths.forEach((path) => {
+          domains.forEach((domain) => {
+            document.cookie = `${name}=; Max-Age=0; Path=${path}${domain}; SameSite=Lax`;
+          });
+        });
+      });
+    };
+
+    window.__ooopsStageTemplateUmamiTeardown = () => {
+      clearStorage(window.localStorage);
+      clearStorage(window.sessionStorage);
+      clearCookies();
+
+      try {
+        window['umami']?.clear?.();
+        window['umami']?.reset?.();
+      } catch {
+        // A third-party tracker must never prevent consent revocation.
+      }
+
+      try {
+        delete window['umami'];
+        delete window['umamiTrack'];
+      } catch {
+        // Non-configurable globals are harmless once the runtime removes the script.
+      }
+    };
+  })();
+</script>

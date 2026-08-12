@@ -1,9 +1,9 @@
 name: CI
 
 on:
-  # Re-enable push/pull_request triggers once the required Stage and Editor
-  # packages are available to clean GitHub-hosted runners.
   workflow_dispatch:
+  push:
+  pull_request:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -14,6 +14,7 @@ permissions:
 
 jobs:
   validate:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
     steps:
@@ -45,3 +46,23 @@ jobs:
 
       - name: Test real UI integration
         run: pnpm test:e2e
+
+  analytics-published-consumer:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.13.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+
+      - name: Validate npm consumer artifact
+        run: node scripts/test-published-analytics-consumer.mjs

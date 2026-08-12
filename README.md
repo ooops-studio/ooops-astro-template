@@ -166,7 +166,7 @@ pnpm validate
 
 `pnpm check:openapi` fetches `${OOOPS_STAGE_API_BASE_URL}/openapi.json` when Stage is configured and checks for the required Stage API v1 paths. It skips locally when Stage is not configured or not running, and fails in CI when a configured OpenAPI endpoint is unreachable.
 
-GitHub Actions uses Node.js `22.14.0`, pnpm `11.13.1`, and a frozen lockfile before running `pnpm validate`. The workflow is temporarily manual because the Stage and Editor packages referenced by the local development overrides are not yet available to a clean GitHub-hosted runner. Restore push and pull-request triggers after those packages are published or otherwise made available to CI.
+GitHub Actions validates the published analytics consumer on every push and pull request. The full template validation remains manual because the Stage and Editor packages referenced by the local development overrides are not yet available to a clean GitHub-hosted runner. Restore its push and pull-request trigger after those packages are published or otherwise made available to CI.
 
 ## Client Setup Installer
 
@@ -295,15 +295,15 @@ The active template includes `StageAnalytics.astro` and `AnalyticsConsent.astro`
 
 - If `PUBLIC_STAGE_ANALYTICS_SCRIPT_URL` or `PUBLIC_STAGE_ANALYTICS_WEBSITE_ID` is blank, it renders nothing and sends no events.
 - Once both values are configured, it loads the Stage analytics script in the browser.
-- Consent is required by default through `PUBLIC_STAGE_ANALYTICS_REQUIRES_CONSENT=true`.
-- If your site can legally run anonymous analytics without opt-in, set `PUBLIC_STAGE_ANALYTICS_REQUIRES_CONSENT=false`.
+- Optional analytics always requires a current positive consent choice. There is no configuration bypass.
 - Performance analytics and replay stay disabled unless their env flags are explicitly enabled and consent allows them.
 
 ```env
 PUBLIC_STAGE_ANALYTICS_SCRIPT_URL=
 PUBLIC_STAGE_ANALYTICS_WEBSITE_ID=
-PUBLIC_STAGE_ANALYTICS_REQUIRES_CONSENT=true
 PUBLIC_STAGE_ANALYTICS_RESPECT_DNT=true
+# Default for the Stage-hosted Umami endpoint: raw connected-site analytics is deleted after 90 days.
+PUBLIC_STAGE_ANALYTICS_RETENTION=90 days
 PUBLIC_STAGE_ANALYTICS_PERFORMANCE_ENABLED=false
 PUBLIC_STAGE_ANALYTICS_REPLAY_ENABLED=false
 PUBLIC_STAGE_ANALYTICS_REPLAY_SCRIPT_URL=
@@ -322,7 +322,6 @@ For local development with the bundled Ooops Suite stack, use:
 ```env
 PUBLIC_STAGE_ANALYTICS_SCRIPT_URL=http://localhost:3001/script.js
 PUBLIC_STAGE_ANALYTICS_WEBSITE_ID=2e3df25b-701f-4c95-8976-c90b1ed87da2
-PUBLIC_STAGE_ANALYTICS_REQUIRES_CONSENT=true
 PUBLIC_STAGE_ANALYTICS_RESPECT_DNT=true
 ```
 

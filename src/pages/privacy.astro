@@ -1,0 +1,19 @@
+---
+import PrivacyNotice from '@ooopsstudio/analytics-consent-astro/PrivacyNotice.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { privacyNoticeConfig } from '../lib/stage/privacy-notice';
+
+const siteUrl = (import.meta.env.PUBLIC_SITE_URL || 'http://localhost:4321').replace(/\/$/, '');
+---
+
+<BaseLayout
+  seo={{
+    title: 'Privacy notice',
+    description: 'How this site handles consent and optional analytics.',
+    canonical: `${siteUrl}/privacy`,
+    type: 'website',
+    robots: { index: true, follow: true }
+  }}
+>
+  <PrivacyNotice config={privacyNoticeConfig} className="privacy-notice" />
+</BaseLayout>

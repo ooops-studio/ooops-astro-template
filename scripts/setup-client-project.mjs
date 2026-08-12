@@ -38,7 +38,7 @@ const dryRun = flags.has('dry-run');
 const modulesFlag = typeof flags.get('modules') === 'string' ? String(flags.get('modules')) : '';
 const packageSource = typeof flags.get('package-source') === 'string'
   ? String(flags.get('package-source'))
-  : 'local';
+  : 'published';
 const manifests = loadModuleManifests();
 
 const knownModules = manifests.map((manifest) => manifest.id);
@@ -162,9 +162,9 @@ const packageJson = readJson('package.json');
 packageJson.name = projectName;
 packageJson.dependencies = {
   '@astrojs/svelte': packageJson.dependencies?.['@astrojs/svelte'] || '^9.0.1',
-  '@ooopsstudio/analytics-consent': packageJson.dependencies?.['@ooopsstudio/analytics-consent'] || '^0.1.0',
+  '@ooopsstudio/analytics-consent': packageJson.dependencies?.['@ooopsstudio/analytics-consent'] || '^0.3.0',
   '@ooopsstudio/analytics-consent-astro':
-    packageJson.dependencies?.['@ooopsstudio/analytics-consent-astro'] || '^0.1.0',
+    packageJson.dependencies?.['@ooopsstudio/analytics-consent-astro'] || '^0.3.0',
   '@ooopsstudio/accessibility': packageJson.dependencies?.['@ooopsstudio/accessibility'] || '^0.1.0',
   '@ooopsstudio/accessibility-astro':
     packageJson.dependencies?.['@ooopsstudio/accessibility-astro'] || '^0.1.0',

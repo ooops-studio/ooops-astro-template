@@ -4,8 +4,18 @@ type Props = {
 };
 
 const { text = 'Powered by Stage CMS and Astro.' } = Astro.props;
+const analyticsConfigured = Boolean(
+  import.meta.env.PUBLIC_STAGE_ANALYTICS_SCRIPT_URL && import.meta.env.PUBLIC_STAGE_ANALYTICS_WEBSITE_ID
+);
+const showAnalyticsPreferences = analyticsConfigured;
 ---
 
 <footer class="site-footer">
-  {text}
+  <span>{text}</span>
+  <a href="/privacy">Privacy notice</a>
+  {
+    showAnalyticsPreferences ? (
+      <button data-ooops-consent-preferences type="button">Manage analytics choices</button>
+    ) : null
+  }
 </footer>

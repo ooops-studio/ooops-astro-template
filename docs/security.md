@@ -14,8 +14,7 @@ If `PUBLIC_STAGE_ANALYTICS_SCRIPT_URL` or `PUBLIC_STAGE_ANALYTICS_WEBSITE_ID` is
 
 Recommended defaults:
 
-- Consent is required by default with `PUBLIC_STAGE_ANALYTICS_REQUIRES_CONSENT=true`.
-- Anonymous analytics can run without a private API token, but only set `PUBLIC_STAGE_ANALYTICS_REQUIRES_CONSENT=false` when your site has the legal basis to do that.
+- Optional analytics is always consent-gated. The template has no configuration bypass for anonymous or identified analytics.
 - Keep `PUBLIC_STAGE_ANALYTICS_RESPECT_DNT=true`.
 - Keep performance analytics and replay disabled until you have the correct consent UX and legal basis for your site.
 - Do not put private Stage/CMS API tokens, webhook secrets, or preview-session secrets in any `PUBLIC_*` variable.

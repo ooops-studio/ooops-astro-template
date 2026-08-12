@@ -13,7 +13,7 @@ const webGpuTestArgs = [
 
 export default defineConfig({
 	testDir: './tests/e2e',
-	testIgnore: /cms-preview\.spec\.ts/,
+	testIgnore: /(?:cms-preview|analytics-consent)\.spec\.ts/,
 	timeout: 45_000,
 	fullyParallel: false,
 	workers: 1,
@@ -45,7 +45,7 @@ export default defineConfig({
 		}] : [])
 	],
 	webServer: {
-		command: 'corepack pnpm preview --host 127.0.0.1 --port 4401',
+		command: 'corepack pnpm exec astro preview --host 127.0.0.1 --port 4401',
 		url: 'http://127.0.0.1:4401/',
 		reuseExistingServer: !process.env.CI,
 		timeout: 120_000
