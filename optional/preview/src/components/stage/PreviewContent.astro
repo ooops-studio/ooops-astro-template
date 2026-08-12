@@ -1,0 +1,23 @@
+---
+import type { PreviewContent as PreviewContentModel } from '../../lib/cms-preview/content';
+
+type Props = { content: PreviewContentModel };
+const { content } = Astro.props;
+---
+
+<article class="section preview-content" data-cms-preview-content>
+  <p class="meta">Draft preview</p>
+  <h1>{content.title}</h1>
+  {content.description ? <p class="preview-content__description">{content.description}</p> : null}
+  {content.body ? <div class="rich-text" set:html={content.body} /> : null}
+  {content.fields.length ? <dl class="preview-content__fields">{content.fields.map((field) => <div><dt>{field.key}</dt><dd><pre>{field.value}</pre></dd></div>)}</dl> : null}
+</article>
+
+<style>
+  .preview-content__description { max-width:70ch; font-size:var(--font-size-lg); }
+  .preview-content__fields { display:grid; gap:var(--space-4); margin-top:var(--space-8); }
+  .preview-content__fields > div { padding:var(--space-4); border:1px solid var(--color-border); border-radius:var(--radius-md); }
+  .preview-content__fields dt { color:var(--color-text-muted); font-weight:700; }
+  .preview-content__fields dd { margin:var(--space-2) 0 0; }
+  .preview-content__fields pre { margin:0; overflow:auto; white-space:pre-wrap; }
+</style>

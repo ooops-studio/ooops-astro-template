@@ -37,6 +37,7 @@
     "test:modules": "node scripts/test-template-modules.mjs",
     "test:e2e": "pnpm build && playwright test",
     "test:editor:e2e": "playwright test --config playwright.editor.config.ts",
+    "test:preview:e2e": "pnpm build && playwright test --config playwright.preview.config.ts",
     "test:signatures": "tsx scripts/test-stage-signature.mjs",
     "test:webhook": "node scripts/test-stage-webhook-signature.mjs",
     "typecheck": "astro check",
@@ -45,23 +46,24 @@
   },
   "dependencies": {
     "@astrojs/svelte": "^9.0.1",
+    "@lucide/astro": "^1.28.0",
     "@ooopsstudio/accessibility": "^0.1.0",
     "@ooopsstudio/accessibility-astro": "^0.1.0",
     "@ooopsstudio/analytics-consent": "^0.1.0",
     "@ooopsstudio/analytics-consent-astro": "^0.1.0",
-    "@ooopsstudio/editor-contracts": "^0.2.0",
     "@ooopsstudio/editor-astro": "^0.1.0",
+    "@ooopsstudio/editor-contracts": "^0.2.0",
     "@ooopsstudio/stage-api": "^0.1.0",
     "@ooopsstudio/stage-astro": "^0.1.0",
     "@ooopsstudio/stage-cloudflare": "^0.1.0",
     "@ooopsstudio/ui-astro": "^0.1.0",
     "@ooopsstudio/ui-primitives": "^0.1.0",
     "astro": "^7.1.4",
-    "@lucide/astro": "^1.28.0",
     "svelte": "^5.56.4"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "@astrojs/cloudflare": "14.1.0",
     "@axe-core/playwright": "^4.12.1",
     "@eslint/js": "^9.39.1",
     "@playwright/test": "^1.62.0",
@@ -72,6 +74,7 @@
     "globals": "^16.4.0",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.45.0"
+    "typescript-eslint": "^8.45.0",
+    "wrangler": "4.120.1"
   }
 }

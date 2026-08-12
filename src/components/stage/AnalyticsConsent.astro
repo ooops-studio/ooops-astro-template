@@ -10,10 +10,9 @@ const truthy = (value: string | undefined, fallback = false) => {
 const analyticsConfigured = Boolean(
   import.meta.env.PUBLIC_STAGE_ANALYTICS_SCRIPT_URL && import.meta.env.PUBLIC_STAGE_ANALYTICS_WEBSITE_ID
 );
-const requiresConsent = truthy(import.meta.env.PUBLIC_STAGE_ANALYTICS_REQUIRES_CONSENT, true);
 const performanceEnabled = truthy(import.meta.env.PUBLIC_STAGE_ANALYTICS_PERFORMANCE_ENABLED, false);
 const replayEnabled = truthy(import.meta.env.PUBLIC_STAGE_ANALYTICS_REPLAY_ENABLED, false);
-const enabled = analyticsConfigured && (requiresConsent || performanceEnabled || replayEnabled);
+const enabled = analyticsConfigured || performanceEnabled || replayEnabled;
 const categories: OptionalConsentCategory[] = [
   ...(performanceEnabled ? ['performance' as const] : []),
   ...(replayEnabled ? ['replay' as const] : [])
@@ -26,6 +25,10 @@ const categories: OptionalConsentCategory[] = [
   variant="compact"
   position="bottom-right"
   theme="auto"
+  privacyHref="/privacy"
+  consentDurationDays={180}
+  noticeVersion="1"
+  policyVersion="1"
   categories={categories}
   className="stage-consent"
 />

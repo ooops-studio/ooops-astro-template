@@ -29,7 +29,8 @@ const replayMaskLevel = import.meta.env.PUBLIC_STAGE_ANALYTICS_REPLAY_MASK_LEVEL
   enabled={Boolean(scriptUrl && websiteId)}
   src={scriptUrl}
   websiteId={websiteId}
-  requiresConsent={truthy(import.meta.env.PUBLIC_STAGE_ANALYTICS_REQUIRES_CONSENT, false)}
+  noticeVersion="1"
+  policyVersion="1"
   respectDoNotTrack={truthy(import.meta.env.PUBLIC_STAGE_ANALYTICS_RESPECT_DNT, true)}
   performanceEnabled={truthy(import.meta.env.PUBLIC_STAGE_ANALYTICS_PERFORMANCE_ENABLED, false)}
   replaySrc={import.meta.env.PUBLIC_STAGE_ANALYTICS_REPLAY_SCRIPT_URL || ''}
@@ -42,7 +43,7 @@ const replayMaskLevel = import.meta.env.PUBLIC_STAGE_ANALYTICS_REPLAY_MASK_LEVEL
   }}
   privacy={{
     ignoreInternalTraffic: true,
-    excludePreviewRoutes: false,
+    excludePreviewRoutes: true,
     excludedPathPatterns: listValue(import.meta.env.PUBLIC_STAGE_ANALYTICS_EXCLUDED_PATHS),
     internalReferrerDomains: listValue(import.meta.env.PUBLIC_STAGE_ANALYTICS_INTERNAL_REFERRER_DOMAINS)
   }}

@@ -24,8 +24,8 @@ Add Playwright tests for:
 - accessibility menu opens, closes, and persists settings
 - newsletter success and error states if the newsletter module is copied
 - localized route rendering if i18n is enabled
-- preview endpoint rejects invalid secrets
-- preview banner is visible in preview mode and exit preview clears preview state
+- CMS preview rejects invalid opaque tokens and does not render draft content
+- CMS preview handoff removes the token from the URL; its banner is visible and exit clears the preview session
 - optional module installer dry-run does not write files
 - selected optional modules are listed in `SETUP.md`
 

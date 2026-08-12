@@ -4,6 +4,7 @@ allowBuilds:
   esbuild: true
   sharp: true
   unrs-resolver: true
+  workerd: true
 
 overrides:
   esbuild: ^0.28.1
@@ -11,6 +12,7 @@ overrides:
   '@ooopsstudio/analytics-consent-astro': file:../ooops-analytics/packages/analytics-consent-astro
   '@ooopsstudio/accessibility': file:../ooops-accessibility/packages/accessibility
   '@ooopsstudio/accessibility-astro': file:../ooops-accessibility/packages/accessibility-astro
+  '@ooopsstudio/accessibility-editor-manifests': file:../ooops-accessibility/packages/accessibility-editor-manifests
   '@ooopsstudio/editor-contracts': file:../ooops-ui/packages/editor-contracts
   '@ooopsstudio/editor-framework': file:../ooops-editor/packages/framework
   '@ooopsstudio/editor-browser-runtime': file:../ooops-editor/packages/browser-runtime

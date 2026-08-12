@@ -18,7 +18,7 @@ Recommended defaults:
 - Anonymous analytics can run without a private API token, but only set `PUBLIC_STAGE_ANALYTICS_REQUIRES_CONSENT=false` when your site has the legal basis to do that.
 - Keep `PUBLIC_STAGE_ANALYTICS_RESPECT_DNT=true`.
 - Keep performance analytics and replay disabled until you have the correct consent UX and legal basis for your site.
-- Do not put private Stage API tokens, webhook secrets, or preview secrets in any `PUBLIC_*` variable.
+- Do not put private Stage/CMS API tokens, webhook secrets, or preview-session secrets in any `PUBLIC_*` variable.
 
 ## Bootstrap
 
@@ -40,12 +40,12 @@ The signature is `HMAC-SHA256(timestamp + "." + rawBody)`.
 
 Preview tokens are server-only:
 
-- `STAGE_PREVIEW_TOKEN`
-- `STAGE_PREVIEW_SECRET`
+- `OOOPS_CMS_API_TOKEN`
+- `OOOPS_CMS_PREVIEW_SESSION_SECRET`
 
 Do not import these from browser components, islands, or client scripts.
 
-`functions/api/preview.ts` validates the editor-facing secret and signs preview redirects with the server-only preview token.
+The Cloudflare Worker routes under `/preview/content/**` validate a CMS-issued opaque token server-to-server, encrypt it into an `HttpOnly` preview-session cookie, and redirect to a tokenless URL. The browser never receives the CMS API token or the preview-session encryption secret.
 
 ## Environment Files
 

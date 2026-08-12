@@ -1,24 +1,25 @@
-# Stage Preview Mode
+# CMS Draft Preview
 
-`functions/api/preview.ts` is included in the active template for Cloudflare Pages preview redirects. It should stay a thin adapter over `@ooopsstudio/stage-cloudflare`.
+The public site remains static. Only `/preview/content/**` runs in the Cloudflare Worker so CMS editors can view drafts without turning public content into SSR.
 
-Add server-only env vars:
-
-```env
-STAGE_PREVIEW_TOKEN=
-STAGE_PREVIEW_SECRET=
-```
-
-Configure Stage preview URLs to call:
+Configure the CMS preview URLs as:
 
 ```txt
-https://your-site.com/api/preview?secret=STAGE_PREVIEW_SECRET&type=single&apiId=homepage&path=/
-https://your-site.com/api/preview?secret=STAGE_PREVIEW_SECRET&type=collection&apiId=posts&slug={slug}&path=/posts/{slug}
+https://your-site.com/preview/content/singles/{apiId}?preview={opaque-token}
+https://your-site.com/preview/content/collections/{apiId}/{slug}?preview={opaque-token}
+```
+
+Add these Worker-only variables:
+
+```env
+OOOPS_CMS_API_BASE_URL=https://cms.example.com/api/cms/v1
+OOOPS_CMS_API_TOKEN=
+OOOPS_CMS_PREVIEW_SESSION_SECRET=
 ```
 
 Rules:
 
-- `STAGE_PREVIEW_TOKEN` must be server-only.
-- Do not expose preview tokens in browser code.
-- Preview mode is optional. Static builds should continue using published content.
-- Preview redirect signing is handled by `@ooopsstudio/stage-cloudflare`.
+- The CMS API token needs only `cms:content:read` and is never sent to the browser.
+- The opaque CMS token is exchanged once for a 30-minute encrypted `HttpOnly`, `SameSite=Lax` cookie; the Worker redirects to a tokenless URL.
+- Preview HTML is `private, no-store`, `noindex, nofollow`, has no canonical URL, and excludes analytics/replay.
+- `/preview/content/exit` clears the preview cookie and takes the editor back to published content.

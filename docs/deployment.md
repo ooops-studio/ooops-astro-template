@@ -30,8 +30,9 @@ PUBLIC_STAGE_ANALYTICS_RESPECT_DNT=true
 PUBLIC_STAGE_ANALYTICS_PERFORMANCE_ENABLED=false
 PUBLIC_STAGE_ANALYTICS_REPLAY_ENABLED=false
 PUBLIC_STAGE_ANALYTICS_REPLAY_SCRIPT_URL=
-STAGE_PREVIEW_TOKEN=
-STAGE_PREVIEW_SECRET=
+OOOPS_CMS_API_BASE_URL=https://cms.example/api/cms/v1
+OOOPS_CMS_API_TOKEN=
+OOOPS_CMS_PREVIEW_SESSION_SECRET=
 CLOUDFLARE_PAGES_DEPLOY_HOOK_URL=
 STAGE_WEBHOOK_SECRET=
 ```
@@ -43,7 +44,7 @@ STAGE_WEBHOOK_SECRET=
 3. Add the required env vars in Pages settings.
 4. Add `CLOUDFLARE_PAGES_DEPLOY_HOOK_URL` and `STAGE_WEBHOOK_SECRET` if Stage should trigger rebuilds.
 5. Configure the Stage webhook URL as `https://your-site.com/api/stage/rebuild`.
-6. Add `STAGE_PREVIEW_TOKEN` and `STAGE_PREVIEW_SECRET` if editors need preview URLs.
+6. Add `OOOPS_CMS_API_BASE_URL`, `OOOPS_CMS_API_TOKEN`, and `OOOPS_CMS_PREVIEW_SESSION_SECRET` if editors need CMS draft previews. These are Worker-only secrets; never prefix them with `PUBLIC_`.
 
 Before deploy, run:
 
@@ -115,13 +116,15 @@ pnpm stage:bootstrap
 
 See [Stage bootstrap](bootstrap.md).
 
-## Stage Preview URLs
+## CMS Draft Preview
 
-Configure Stage preview URLs to call the Cloudflare Pages Function:
+The Astro output stays static apart from the Cloudflare Worker routes under `/preview/content/**`. Configure the CMS to open:
 
 ```txt
-https://your-site.com/api/preview?token=STAGE_PREVIEW_TOKEN&redirect=/
-https://your-site.com/api/preview?token=STAGE_PREVIEW_TOKEN&redirect=/posts/{slug}
+https://your-site.com/preview/content/collections/{apiId}/{slug}?preview={opaque-token}
+https://your-site.com/preview/content/singles/{apiId}?preview={opaque-token}
 ```
 
-Preview requests set the signed, `HttpOnly` preview cookie and redirect with a non-sensitive `stagePreview=1` indicator so the static UI can show its preview banner. Draft reads use the read-only Stage preview client.
+The Worker sends the opaque token only to the CMS preview endpoint using `OOOPS_CMS_API_TOKEN`, stores the validated token in an encrypted 30-minute `HttpOnly` cookie, then redirects to the tokenless preview URL. Preview HTML and the exit endpoint are `private, no-store`; preview responses are also `noindex, nofollow`, have no analytics/replay, and cannot leak the token through canonical or referrer metadata. The exit control calls `/preview/content/exit` and clears the preview cookie before returning to the published page.
+
+The committed `wrangler.jsonc` enables `nodejs_compat` for the Astro/Svelte SSR runtime. Keep that compatibility flag when deploying the Worker.

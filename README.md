@@ -82,7 +82,7 @@ docs/
 - Empty-content build behavior when Stage env vars are missing, so the template can validate before it is connected to Stage.
 - Small copy-editable Astro UI primitives.
 - `StageImage.astro` for Stage media URLs, alt fallback, responsive sizing, lazy loading, and fallback image handling.
-- Cloudflare Pages Functions for Stage preview and rebuild webhooks.
+- Cloudflare Worker preview routes for CMS drafts and a Pages Function for rebuild webhooks.
 - Preview banner and exit preview link when preview mode is active.
 - `validate-env` and content health scripts for production readiness.
 - Manifest-driven optional modules and installer.
@@ -254,18 +254,28 @@ Expected collection API id: `posts`.
 - [Redirects and headers](docs/redirects-and-headers.md)
 - [Future package extraction](docs/package-extraction.md)
 
-## Preview Mode
+## CMS Draft Preview
 
-Stage preview support is included for Cloudflare Pages Functions.
+The template is static by default. Only `/preview/content/**` is rendered by the Cloudflare Worker so editors can view unpublished CMS content without making the public site dynamic.
 
-Preview mode uses server-only env vars:
+The CMS opens one of these URLs with its short-lived opaque preview token:
 
-```env
-STAGE_PREVIEW_TOKEN=
-STAGE_PREVIEW_SECRET=
+```txt
+https://site.example/preview/content/collections/{apiId}/{slug}?preview={opaque-token}
+https://site.example/preview/content/singles/{apiId}?preview={opaque-token}
 ```
 
-Never expose preview tokens in browser code. See [Deployment](docs/deployment.md) and `functions/api/preview.ts`.
+The worker validates the token with the CMS preview API, encrypts it into a 30-minute `HttpOnly`, `SameSite=Lax` cookie, and redirects to the same URL without the token. Draft responses are `private, no-store`, `noindex, nofollow`, have no canonical URL, and omit analytics and session replay. Exiting preview clears the cookie and immediately returns to the public static route.
+
+Configure these server-only Cloudflare variables (never `PUBLIC_` variables):
+
+```env
+OOOPS_CMS_API_BASE_URL=https://cms.example/api/cms/v1
+OOOPS_CMS_API_TOKEN=
+OOOPS_CMS_PREVIEW_SESSION_SECRET=
+```
+
+The CMS token needs only `cms:content:read`. See [Deployment](docs/deployment.md) and run `pnpm test:preview:e2e` to exercise the complete handoff.
 
 ## Optional Newsletter Form
 
@@ -359,7 +369,7 @@ pnpm example:newsletter-submit -- subscriber@example.com
 Never expose these to browser code:
 
 - `OOOPS_STAGE_API_TOKEN`
-- `STAGE_PREVIEW_TOKEN`
-- `STAGE_PREVIEW_SECRET`
+- `OOOPS_CMS_API_TOKEN`
+- `OOOPS_CMS_PREVIEW_SESSION_SECRET`
 - `CLOUDFLARE_PAGES_DEPLOY_HOOK_URL`
 - `STAGE_WEBHOOK_SECRET`

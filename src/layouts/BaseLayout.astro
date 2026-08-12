@@ -16,9 +16,11 @@ import type { SeoPayload } from '../lib/stage/types';
 type Props = {
   seo: SeoPayload;
   lang?: string;
+  preview?: boolean;
+  previewExitPath?: string;
 };
 
-const { seo, lang = 'en' } = Astro.props;
+const { seo, lang = 'en', preview = false, previewExitPath = '/' } = Astro.props;
 const title = seo.title;
 const description = seo.description;
 const robots = seo.robots ? `${seo.robots.index ? 'index' : 'noindex'},${seo.robots.follow ? 'follow' : 'nofollow'}` : null;
@@ -61,8 +63,8 @@ const jsonLdPayloads = Array.isArray(seo.jsonLd) ? seo.jsonLd : seo.jsonLd ? [se
       <Footer />
     </Container>
     <AccessibilityMenu />
-    <PreviewBanner />
-    <AnalyticsConsent />
-    <StageAnalytics />
+    <PreviewBanner active={preview} exitPath={previewExitPath} />
+    {!preview ? <AnalyticsConsent /> : null}
+    {!preview ? <StageAnalytics /> : null}
   </body>
 </html>

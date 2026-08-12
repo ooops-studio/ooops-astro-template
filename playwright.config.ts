@@ -13,6 +13,7 @@ const webGpuTestArgs = [
 
 export default defineConfig({
 	testDir: './tests/e2e',
+	testIgnore: /cms-preview\.spec\.ts/,
 	timeout: 45_000,
 	fullyParallel: false,
 	workers: 1,

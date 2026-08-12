@@ -45,7 +45,6 @@ const requiredFiles = [
   'docs/svelte-islands.md',
   'docs/testing.md',
   'docs/ui-components.md',
-  'functions/api/preview.ts',
   'functions/api/stage/rebuild.ts',
   'scripts/test-stage-webhook-signature.mjs',
   'scripts/test-stage-signature.mjs',
@@ -60,6 +59,7 @@ const requiredFiles = [
   'scripts/setup-module.mjs',
   'src/components/stage/AnalyticsConsent.astro',
   'src/components/stage/PreviewBanner.astro',
+  'src/components/stage/PreviewContent.astro',
   'src/components/stage/StageAnalytics.astro',
   'src/components/stage/StageImage.astro',
   'src/components/islands/IslandStatus.svelte',
@@ -89,6 +89,12 @@ const requiredFiles = [
   'src/lib/stage/mappers.ts',
   'src/lib/seo/sitemap.ts',
   'src/lib/seo/schema.ts',
+  'src/lib/cms-preview/client.ts',
+  'src/lib/cms-preview/content.ts',
+  'src/lib/cms-preview/session.ts',
+  'src/pages/preview/content/exit.ts',
+  'src/pages/preview/content/singles/[apiId].astro',
+  'src/pages/preview/content/collections/[apiId]/[slug].astro',
   'src/pages/404.astro',
   'src/pages/500.astro',
   'src/pages/posts/index.astro',
@@ -108,6 +114,7 @@ const requiredFiles = [
   'public/assets/images/fallback-image.svg',
   'pnpm-lock.yaml',
   'pnpm-workspace.yaml',
+  'wrangler.jsonc',
   'template-policy.json',
   'src/components/ui/Popover.astro'
 ];
@@ -128,8 +135,8 @@ const forbiddenLocalEnvFiles = [
 
 const requiredBlankExampleSecrets = [
   'OOOPS_STAGE_API_TOKEN',
-  'STAGE_PREVIEW_TOKEN',
-  'STAGE_PREVIEW_SECRET',
+  'OOOPS_CMS_API_TOKEN',
+  'OOOPS_CMS_PREVIEW_SESSION_SECRET',
   'PUBLIC_NEWSLETTER_FORM_TOKEN',
   'PUBLIC_STAGE_ANALYTICS_SCRIPT_URL',
   'PUBLIC_STAGE_ANALYTICS_WEBSITE_ID',
@@ -204,7 +211,7 @@ function walk(directory) {
 }
 
 const activeRequiredFiles = requiredFiles.filter((file) => {
-  if (file === 'functions/api/preview.ts') return moduleEnabled('preview');
+  if (file === 'src/components/stage/PreviewContent.astro' || file.startsWith('src/lib/cms-preview/') || file.startsWith('src/pages/preview/content/')) return moduleEnabled('preview');
   if (file === 'functions/api/stage/rebuild.ts') return moduleEnabled('rebuildWebhook');
   if (file === 'src/pages/posts/index.astro' || file === 'src/pages/posts/[slug].astro') return moduleEnabled('posts');
   if (file === 'src/components/islands/IslandStatus.svelte') return moduleEnabled('svelteIslands');
@@ -229,8 +236,8 @@ for (const file of forbiddenLocalEnvFiles) {
 const envExample = read('.env.example');
 const enabledSensitiveEnv = new Set(['OOOPS_STAGE_API_TOKEN']);
 if (moduleEnabled('preview')) {
-  enabledSensitiveEnv.add('STAGE_PREVIEW_TOKEN');
-  enabledSensitiveEnv.add('STAGE_PREVIEW_SECRET');
+  enabledSensitiveEnv.add('OOOPS_CMS_API_TOKEN');
+  enabledSensitiveEnv.add('OOOPS_CMS_PREVIEW_SESSION_SECRET');
 }
 if (moduleEnabled('newsletter')) enabledSensitiveEnv.add('PUBLIC_NEWSLETTER_FORM_TOKEN');
 if (moduleEnabled('analytics')) {
@@ -273,6 +280,16 @@ if (exists('package-lock.json')) {
 const astroConfig = read('astro.config.mjs');
 if (!/output:\s*['"]static['"]/.test(astroConfig)) {
   fail('astro.config.mjs must keep output: "static".');
+}
+if (!astroConfig.includes("@astrojs/cloudflare")) {
+  fail('astro.config.mjs must use the Cloudflare adapter for CMS preview routes.');
+}
+if (packageJson.devDependencies?.['@astrojs/cloudflare'] !== '14.1.0') {
+  fail('@astrojs/cloudflare must use the approved 14.1.0 adapter version.');
+}
+const wranglerConfig = read('wrangler.jsonc');
+if (!wranglerConfig.includes('nodejs_compat')) {
+  fail('wrangler.jsonc must enable nodejs_compat for the Cloudflare SSR runtime.');
 }
 
 const templateConfigSource = read('src/template.config.ts');
@@ -376,10 +393,9 @@ for (const forbidden of ['class OoopsStageClient', 'authorization:', 'Bearer ${'
 }
 
 const cloudflareFunctionSource = [
-  moduleEnabled('preview') && exists('functions/api/preview.ts') ? read('functions/api/preview.ts') : '',
   moduleEnabled('rebuildWebhook') && exists('functions/api/stage/rebuild.ts') ? read('functions/api/stage/rebuild.ts') : ''
 ].join('\n');
-if ((moduleEnabled('preview') || moduleEnabled('rebuildWebhook')) && !cloudflareFunctionSource.includes('@ooopsstudio/stage-cloudflare')) {
+if (moduleEnabled('rebuildWebhook') && !cloudflareFunctionSource.includes('@ooopsstudio/stage-cloudflare')) {
   fail('Cloudflare Functions must use @ooopsstudio/stage-cloudflare helpers.');
 }
 
@@ -429,7 +445,7 @@ for (const file of walk(root)) {
   }
 
   if (browserFacingRoots.some((prefix) => file.startsWith(prefix))) {
-    for (const secret of ['OOOPS_STAGE_API_TOKEN', 'STAGE_API_TOKEN', 'STAGE_PREVIEW_TOKEN', 'STAGE_PREVIEW_SECRET']) {
+    for (const secret of ['OOOPS_STAGE_API_TOKEN', 'STAGE_API_TOKEN', 'STAGE_PREVIEW_TOKEN', 'STAGE_PREVIEW_SECRET', 'OOOPS_CMS_API_TOKEN', 'OOOPS_CMS_PREVIEW_SESSION_SECRET']) {
       if (source.includes(secret)) {
         fail(`Browser-facing file must not reference ${secret}: ${file}`);
       }

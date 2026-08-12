@@ -6,8 +6,9 @@ interface ImportMetaEnv {
   readonly OOOPS_STAGE_API_TOKEN?: string;
   readonly STAGE_API_BASE_URL?: string;
   readonly STAGE_API_TOKEN?: string;
-  readonly STAGE_PREVIEW_TOKEN?: string;
-  readonly STAGE_PREVIEW_SECRET?: string;
+  readonly OOOPS_CMS_API_BASE_URL?: string;
+  readonly OOOPS_CMS_API_TOKEN?: string;
+  readonly OOOPS_CMS_PREVIEW_SESSION_SECRET?: string;
   readonly PUBLIC_SITE_URL?: string;
   readonly PUBLIC_STAGE_API_BASE_URL?: string;
   readonly PUBLIC_NEWSLETTER_FORM_TOKEN?: string;
