@@ -31,8 +31,9 @@
   "files": [
     {"from": "optional/visual-editor/editor", "to": "editor"},
     {"from": "optional/visual-editor/src/lib/editor", "to": "src/lib/editor"},
-    {"from": "optional/visual-editor/scripts/lib/editor-metadata.mjs", "to": "scripts/lib/editor-metadata.mjs"}
+    {"from": "optional/visual-editor/scripts/lib/editor-metadata.mjs", "to": "scripts/lib/editor-metadata.mjs"},
+    {"from": "optional/visual-editor/tests/editor-e2e/editor-mode.spec.ts", "to": "tests/editor-e2e/editor-mode.spec.ts"}
   ],
-  "cleanupTargets": ["editor", "src/lib/editor", "scripts/lib/editor-metadata.mjs"],
+  "cleanupTargets": ["editor", "src/lib/editor", "scripts/lib/editor-metadata.mjs", "tests/editor-e2e/editor-mode.spec.ts"],
   "validationChecks": ["editor-manifest-contracts", "editor-adapter-resolution"]
 }
