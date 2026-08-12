@@ -1,5 +1,5 @@
 ---
-import StageImage from '../../components/stage/StageImage.astro';
+import CmsImage from '../../components/cms/CmsImage.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getPost, getPosts } from '../../lib/posts/client';
 
@@ -23,7 +23,7 @@ if (!post) {
       <h1>{post.title}</h1>
       <p>{post.excerpt}</p>
       {post.heroImageUrl ? (
-        <StageImage src={post.heroImageUrl} alt={post.heroImageAlt} width="1200" height="760" loading="eager" />
+        <CmsImage src={post.heroImageUrl} alt={post.heroImageAlt} width="1200" height="760" loading="eager" />
       ) : null}
       <div set:html={post.body} />
     </div>

@@ -1000,7 +1000,7 @@
   "bindings": [
     {
       "id": "homepage-title",
-      "provider": "stage",
+      "provider": "cms",
       "mode": "read-only",
       "resource": "single",
       "apiId": "homepage",
@@ -1009,7 +1009,7 @@
     },
     {
       "id": "homepage-intro",
-      "provider": "stage",
+      "provider": "cms",
       "mode": "read-only",
       "resource": "single",
       "apiId": "homepage",
@@ -1018,7 +1018,7 @@
     },
     {
       "id": "post-title",
-      "provider": "stage",
+      "provider": "cms",
       "mode": "read-only",
       "resource": "collection",
       "apiId": "posts",

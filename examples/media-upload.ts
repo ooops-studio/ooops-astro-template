@@ -1,9 +1,9 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { createExampleStageClient } from './stage-request';
+import { createExampleCmsClient } from './cms-request';
 
 const filePath = process.argv[2];
-const stage = createExampleStageClient();
+const cms = createExampleCmsClient();
 
 if (!filePath) throw new Error('Usage: npm exec tsx examples/media-upload.ts ./image.png');
 
@@ -11,7 +11,7 @@ const fileName = path.basename(filePath);
 const file = await readFile(filePath);
 const mimeType = fileName.endsWith('.png') ? 'image/png' : fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') ? 'image/jpeg' : 'application/octet-stream';
 
-const signed = await stage.media.signUpload<{
+const signed = await cms.media.signUpload<{
   ok: true;
   uploadUrl: string;
   objectKey: string;
@@ -25,7 +25,7 @@ const upload = await fetch(signed.uploadUrl, {
 });
 if (!upload.ok) throw new Error(`Upload failed with ${upload.status}`);
 
-const completed = await stage.media.completeUpload<{
+const completed = await cms.media.completeUpload<{
   ok: true;
   asset: { id: string; title?: string | null; url?: string | null };
 }>({ fileName, objectKey: signed.objectKey, mimeType, sizeBytes: file.byteLength });

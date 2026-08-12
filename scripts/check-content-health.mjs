@@ -6,15 +6,15 @@ const collections = (collectionsArg?.split('=')[1] || 'posts,projects')
   .map((item) => item.trim())
   .filter(Boolean);
 
-let stageApi = null;
+let cmsApi = null;
 try {
-  stageApi = await import('@ooopsstudio/stage-api');
+	cmsApi = await import('@ooopsstudio/cms-api');
 } catch {
-  stageApi = null;
+	cmsApi = null;
 }
 
-if (!stageApi) {
-  const message = '[content-health] @ooopsstudio/stage-api is not installed; skipping live content audit.';
+if (!cmsApi) {
+	const message = '[content-health] @ooopsstudio/cms-api is not installed; skipping live content audit.';
   if (strict) {
     console.error(message);
     process.exit(1);
@@ -23,16 +23,18 @@ if (!stageApi) {
   process.exit(0);
 }
 
-const { createStageClientFromEnv, mediaAlt, mediaUrl } = stageApi;
+const { createCmsClient } = cmsApi;
 let client = null;
 try {
-  client = createStageClientFromEnv(process.env);
+	const baseUrl = process.env.OOOPS_CMS_API_BASE_URL?.replace(/\/$/, '');
+	const token = process.env.OOOPS_CMS_API_TOKEN;
+	if (baseUrl && token) client = createCmsClient({baseUrl, token});
 } catch {
   client = null;
 }
 
 if (!client) {
-  const message = '[content-health] Stage env is missing; skipping live content audit.';
+	const message = '[content-health] CMS env is missing; skipping live content audit.';
   if (strict) {
     console.error(message);
     process.exit(1);
@@ -42,6 +44,16 @@ if (!client) {
 }
 
 const issues = [];
+
+const mediaUrl = (value) => {
+	if (!value || typeof value !== 'object') return '';
+	return typeof value.url === 'string' ? value.url : typeof value.src === 'string' ? value.src : '';
+};
+
+const mediaAlt = (value, fallback = '') => {
+	if (!value || typeof value !== 'object') return fallback;
+	return typeof value.alt === 'string' ? value.alt.trim() : fallback;
+};
 
 const getField = (entry, key) => {
   const fields = entry?.fields && typeof entry.fields === 'object' ? entry.fields : entry;

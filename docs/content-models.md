@@ -1,6 +1,6 @@
 # Content Model Examples
 
-Stage controls content only. Layout and design stay in code.
+CMS controls content only. Layout and design stay in code.
 
 ## Recommended Core Singles
 

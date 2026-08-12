@@ -1,5 +1,5 @@
 export const templateConfig = {
-  siteName: 'Stage Astro Site',
+  siteName: 'Ooops CMS Astro Site',
   defaultLocale: 'en',
   locales: ['en', 'el'],
   i18nEnabled: false,

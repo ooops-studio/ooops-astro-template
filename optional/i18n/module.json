@@ -3,7 +3,7 @@
   "label": "i18n helpers",
   "defaultEnabled": false,
   "readme": "docs/i18n.md",
-  "deps": ["@ooopsstudio/stage-astro"],
+  "deps": ["@ooopsstudio/cms-astro"],
   "env": [],
   "files": [],
   "cleanupTargets": [],

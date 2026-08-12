@@ -85,7 +85,7 @@ const sourceExpectations = [
   ['optional/gallery/src/lib/gallery/headless.ts', 'galleryActionFromKey'],
   ['optional/media-player/src/lib/media-player/headless.ts', 'mediaKeyAction'],
   ['optional/newsletter/src/components/newsletter/NewsletterForm.astro', 'role="status"'],
-  ['src/components/stage/PreviewBanner.astro', 'Exit preview'],
+  ['src/components/cms/PreviewBanner.astro', 'Exit preview'],
   ['optional/interactive-scene/src/scenes/reference-scene.ts', 'defineThreeScene'],
   ['optional/interactive-scene/editor/scenes/reference-scene.json', '"internals": "locked"'],
   ['optional/interactive-scene/editor/extensions/reference-scene.json', '"pointer-influence"'],

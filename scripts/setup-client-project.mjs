@@ -169,9 +169,9 @@ packageJson.dependencies = {
   '@ooopsstudio/accessibility-astro':
     packageJson.dependencies?.['@ooopsstudio/accessibility-astro'] || '^0.1.0',
   '@ooopsstudio/editor-contracts': packageJson.dependencies?.['@ooopsstudio/editor-contracts'] || '^0.2.0',
-  '@ooopsstudio/stage-api': packageJson.dependencies?.['@ooopsstudio/stage-api'] || '^0.1.0',
-  '@ooopsstudio/stage-astro': packageJson.dependencies?.['@ooopsstudio/stage-astro'] || '^0.1.0',
-  '@ooopsstudio/stage-cloudflare': packageJson.dependencies?.['@ooopsstudio/stage-cloudflare'] || '^0.1.0',
+	'@ooopsstudio/cms-api': packageJson.dependencies?.['@ooopsstudio/cms-api'] || '^0.1.0',
+	'@ooopsstudio/cms-astro': packageJson.dependencies?.['@ooopsstudio/cms-astro'] || '^0.1.0',
+	'@ooopsstudio/cms-cloudflare': packageJson.dependencies?.['@ooopsstudio/cms-cloudflare'] || '^0.1.0',
   '@ooopsstudio/ui-primitives': packageJson.dependencies?.['@ooopsstudio/ui-primitives'] || '^0.1.0',
   '@ooopsstudio/ui-astro': packageJson.dependencies?.['@ooopsstudio/ui-astro'] || '^0.1.0',
   astro: packageJson.dependencies?.astro || '^7.0.6',

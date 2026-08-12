@@ -1,6 +1,6 @@
-# Stage Astro Site Template
+# CMS Astro Site Template
 
-Astro template for public websites powered by Stage CMS.
+Astro template for public websites powered by Ooops CMS.
 
 The active app is intentionally small and familiar to Astro users:
 
@@ -17,10 +17,10 @@ src/
     BaseLayout.astro
   components/
     AccessibilityMenu.astro
-    stage/
+    cms/
       AnalyticsConsent.astro
-      StageAnalytics.astro
-      StageImage.astro
+      CmsAnalytics.astro
+      CmsImage.astro
     ui/
       Button.astro
       CheckboxField.astro
@@ -36,7 +36,7 @@ src/
     posts/
       client.ts
       sitemap.ts
-    stage/
+    cms/
       client.ts
       content-helpers.ts
       env.ts
@@ -74,26 +74,26 @@ docs/
 
 - Static Astro homepage.
 - Svelte islands integration for interactive components while keeping Astro as the shell.
-- Build-time Stage API v1 reads through the official Stage client surface with a private `OOOPS_STAGE_API_TOKEN`.
-- One Stage single type, `homepage`.
+- Build-time CMS API v1 reads through the official CMS client surface with a private `OOOPS_CMS_API_TOKEN`.
+- One CMS single type, `homepage`.
 - Included `posts` collection example with `/posts` and `/posts/[slug]`.
 - Optional i18n helpers with `en` as the unprefixed default locale.
 - Basic SEO helper, JSON-LD helper, `robots.txt`, `sitemap.xml`, and Cloudflare `_headers`.
-- Empty-content build behavior when Stage env vars are missing, so the template can validate before it is connected to Stage.
+- Empty-content build behavior when CMS env vars are missing, so the template can validate before it is connected to CMS.
 - Small copy-editable Astro UI primitives.
-- `StageImage.astro` for Stage media URLs, alt fallback, responsive sizing, lazy loading, and fallback image handling.
+- `CmsImage.astro` for CMS media URLs, alt fallback, responsive sizing, lazy loading, and fallback image handling.
 - Cloudflare Worker preview routes for CMS drafts and a Pages Function for rebuild webhooks.
 - Preview banner and exit preview link when preview mode is active.
 - `validate-env` and content health scripts for production readiness.
 - Manifest-driven optional modules and installer.
-- Env-gated Stage analytics loader and consent banner. If analytics env vars are blank, no analytics script is loaded.
+- Env-gated CMS analytics loader and consent banner. If analytics env vars are blank, no analytics script is loaded.
 - A themeable accessibility menu backed by `@ooopsstudio/accessibility-astro`.
 
 Optional examples live in `optional/`. Copy them into `src/` only if you need them.
 
 ## Visual Editor Metadata
 
-The template includes a schema-validated, framework-neutral registry in `editor/`. Global visual tokens are edited in `editor/design-tokens.json`; `pnpm generate:editor` deterministically rebuilds `src/styles/tokens.css`, and `pnpm check:editor` enforces registry, token, controlled positioning and read-only Stage binding consistency. Positioning uses logical offsets and semantic z-index layers from `base` through `toast`; package-owned overlay positioning remains locked.
+The template includes a schema-validated, framework-neutral registry in `editor/`. Global visual tokens are edited in `editor/design-tokens.json`; `pnpm generate:editor` deterministically rebuilds `src/styles/tokens.css`, and `pnpm check:editor` enforces registry, token, controlled positioning and read-only CMS binding consistency. Positioning uses logical offsets and semantic z-index layers from `base` through `toast`; package-owned overlay positioning remains locked.
 
 ## UI Primitives
 
@@ -130,7 +130,7 @@ The wrappers keep project-specific composition and styling local while interacti
 
 `Dialog.astro` and `Modal.astro` delegate native dialog semantics, Escape handling, focus behavior, and return-focus support to the UI packages. Local wrappers remain the extension point for project composition and styling.
 
-`StageImage.astro` lives in `src/components/stage`. It accepts a Stage media record or plain `src`, normalizes Stage asset URLs, and uses `/assets/images/fallback-image.svg` when no image is available.
+`CmsImage.astro` lives in `src/components/cms`. It accepts a CMS media record or plain `src`, normalizes CMS asset URLs, and uses `/assets/images/fallback-image.svg` when no image is available.
 It also supports responsive `srcset`, eager/lazy strategy, and dev warnings for media without alt text.
 
 ## Quick Start
@@ -146,8 +146,8 @@ pnpm dev
 Set these values in `.env.local`:
 
 ```env
-OOOPS_STAGE_API_BASE_URL=http://stage.localhost:4275/api/stage/v1
-OOOPS_STAGE_API_TOKEN=your_private_stage_api_token
+OOOPS_CMS_API_BASE_URL=http://cms.localhost:4175/api/cms/v1
+OOOPS_CMS_API_TOKEN=your_private_cms_api_token
 PUBLIC_SITE_URL=http://localhost:4321
 ```
 
@@ -162,11 +162,11 @@ pnpm check:content-health
 pnpm validate
 ```
 
-`pnpm check` runs Astro type checking plus the template guard in `scripts/check-stage-api-contracts.mjs`. The guard enforces `template-policy.json`, canonical package ownership, Node/pnpm/Astro policy, published dependency ranges, forbidden duplicated behavior, secret boundaries, and required template files.
+`pnpm check` runs Astro type checking plus the template guard in `scripts/check-cms-api-contracts.mjs`. The guard enforces `template-policy.json`, canonical package ownership, Node/pnpm/Astro policy, published dependency ranges, forbidden duplicated behavior, secret boundaries, and required template files.
 
-`pnpm check:openapi` fetches `${OOOPS_STAGE_API_BASE_URL}/openapi.json` when Stage is configured and checks for the required Stage API v1 paths. It skips locally when Stage is not configured or not running, and fails in CI when a configured OpenAPI endpoint is unreachable.
+`pnpm check:openapi` fetches `${OOOPS_CMS_API_BASE_URL}/openapi.json` when CMS is configured and checks for the required CMS API v1 paths. It skips locally when CMS is not configured or not running, and fails in CI when a configured OpenAPI endpoint is unreachable.
 
-GitHub Actions validates the published analytics consumer on every push and pull request. The full template validation remains manual because the Stage and Editor packages referenced by the local development overrides are not yet available to a clean GitHub-hosted runner. Restore its push and pull-request trigger after those packages are published or otherwise made available to CI.
+GitHub Actions validates the published analytics consumer on every push and pull request. The full template validation remains manual because the CMS and Editor packages referenced by the local development overrides are not yet available to a clean GitHub-hosted runner. Restore its push and pull-request trigger after those packages are published or otherwise made available to CI.
 
 ## Client Setup Installer
 
@@ -180,23 +180,23 @@ pnpm setup:module -- remove newsletter
 
 Each optional module has an `optional/<module>/module.json` manifest describing dependencies, env vars, files, cleanup targets, and validation checks. The installer uses those manifests to generate `.env.example`, `src/template.config.ts`, and `SETUP.md`.
 
-## Expected Stage Content
+## Expected CMS Content
 
 The fastest setup path is the bootstrap script. Full guide:
 
-- [Stage bootstrap guide](docs/bootstrap.md)
+- [CMS bootstrap guide](docs/bootstrap.md)
 
 Short version:
 
 ```bash
 cp .env.example .env.local
-# Fill OOOPS_STAGE_API_BASE_URL and OOOPS_STAGE_API_TOKEN.
-pnpm stage:bootstrap
+# Fill OOOPS_CMS_API_BASE_URL and OOOPS_CMS_API_TOKEN.
+pnpm cms:bootstrap
 ```
 
-The script applies `stage/starter-bundle.json` to the Stage organization attached to your API token. It does not create an organization. It creates missing schemas/content/forms, updates starter content idempotently, and prints `PUBLIC_NEWSLETTER_FORM_TOKEN` when the newsletter form is created.
+The script applies `cms/starter-bundle.json` to the CMS organization attached to your API token. It does not create an organization. It creates missing schemas/content/forms, updates starter content idempotently, and prints `PUBLIC_NEWSLETTER_FORM_TOKEN` when the newsletter form is created.
 
-Create the token in Stage under `Settings -> General -> API access` with the `Site bootstrap` preset.
+Create the token in CMS under `Settings -> General -> API access` with the `Site bootstrap` preset.
 
 Recommended setup scopes:
 
@@ -213,8 +213,8 @@ After bootstrap, rotate to a narrower read-focused token for production builds w
 
 The starter bundle creates:
 
-- a Stage single type with API id `homepage`
-- a Stage collection type with API id `posts`
+- a CMS single type with API id `homepage`
+- a CMS collection type with API id `posts`
 - starter homepage and post content
 - a public newsletter form token for the optional newsletter component
 
@@ -230,7 +230,7 @@ Recommended fields:
 - `google-site-verification` optional
 - `twitter-handle` optional
 
-You can rename the API id and fields in `src/lib/stage/homepage.ts`.
+You can rename the API id and fields in `src/lib/cms/homepage.ts`.
 
 ## Included Posts Collection
 
@@ -238,7 +238,7 @@ The template includes a small collection example:
 
 - `/posts/[slug]` static pages.
 - `/posts` static index page.
-- Stage collection API reads.
+- CMS collection API reads.
 - Per-post SEO.
 - Sitemap integration.
 
@@ -284,35 +284,35 @@ Use `optional/newsletter` if you want browser-side public form submissions.
 It demonstrates posting to:
 
 ```txt
-/api/stage/v1/forms/shares/{token}/submissions
+/api/cms/v1/forms/shares/{token}/submissions
 ```
 
-No private Stage API token is exposed to the browser.
+No private CMS API token is exposed to the browser.
 
-## Stage Analytics
+## CMS Analytics
 
-The active template includes `StageAnalytics.astro` and `AnalyticsConsent.astro` in the base layout. It is fully env-gated:
+The active template includes `CmsAnalytics.astro` and `AnalyticsConsent.astro` in the base layout. It is fully env-gated:
 
-- If `PUBLIC_STAGE_ANALYTICS_SCRIPT_URL` or `PUBLIC_STAGE_ANALYTICS_WEBSITE_ID` is blank, it renders nothing and sends no events.
-- Once both values are configured, it loads the Stage analytics script in the browser.
+- If `PUBLIC_CMS_ANALYTICS_SCRIPT_URL` or `PUBLIC_CMS_ANALYTICS_WEBSITE_ID` is blank, it renders nothing and sends no events.
+- Once both values are configured, it loads the CMS analytics script in the browser.
 - Optional analytics always requires a current positive consent choice. There is no configuration bypass.
 - Performance analytics and replay stay disabled unless their env flags are explicitly enabled and consent allows them.
 
 ```env
-PUBLIC_STAGE_ANALYTICS_SCRIPT_URL=
-PUBLIC_STAGE_ANALYTICS_WEBSITE_ID=
-PUBLIC_STAGE_ANALYTICS_RESPECT_DNT=true
-# Default for the Stage-hosted Umami endpoint: raw connected-site analytics is deleted after 90 days.
-PUBLIC_STAGE_ANALYTICS_RETENTION=90 days
-PUBLIC_STAGE_ANALYTICS_PERFORMANCE_ENABLED=false
-PUBLIC_STAGE_ANALYTICS_REPLAY_ENABLED=false
-PUBLIC_STAGE_ANALYTICS_REPLAY_SCRIPT_URL=
-PUBLIC_STAGE_ANALYTICS_REPLAY_SAMPLE_RATE=0.05
-PUBLIC_STAGE_ANALYTICS_REPLAY_MASK_LEVEL=moderate
-PUBLIC_STAGE_ANALYTICS_REPLAY_MAX_DURATION_MS=600000
-PUBLIC_STAGE_ANALYTICS_REPLAY_BLOCK_SELECTOR=[data-private], [data-sensitive]
-PUBLIC_STAGE_ANALYTICS_EXCLUDED_PATHS=/preview
-PUBLIC_STAGE_ANALYTICS_INTERNAL_REFERRER_DOMAINS=
+PUBLIC_CMS_ANALYTICS_SCRIPT_URL=
+PUBLIC_CMS_ANALYTICS_WEBSITE_ID=
+PUBLIC_CMS_ANALYTICS_RESPECT_DNT=true
+# Default for the CMS-hosted Umami endpoint: raw connected-site analytics is deleted after 90 days.
+PUBLIC_CMS_ANALYTICS_RETENTION=90 days
+PUBLIC_CMS_ANALYTICS_PERFORMANCE_ENABLED=false
+PUBLIC_CMS_ANALYTICS_REPLAY_ENABLED=false
+PUBLIC_CMS_ANALYTICS_REPLAY_SCRIPT_URL=
+PUBLIC_CMS_ANALYTICS_REPLAY_SAMPLE_RATE=0.05
+PUBLIC_CMS_ANALYTICS_REPLAY_MASK_LEVEL=moderate
+PUBLIC_CMS_ANALYTICS_REPLAY_MAX_DURATION_MS=600000
+PUBLIC_CMS_ANALYTICS_REPLAY_BLOCK_SELECTOR=[data-private], [data-sensitive]
+PUBLIC_CMS_ANALYTICS_EXCLUDED_PATHS=/preview
+PUBLIC_CMS_ANALYTICS_INTERNAL_REFERRER_DOMAINS=
 ```
 
 These are public browser env vars, not private API tokens. In Astro, they are baked at build time for static deployments.
@@ -320,25 +320,25 @@ These are public browser env vars, not private API tokens. In Astro, they are ba
 For local development with the bundled Ooops Suite stack, use:
 
 ```env
-PUBLIC_STAGE_ANALYTICS_SCRIPT_URL=http://localhost:3001/script.js
-PUBLIC_STAGE_ANALYTICS_WEBSITE_ID=2e3df25b-701f-4c95-8976-c90b1ed87da2
-PUBLIC_STAGE_ANALYTICS_RESPECT_DNT=true
+PUBLIC_CMS_ANALYTICS_SCRIPT_URL=http://localhost:3001/script.js
+PUBLIC_CMS_ANALYTICS_WEBSITE_ID=2e3df25b-701f-4c95-8976-c90b1ed87da2
+PUBLIC_CMS_ANALYTICS_RESPECT_DNT=true
 ```
 
-Restart `pnpm dev` after changing these values. Accept analytics in the banner, visit a few pages in the template, then open Stage Analytics for the same organization. The dashboard starts clean unless you seed or generate traffic.
+Restart `pnpm dev` after changing these values. Accept analytics in the banner, visit a few pages in the template, then open CMS Analytics for the same organization. The dashboard starts clean unless you seed or generate traffic.
 
-For production, use the analytics script URL and website id from your Stage analytics setup. Keep the private `OOOPS_STAGE_API_TOKEN` server/build-only; analytics uses only public browser config.
+For production, use the analytics script URL and website id from your CMS analytics setup. Keep the private `OOOPS_CMS_API_TOKEN` server/build-only; analytics uses only public browser config.
 
 ## Cloudflare Pages Rebuild
 
-Cloudflare Pages rebuild support is included in `functions/api/stage/rebuild.ts`.
+Cloudflare Pages rebuild support is included in `functions/api/cms/rebuild.ts`.
 
-The endpoint verifies Stage HMAC signatures using `STAGE_WEBHOOK_SECRET` and queues a Cloudflare Pages deploy hook for `cms.*`, `media.*`, and `form.*` events.
+The endpoint verifies CMS HMAC signatures using `CMS_WEBHOOK_SECRET` and queues a Cloudflare Pages deploy hook for `cms.*`, `media.*`, and `form.*` events.
 
 Test a rebuild endpoint with:
 
 ```bash
-STAGE_WEBHOOK_SECRET=your_secret WEBHOOK_TEST_URL=https://your-site.com/api/stage/rebuild pnpm test:webhook
+CMS_WEBHOOK_SECRET=your_secret WEBHOOK_TEST_URL=https://your-site.com/api/cms/rebuild pnpm test:webhook
 ```
 
 ## Deployment And Security
@@ -346,7 +346,7 @@ STAGE_WEBHOOK_SECRET=your_secret WEBHOOK_TEST_URL=https://your-site.com/api/stag
 - [Deployment guide](docs/deployment.md)
 - [Security notes](docs/security.md)
 
-## Stage API Examples
+## CMS API Examples
 
 Examples live in `examples/`:
 
@@ -367,8 +367,7 @@ pnpm example:newsletter-submit -- subscriber@example.com
 
 Never expose these to browser code:
 
-- `OOOPS_STAGE_API_TOKEN`
 - `OOOPS_CMS_API_TOKEN`
 - `OOOPS_CMS_PREVIEW_SESSION_SECRET`
 - `CLOUDFLARE_PAGES_DEPLOY_HOOK_URL`
-- `STAGE_WEBHOOK_SECRET`
+- `CMS_WEBHOOK_SECRET`

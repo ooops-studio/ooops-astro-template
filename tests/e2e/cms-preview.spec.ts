@@ -13,8 +13,8 @@ test('CMS draft preview trades the opaque token for a private cookie and exits t
 	await expect(page.locator('[data-cms-preview-content]')).toContainText('Draft homepage')
 	await expect(page.locator('body')).toContainText('Draft-only homepage body.')
 	await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,nofollow')
-	await expect(page.locator('#stage-analytics-runtime')).toHaveCount(0)
-	await expect(page.locator('#stage-analytics-consent')).toHaveCount(0)
+	await expect(page.locator('#cms-analytics-runtime')).toHaveCount(0)
+	await expect(page.locator('#cms-analytics-consent')).toHaveCount(0)
 
 	const cookies = await context.cookies()
 	const sessionCookie = cookies.find((cookie) => cookie.name === 'ooops_cms_preview')

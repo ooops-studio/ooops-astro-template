@@ -3,15 +3,15 @@
   "label": "Cloudflare rebuild webhook",
   "defaultEnabled": true,
   "readme": "optional/cloudflare-rebuild/README.md",
-  "deps": ["@ooopsstudio/stage-cloudflare"],
+  "deps": ["@ooopsstudio/cms-cloudflare"],
   "env": [
     { "name": "CLOUDFLARE_PAGES_DEPLOY_HOOK_URL", "required": true },
-    { "name": "STAGE_WEBHOOK_SECRET", "required": true }
+    { "name": "CMS_WEBHOOK_SECRET", "required": true }
   ],
   "files": [
-    { "from": "optional/cloudflare-rebuild/functions/api/stage/rebuild.ts", "to": "functions/api/stage/rebuild.ts" }
+    { "from": "optional/cloudflare-rebuild/functions/api/cms/rebuild.ts", "to": "functions/api/cms/rebuild.ts" }
   ],
-  "cleanupTargets": ["functions/api/stage/rebuild.ts"],
-  "validationChecks": ["stage-webhook-signature"],
-  "cloudflare": "Set CLOUDFLARE_PAGES_DEPLOY_HOOK_URL and STAGE_WEBHOOK_SECRET in Pages env vars."
+  "cleanupTargets": ["functions/api/cms/rebuild.ts"],
+	"validationChecks": ["cms-webhook-signature"],
+	"cloudflare": "Set CLOUDFLARE_PAGES_DEPLOY_HOOK_URL and CMS_WEBHOOK_SECRET in Pages env vars."
 }

@@ -179,7 +179,7 @@ export function getEnabledModulesFromConfig() {
 export function renderSetupMarkdown({ projectName, manifests, enabledModules, packageSource = 'published' }) {
   const enabled = manifests.filter((manifest) => enabledModules[manifest.id]);
   const envRows = [
-    { module: 'core', name: 'OOOPS_STAGE_API_BASE_URL', required: true },
+    { module: 'core', name: 'OOOPS_CMS_API_BASE_URL', required: true },
     { module: 'core', name: 'PUBLIC_SITE_URL', required: true },
     ...enabled.flatMap((manifest) => (manifest.env ?? []).map((env) => ({ module: manifest.id, ...env })))
   ];
@@ -210,7 +210,7 @@ ${cloudflareRows.length ? cloudflareRows.join('\n') : '- No Cloudflare-specific 
 - Portable registry: \`editor/template.json\` and \`editor/components.json\`.
 - Design-token source: \`editor/design-tokens.json\`.
 - Run \`pnpm generate:editor\` after token edits and \`pnpm check:editor\` before merge.
-- Stage bindings are read-only metadata. Keep credentials and write capabilities outside the registry.
+- CMS bindings are read-only metadata. Keep credentials and write capabilities outside the registry.
 - \`OOOPS_EDITOR_MODE=1\` is development-only and enables markers only for components with an \`editorId\`.
 
 ## Module Documentation
@@ -228,15 +228,12 @@ ${enabled.length ? enabled.map((item) => `- ${item.label}: ${item.readme}`).join
 
 export function renderEnvExample({ manifests, enabledModules }) {
   const coreLines = [
-    'OOOPS_STAGE_API_BASE_URL=http://stage.localhost:4275/api/stage/v1',
-    'OOOPS_STAGE_API_TOKEN=',
-    '# Backward-compatible aliases supported by the template:',
-    '# STAGE_API_BASE_URL=',
-    '# STAGE_API_TOKEN=',
+    'OOOPS_CMS_API_BASE_URL=http://cms.localhost:4175/api/cms/v1',
+    'OOOPS_CMS_API_TOKEN=',
     'PUBLIC_SITE_URL=http://localhost:4321'
   ];
 
-  const sections = [['Core Stage/site', coreLines]];
+  const sections = [['Core CMS/site', coreLines]];
   for (const manifest of manifests) {
     if (!enabledModules[manifest.id]) continue;
     const env = manifest.env ?? [];

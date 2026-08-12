@@ -1,14 +1,14 @@
 ---
-import StageImage from "../../components/stage/StageImage.astro";
+import CmsImage from "../../components/cms/CmsImage.astro";
 import Section from "../../components/ui/Section.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getPosts } from "../../lib/posts/client";
-import { siteUrl } from "../../lib/stage/env";
+import { siteUrl } from "../../lib/cms/env";
 
 const posts = await getPosts();
 const seo = {
   title: "Posts",
-  description: "Latest posts from this Stage-powered site.",
+  description: "Latest posts from this Ooops CMS-powered site.",
   canonical: `${siteUrl}/posts`,
   type: "website",
 };
@@ -22,7 +22,7 @@ const seo = {
           <article class="card">
             {post.heroImageUrl ? (
               <a href={`/posts/${post.slug}`} aria-label={`Read ${post.title}`}>
-                <StageImage
+                <CmsImage
                   src={post.heroImageUrl}
                   alt={post.heroImageAlt}
                   width="640"

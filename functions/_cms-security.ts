@@ -1,4 +1,4 @@
-export type StageSignatureResult =
+export type CmsSignatureResult =
   | { ok: true; timestamp: string; signature: string }
   | { ok: false; status: number; message: string };
 
@@ -17,7 +17,7 @@ const timingSafeEqual = (a: string, b: string) => {
   return result === 0;
 };
 
-export const signStagePayload = async (secret: string, timestamp: string, body: string) => {
+export const signCmsWebhookPayload = async (secret: string, timestamp: string, body: string) => {
   const key = await crypto.subtle.importKey(
     'raw',
     encoder.encode(secret),
@@ -29,7 +29,7 @@ export const signStagePayload = async (secret: string, timestamp: string, body: 
   return toHex(signature);
 };
 
-export const verifyStageSignature = async ({
+export const verifyCmsWebhookSignature = async ({
   secret,
   timestamp,
   signatureHeader,
@@ -41,20 +41,20 @@ export const verifyStageSignature = async ({
   signatureHeader: string | null;
   body: string;
   now?: number;
-}): Promise<StageSignatureResult> => {
+}): Promise<CmsSignatureResult> => {
   if (!secret) return { ok: false, status: 500, message: 'Webhook secret is not configured.' };
-  if (!timestamp || !signatureHeader) return { ok: false, status: 400, message: 'Missing Stage signature headers.' };
+  if (!timestamp || !signatureHeader) return { ok: false, status: 400, message: 'Missing CMS signature headers.' };
 
   const timestampMs = Date.parse(timestamp);
-  if (!Number.isFinite(timestampMs)) return { ok: false, status: 400, message: 'Invalid Stage timestamp.' };
+  if (!Number.isFinite(timestampMs)) return { ok: false, status: 400, message: 'Invalid CMS timestamp.' };
   if (Math.abs(now - timestampMs) > MAX_TIMESTAMP_SKEW_MS) {
-    return { ok: false, status: 401, message: 'Stage signature timestamp is outside the allowed window.' };
+    return { ok: false, status: 401, message: 'CMS signature timestamp is outside the allowed window.' };
   }
 
   const signature = signatureHeader.replace(/^v1=/, '').trim();
-  const expected = await signStagePayload(secret, timestamp, body);
+  const expected = await signCmsWebhookPayload(secret, timestamp, body);
   if (!timingSafeEqual(signature, expected)) {
-    return { ok: false, status: 401, message: 'Invalid Stage signature.' };
+    return { ok: false, status: 401, message: 'Invalid CMS signature.' };
   }
 
   return { ok: true, timestamp, signature };

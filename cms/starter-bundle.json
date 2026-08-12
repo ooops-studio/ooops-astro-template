@@ -1,6 +1,6 @@
 {
   "formatVersion": "stage-template-bundle/v1",
-  "name": "Stage Astro Site Template Starter",
+  "name": "CMS Astro Site Template Starter",
   "contentTypes": [
     {
       "kind": "single",
@@ -120,19 +120,19 @@
       "publish": true,
       "payload": {
         "heading": {
-          "value": "Build a Stage-powered Astro site",
+          "value": "Build a CMS-powered Astro site",
           "localized": {}
         },
         "description": {
-          "value": "This template gives you a secure Stage API connection, starter CMS content, SEO metadata, sitemap support, and optional modules you can copy in when needed.",
+          "value": "This template gives you a secure CMS API connection, starter CMS content, SEO metadata, sitemap support, and optional modules you can copy in when needed.",
           "localized": {}
         },
         "seo-title": {
-          "value": "Stage Astro Site Template",
+          "value": "CMS Astro Site Template",
           "localized": {}
         },
         "seo-description": {
-          "value": "A minimal Astro template for public websites powered by Stage CMS.",
+          "value": "A minimal Astro template for public websites powered by Ooops CMS.",
           "localized": {}
         },
         "robots-index": {
@@ -151,16 +151,16 @@
       "apiId": "posts",
       "entries": [
         {
-          "title": "Hello from Stage",
-          "slug": "hello-from-stage",
+          "title": "Hello from CMS",
+          "slug": "hello-from-cms",
           "publish": true,
           "payload": {
             "title": {
-              "value": "Hello from Stage",
+              "value": "Hello from CMS",
               "localized": {}
             },
             "excerpt": {
-              "value": "A starter post created by the Stage Astro template bootstrap.",
+              "value": "A starter post created by the CMS Astro template bootstrap.",
               "localized": {}
             },
             "body": {
@@ -168,11 +168,11 @@
               "localized": {}
             },
             "seo-title": {
-              "value": "Hello from Stage",
+              "value": "Hello from CMS",
               "localized": {}
             },
             "seo-description": {
-              "value": "Starter content for a Stage-powered Astro site.",
+              "value": "Starter content for a CMS-powered Astro site.",
               "localized": {}
             }
           }

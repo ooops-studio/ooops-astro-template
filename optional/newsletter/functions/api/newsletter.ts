@@ -1,7 +1,7 @@
-import { createStagePublicFormsClient } from '@ooopsstudio/stage-api';
+import { createCmsPublicFormsClient } from '@ooopsstudio/cms-api';
 
 type Env = {
-  PUBLIC_STAGE_API_BASE_URL?: string;
+	PUBLIC_CMS_API_BASE_URL?: string;
   PUBLIC_NEWSLETTER_FORM_TOKEN?: string;
 };
 
@@ -21,12 +21,12 @@ export const onRequestPost = async ({ request, env }: PagesContext) => {
   if (String(formData.get('company') || '').trim()) return redirectWithStatus(request, 'success');
 
   const email = String(formData.get('email') || '').trim();
-  const baseUrl = env.PUBLIC_STAGE_API_BASE_URL?.replace(/\/$/, '') || '';
+	const baseUrl = env.PUBLIC_CMS_API_BASE_URL?.replace(/\/$/, '') || '';
   const token = env.PUBLIC_NEWSLETTER_FORM_TOKEN || '';
   if (!email || !baseUrl || !token) return redirectWithStatus(request, 'error');
 
-  const client = createStagePublicFormsClient({
-    baseUrl: baseUrl.endsWith('/api/stage/v1') ? baseUrl : `${baseUrl}/api/stage/v1`
+	const client = createCmsPublicFormsClient({
+		baseUrl: baseUrl.endsWith('/api/cms/v1') ? baseUrl : `${baseUrl}/api/cms/v1`
   });
 
   const response = await client.forms.submit(token, {

@@ -33,7 +33,7 @@ const requireEnv = (name, source) => {
   if (!String(env[name] ?? '').trim()) missing.push({ name, source });
 };
 
-requireEnv('OOOPS_STAGE_API_BASE_URL', 'core');
+requireEnv('OOOPS_CMS_API_BASE_URL', 'core');
 requireEnv('PUBLIC_SITE_URL', 'core');
 
 for (const manifest of manifests) {

@@ -1,11 +1,11 @@
 import {
-  handleStageRebuildWebhook,
-  jsonResponse,
-} from '@ooopsstudio/stage-cloudflare';
+	handleCmsRebuildWebhook,
+	jsonResponse,
+} from '@ooopsstudio/cms-cloudflare';
 
 type Env = {
   CLOUDFLARE_PAGES_DEPLOY_HOOK_URL?: string;
-  STAGE_WEBHOOK_SECRET?: string;
+	CMS_WEBHOOK_SECRET?: string;
 };
 
 type PagesContext = {
@@ -14,8 +14,8 @@ type PagesContext = {
 };
 
 export const onRequestPost = async ({ request, env }: PagesContext) => {
-  return handleStageRebuildWebhook(request, {
-    secret: env.STAGE_WEBHOOK_SECRET || '',
+	return handleCmsRebuildWebhook(request, {
+		secret: env.CMS_WEBHOOK_SECRET || '',
     deployHookUrl: env.CLOUDFLARE_PAGES_DEPLOY_HOOK_URL || ''
   });
 };

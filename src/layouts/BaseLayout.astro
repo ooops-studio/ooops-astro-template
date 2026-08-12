@@ -8,10 +8,10 @@ import AccessibilityMenu from '../components/AccessibilityMenu.astro';
 import Container from '../components/ui/Container.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import AnalyticsConsent from '../components/stage/AnalyticsConsent.astro';
-import PreviewBanner from '../components/stage/PreviewBanner.astro';
-import StageAnalytics from '../components/stage/StageAnalytics.astro';
-import type { SeoPayload } from '../lib/stage/types';
+import AnalyticsConsent from '../components/cms/AnalyticsConsent.astro';
+import PreviewBanner from '../components/cms/PreviewBanner.astro';
+import CmsAnalytics from '../components/cms/CmsAnalytics.astro';
+import type { SeoPayload } from '../lib/cms/types';
 
 type Props = {
   seo: SeoPayload;
@@ -65,6 +65,6 @@ const jsonLdPayloads = Array.isArray(seo.jsonLd) ? seo.jsonLd : seo.jsonLd ? [se
     <AccessibilityMenu />
     <PreviewBanner active={preview} exitPath={previewExitPath} />
     {!preview ? <AnalyticsConsent /> : null}
-    {!preview ? <StageAnalytics /> : null}
+    {!preview ? <CmsAnalytics /> : null}
   </body>
 </html>

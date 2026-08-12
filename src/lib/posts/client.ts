@@ -1,7 +1,7 @@
-import { getStageCollectionEntries, getStageCollectionEntry } from '../stage/client';
-import { asRecord, asString, mediaAlt, mediaUrl, type PublicMediaMap } from '../stage/content-helpers';
-import { seoFromFields } from '../stage/seo';
-import type { SeoPayload } from '../stage/types';
+import { getCmsCollectionEntries, getCmsCollectionEntry } from '../cms/client';
+import { asRecord, asString, mediaAlt, mediaUrl, type PublicMediaMap } from '../cms/content-helpers';
+import { seoFromFields } from '../cms/seo';
+import type { SeoPayload } from '../cms/types';
 
 export type PostSummary = {
   id: string;
@@ -63,12 +63,12 @@ const mapPostDetail = (entry: Record<string, unknown>): PostDetail => {
 };
 
 export const getPosts = async (): Promise<PostSummary[]> => {
-  const entries = await getStageCollectionEntries('posts');
+  const entries = await getCmsCollectionEntries('posts');
   return (entries as Record<string, unknown>[] | undefined)?.map(mapPostSummary).filter((post) => post.slug) ?? [];
 };
 
 export const getPost = async (slug: string): Promise<PostDetail | null> => {
-  const entry = await getStageCollectionEntry('posts', slug);
+  const entry = await getCmsCollectionEntry('posts', slug);
   return entry ? mapPostDetail(entry) : null;
 };
 

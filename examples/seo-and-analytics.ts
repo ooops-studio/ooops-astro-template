@@ -1,10 +1,10 @@
-import { createExampleStageClient } from './stage-request';
+import { createExampleCmsClient } from './cms-request';
 
-const stage = createExampleStageClient();
+const cms = createExampleCmsClient();
 
 const [seo, overview] = await Promise.all([
-  stage.seo.get<{ ok: true; site?: unknown; targets?: Array<{ id: string; routePattern: string; targetKind: string }> }>(),
-  stage.analytics.overview<{ ok: true; summary?: Record<string, unknown> }>({ range: '30d' })
+  cms.seo.get<{ ok: true; site?: unknown; targets?: Array<{ id: string; routePattern: string; targetKind: string }> }>(),
+  cms.analytics.overview<{ ok: true; summary?: Record<string, unknown> }>({ range: '30d' })
 ]);
 
 console.log('SEO targets');

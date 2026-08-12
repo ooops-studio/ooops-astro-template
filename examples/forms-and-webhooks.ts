@@ -1,9 +1,9 @@
-import { createExampleStageClient } from './stage-request';
+import { createExampleCmsClient } from './cms-request';
 
-const stage = createExampleStageClient();
+const cms = createExampleCmsClient();
 const webhookUrl = process.env.WEBHOOK_RECEIVER_URL ?? '';
 
-const forms = await stage.forms.list<{
+const forms = await cms.forms.list<{
   ok: true;
   forms?: Array<{ id: string; title: string; shareToken?: string | null }>;
   items?: Array<{ id: string; title: string; shareToken?: string | null }>;
@@ -15,7 +15,7 @@ for (const form of forms.forms ?? forms.items ?? []) {
 }
 
 if (webhookUrl) {
-  const webhook = await stage.webhooks.create<{
+  const webhook = await cms.webhooks.create<{
     ok: true;
     subscription: { id: string; name: string; eventTypes: string[] };
     signingSecret?: string;

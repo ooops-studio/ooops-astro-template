@@ -1,6 +1,6 @@
-import { asRecord, asString } from '../stage/content-helpers';
-import { seoFromFields } from '../stage/seo';
-import type { SeoPayload } from '../stage/types';
+import { asRecord, asString } from '../cms/content-helpers';
+import { seoFromFields } from '../cms/seo';
+import type { SeoPayload } from '../cms/types';
 
 export type PreviewContent = { body: string; description: string; fields: Array<{ key: string; value: string }>; seo: SeoPayload; title: string };
 const displayValue = (value: unknown) => typeof value === 'string' ? value : typeof value === 'number' || typeof value === 'boolean' ? String(value) : value === null || value === undefined ? '' : JSON.stringify(value, null, 2);

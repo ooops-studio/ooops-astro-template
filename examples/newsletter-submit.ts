@@ -1,4 +1,4 @@
-const baseUrl = (process.env.PUBLIC_STAGE_API_BASE_URL ?? 'http://stage.localhost:4275').replace(/\/$/, '');
+const baseUrl = (process.env.PUBLIC_CMS_API_BASE_URL ?? 'http://cms.localhost:4175').replace(/\/$/, '');
 const token = process.env.PUBLIC_NEWSLETTER_FORM_TOKEN ?? '';
 const email = process.argv[2] ?? 'subscriber@example.com';
 
@@ -6,7 +6,7 @@ if (!token) {
   throw new Error('Set PUBLIC_NEWSLETTER_FORM_TOKEN before running this example.');
 }
 
-const response = await fetch(`${baseUrl}/api/stage/v1/forms/shares/${encodeURIComponent(token)}/submissions`, {
+const response = await fetch(`${baseUrl}/api/cms/v1/forms/shares/${encodeURIComponent(token)}/submissions`, {
   method: 'POST',
   headers: { 'content-type': 'application/json' },
   body: JSON.stringify({

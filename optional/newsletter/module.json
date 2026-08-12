@@ -1,11 +1,11 @@
 {
   "id": "newsletter",
-  "label": "Newsletter via Stage Forms",
+  "label": "Newsletter via CMS Forms",
   "defaultEnabled": false,
   "readme": "optional/newsletter/README.md",
-  "deps": ["@ooopsstudio/stage-api"],
+  "deps": ["@ooopsstudio/cms-api"],
   "env": [
-    { "name": "PUBLIC_STAGE_API_BASE_URL", "required": true, "example": "http://stage.localhost:4275" },
+    { "name": "PUBLIC_CMS_API_BASE_URL", "required": true, "example": "http://cms.localhost:4175" },
     { "name": "PUBLIC_NEWSLETTER_FORM_TOKEN", "required": true }
   ],
   "files": [

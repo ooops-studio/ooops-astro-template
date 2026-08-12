@@ -1,4 +1,4 @@
-import { stageApiBaseUrl } from './env';
+import { cmsApiBaseUrl } from './env';
 
 export type LocalizedValue = string | null | undefined | Record<string, string | null | undefined>;
 export type PublicMediaMap = Record<string, Record<string, unknown>>;
@@ -31,16 +31,16 @@ export const asArray = (value: unknown): unknown[] => (Array.isArray(value) ? va
 export const asString = (value: unknown): string =>
   typeof value === 'string' && value.trim() ? value.trim() : '';
 
-const stageOrigin = stageApiBaseUrl.replace(/\/api\/stage\/v1\/?$/, '');
+const cmsOrigin = cmsApiBaseUrl.replace(/\/api\/cms\/v1\/?$/, '');
 
 export const normalizeAssetUrl = (url: string | null | undefined): string | null => {
   if (!url) return null;
-  if (!stageOrigin) return url;
+  if (!cmsOrigin) return url;
 
   try {
     const parsed = new URL(url);
     if (parsed.hostname === 'localhost' && parsed.pathname.startsWith('/assets/')) {
-      return `${stageOrigin}${parsed.pathname}${parsed.search}`;
+      return `${cmsOrigin}${parsed.pathname}${parsed.search}`;
     }
   } catch {
     return url;
@@ -73,7 +73,7 @@ export const mediaAlt = (value: unknown, fallback = '', mediaMap?: PublicMediaMa
   return asString(record.alt) || asString(record.altText) || fallback;
 };
 
-export const stageImageWidths = [320, 640, 960, 1280, 1600];
+export const cmsImageWidths = [320, 640, 960, 1280, 1600];
 
 export const withImageWidth = (url: string, width: number): string => {
   try {
@@ -86,7 +86,7 @@ export const withImageWidth = (url: string, width: number): string => {
   }
 };
 
-export const imageSrcSet = (src: string | null, widths = stageImageWidths): string | null => {
+export const imageSrcSet = (src: string | null, widths = cmsImageWidths): string | null => {
   if (!src) return null;
   return widths.map((width) => `${withImageWidth(src, width)} ${width}w`).join(', ');
 };

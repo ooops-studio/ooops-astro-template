@@ -1,5 +1,5 @@
 ---
-import { imageSrcSet, mediaAlt, mediaUrl, normalizeAssetUrl, stageImageWidths } from '../../lib/stage/content-helpers';
+import { cmsImageWidths, imageSrcSet, mediaAlt, mediaUrl, normalizeAssetUrl } from '../../lib/cms/content-helpers';
 
 type Props = {
   asset?: unknown;
@@ -37,15 +37,15 @@ const resolvedSrc = normalizeAssetUrl(src || '') || mediaUrl(asset) || fallbackS
 const resolvedAlt = alt ?? mediaAlt(asset, '');
 const resolvedLoading = priority ? 'eager' : loading;
 const resolvedFetchPriority = priority ? 'high' : undefined;
-const resolvedSrcset = srcset ?? (responsive && resolvedSrc !== fallbackSrc ? imageSrcSet(resolvedSrc, stageImageWidths) : null);
+const resolvedSrcset = srcset ?? (responsive && resolvedSrc !== fallbackSrc ? imageSrcSet(resolvedSrc, cmsImageWidths) : null);
 
 if (import.meta.env.DEV && asset && !resolvedAlt) {
-  console.warn('[StageImage] Missing alt text for Stage media asset.', asset);
+  console.warn('[CmsImage] Missing alt text for CMS media asset.', asset);
 }
 ---
 
 <img
-  class:list={['stage-image', className]}
+  class:list={['cms-image', className]}
   src={resolvedSrc}
   alt={resolvedAlt}
   srcset={resolvedSrcset}
@@ -58,12 +58,12 @@ if (import.meta.env.DEV && asset && !resolvedAlt) {
 />
 
 <style>
-  .stage-image {
+  .cms-image {
     display: block;
     max-width: 100%;
     height: auto;
-    border-radius: var(--stage-image-radius, var(--radius-md));
-    object-fit: var(--stage-image-fit, cover);
+    border-radius: var(--cms-image-radius, var(--radius-md));
+    object-fit: var(--cms-image-fit, cover);
     background: var(--color-surface-muted);
   }
 </style>

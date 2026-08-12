@@ -7,7 +7,7 @@ const metaContent = async(page: import('@playwright/test').Page, selector: strin
 test('home output exposes complete crawl and sharing metadata', async({page}) => {
 	await page.goto('/')
 
-	await expect(page).toHaveTitle(/Stage Astro Site/)
+	await expect(page).toHaveTitle(/Ooops CMS Astro Site/)
 	expect(await metaContent(page, 'meta[name="description"]')).toBeTruthy()
 	expect(await page.locator('link[rel="canonical"]').getAttribute('href')).toMatch(/\/$/)
 	expect(await metaContent(page, 'meta[property="og:type"]')).toBe('website')
@@ -26,9 +26,9 @@ test('home output exposes complete crawl and sharing metadata', async({page}) =>
 test('contact output carries its own canonical and social metadata', async({page}) => {
 	await page.goto('/contact/')
 
-	await expect(page).toHaveTitle('Contact | Stage Astro Site')
+	await expect(page).toHaveTitle('Contact | Ooops CMS Astro Site')
 	expect(await page.locator('link[rel="canonical"]').getAttribute('href')).toMatch(/\/contact$/)
-	expect(await metaContent(page, 'meta[property="og:title"]')).toBe('Contact | Stage Astro Site')
+	expect(await metaContent(page, 'meta[property="og:title"]')).toBe('Contact | Ooops CMS Astro Site')
 	expect(await metaContent(page, 'meta[property="og:description"]')).toBe('Contact form powered by the canonical Ooops UI components.')
 	expect(await metaContent(page, 'meta[name="twitter:card"]')).toBe('summary')
 })

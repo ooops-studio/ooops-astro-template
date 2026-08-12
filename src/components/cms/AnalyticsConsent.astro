@@ -8,23 +8,23 @@ const truthy = (value: string | undefined, fallback = false) => {
 };
 
 const analyticsConfigured = Boolean(
-  import.meta.env.PUBLIC_STAGE_ANALYTICS_SCRIPT_URL && import.meta.env.PUBLIC_STAGE_ANALYTICS_WEBSITE_ID
+  import.meta.env.PUBLIC_CMS_ANALYTICS_SCRIPT_URL && import.meta.env.PUBLIC_CMS_ANALYTICS_WEBSITE_ID
 );
-const performanceEnabled = truthy(import.meta.env.PUBLIC_STAGE_ANALYTICS_PERFORMANCE_ENABLED, false);
-const replayEnabled = truthy(import.meta.env.PUBLIC_STAGE_ANALYTICS_REPLAY_ENABLED, false);
+const performanceEnabled = truthy(import.meta.env.PUBLIC_CMS_ANALYTICS_PERFORMANCE_ENABLED, false);
+const replayEnabled = truthy(import.meta.env.PUBLIC_CMS_ANALYTICS_REPLAY_ENABLED, false);
 const enabled = analyticsConfigured;
 const categories: OptionalConsentCategory[] = [
   ...(performanceEnabled ? ['performance' as const] : []),
   ...(replayEnabled ? ['replay' as const] : [])
 ];
-const preferencesConfigId = 'stage-analytics-preferences-config';
+const preferencesConfigId = 'cms-analytics-preferences-config';
 const preferencesConfig = JSON.stringify({
   privacyHref: '/privacy',
   consentDurationDays: 180,
   noticeVersion: 'consent-v3',
   policyVersion: 'privacy-v1',
   categories,
-  className: 'stage-consent'
+  className: 'cms-consent'
 }).replace(/[<>&\u2028\u2029]/g, (character) => ({
   '<': '\\u003c',
   '>': '\\u003e',
@@ -36,7 +36,7 @@ const preferencesConfig = JSON.stringify({
 
 <CookieBanner
   enabled={enabled}
-  id="stage-analytics-consent"
+  id="cms-analytics-consent"
   variant="compact"
   position="bottom-right"
   theme="auto"
@@ -45,7 +45,7 @@ const preferencesConfig = JSON.stringify({
   noticeVersion="consent-v3"
   policyVersion="privacy-v1"
   categories={categories}
-  className="stage-consent"
+  className="cms-consent"
 />
 
 {
@@ -58,7 +58,7 @@ const preferencesConfig = JSON.stringify({
         const mountPreferences = () => {
           document.querySelectorAll('[data-ooops-consent-preferences]').forEach((button) => {
             if (!(button instanceof HTMLButtonElement) || button.dataset.ooopsConsentPreferencesMounted === 'true') return;
-            const config = document.getElementById('stage-analytics-preferences-config');
+            const config = document.getElementById('cms-analytics-preferences-config');
             if (!config?.textContent) return;
             button.dataset.ooopsConsentPreferencesMounted = 'true';
             button.addEventListener('click', () => openConsentPreferences(JSON.parse(config.textContent)));

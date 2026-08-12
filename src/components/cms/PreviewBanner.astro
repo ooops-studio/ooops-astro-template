@@ -8,9 +8,9 @@ const { active = false, exitPath = '/' } = Astro.props;
 const exitHref = `/preview/content/exit?redirect=${encodeURIComponent(exitPath)}`;
 ---
 
-<aside class="preview-banner" role="status" data-stage-preview-banner data-server-preview={active ? 'true' : undefined} hidden={!active}>
+<aside class="preview-banner" role="status" data-cms-preview-banner data-server-preview={active ? 'true' : undefined} hidden={!active}>
   <span>Preview mode</span>
-  <a href={exitHref} data-stage-preview-exit>Exit preview</a>
+  <a href={exitHref} data-cms-preview-exit>Exit preview</a>
 </aside>
 
 <style>

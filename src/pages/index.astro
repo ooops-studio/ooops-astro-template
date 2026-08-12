@@ -3,17 +3,17 @@ import Button from '../components/ui/Button.astro';
 import IslandStatus from '../components/islands/IslandStatus.svelte';
 import Section from '../components/ui/Section.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getHome } from '../lib/stage/homepage';
+import { getHome } from '../lib/cms/homepage';
 
 const home = await getHome();
-const headingLines = home.heading === 'Build a Stage-powered Astro site'
-  ? ['Build a', 'Stage-powered', 'Astro site']
+const headingLines = home.heading === 'Build an Ooops CMS-powered Astro site'
+  ? ['Build an', 'Ooops CMS-powered', 'Astro site']
   : [home.heading];
 ---
 
 <BaseLayout seo={home.seo}>
   <Section spacing="lg" class="hero" editorId="home-hero" editorSource="src/pages/index.astro">
-    <span class="eyebrow">Stage CMS + Astro</span>
+    <span class="eyebrow">Ooops CMS + Astro</span>
     <h1>
       {headingLines.map((line) => <span>{line}</span>)}
     </h1>

@@ -10,7 +10,8 @@
     { "name": "OOOPS_CMS_PREVIEW_SESSION_SECRET", "required": true }
   ],
   "files": [
-    { "from": "optional/preview/src/components/stage/PreviewContent.astro", "to": "src/components/stage/PreviewContent.astro" },
+    { "from": "optional/preview/src/components/cms/PreviewBanner.astro", "to": "src/components/cms/PreviewBanner.astro" },
+    { "from": "optional/preview/src/components/cms/PreviewContent.astro", "to": "src/components/cms/PreviewContent.astro" },
     { "from": "optional/preview/src/lib/cms-preview/client.ts", "to": "src/lib/cms-preview/client.ts" },
     { "from": "optional/preview/src/lib/cms-preview/content.ts", "to": "src/lib/cms-preview/content.ts" },
     { "from": "optional/preview/src/lib/cms-preview/session.ts", "to": "src/lib/cms-preview/session.ts" },
@@ -19,7 +20,7 @@
     { "from": "optional/preview/src/pages/preview/content/collections/[apiId]/[slug].astro", "to": "src/pages/preview/content/collections/[apiId]/[slug].astro" }
   ],
   "cleanupTargets": [
-    "src/components/stage/PreviewContent.astro",
+    "src/components/cms/PreviewContent.astro",
     "src/lib/cms-preview",
     "src/pages/preview/content"
   ],

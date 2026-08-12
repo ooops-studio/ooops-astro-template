@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { createStageClient } from '@ooopsstudio/stage-api';
+import { createCmsClient } from '@ooopsstudio/cms-api';
 
 const loadLocalEnv = async () => {
   for (const fileName of ['.env.local', '.env']) {
@@ -21,18 +21,18 @@ const loadLocalEnv = async () => {
 
 await loadLocalEnv();
 
-const baseUrl = (process.env.OOOPS_STAGE_API_BASE_URL || process.env.STAGE_API_BASE_URL || '').replace(/\/+$/, '');
-const token = process.env.OOOPS_STAGE_API_TOKEN || process.env.STAGE_API_TOKEN || '';
-const bundlePath = resolve(process.cwd(), process.argv[2] || 'stage/starter-bundle.json');
+const baseUrl = (process.env.OOOPS_CMS_API_BASE_URL || '').replace(/\/+$/, '');
+const token = process.env.OOOPS_CMS_API_TOKEN || '';
+const bundlePath = resolve(process.cwd(), process.argv[2] || 'cms/starter-bundle.json');
 
 if (!baseUrl || !token) {
-  console.error('[stage-bootstrap] Set OOOPS_STAGE_API_BASE_URL and OOOPS_STAGE_API_TOKEN before running bootstrap.');
+  console.error('[cms-bootstrap] Set OOOPS_CMS_API_BASE_URL and OOOPS_CMS_API_TOKEN before running bootstrap.');
   process.exit(1);
 }
 
 const readBundle = async () => JSON.parse(await readFile(bundlePath, 'utf8'));
 
-const stage = createStageClient({ baseUrl, token });
+const cms = createCmsClient({ baseUrl, token });
 
 const printCounts = (label, counts = {}) => {
   const entries = Object.entries(counts).filter(([, value]) => Number(value) > 0);
@@ -45,21 +45,21 @@ const printCounts = (label, counts = {}) => {
 
 try {
   const bundle = await readBundle();
-  const validation = await stage.imports.validate(bundle);
+  const validation = await cms.imports.validate(bundle);
 
   if (!validation?.ok || !validation.valid) {
-    console.error('[stage-bootstrap] Bundle validation failed.');
+    console.error('[cms-bootstrap] Bundle validation failed.');
     for (const error of validation?.errors ?? []) {
       console.error(`  - ${error.code || 'error'}: ${error.message || JSON.stringify(error)}`);
     }
     process.exit(1);
   }
 
-  console.log('[stage-bootstrap] Bundle is valid.');
+  console.log('[cms-bootstrap] Bundle is valid.');
   printCounts('Planned resources', validation.counts);
 
-  const result = await stage.imports.apply(bundle);
-  console.log('[stage-bootstrap] Bootstrap complete.');
+  const result = await cms.imports.apply(bundle);
+  console.log('[cms-bootstrap] Bootstrap complete.');
   printCounts('Created', result.summary?.creates);
   printCounts('Updated', result.summary?.updates);
   printCounts('Skipped', result.summary?.skips);
@@ -79,9 +79,9 @@ try {
   }
 } catch (error) {
   if (typeof error === 'object' && error !== null && 'status' in error) {
-    console.error(`[stage-bootstrap] Stage API error ${error.status} (${error.code || 'unknown'}): ${error.message}`);
+    console.error(`[cms-bootstrap] CMS API error ${error.status} (${error.code || 'unknown'}): ${error.message}`);
   } else {
-    console.error(`[stage-bootstrap] ${error instanceof Error ? error.message : String(error)}`);
+    console.error(`[cms-bootstrap] ${error instanceof Error ? error.message : String(error)}`);
   }
   process.exit(1);
 }

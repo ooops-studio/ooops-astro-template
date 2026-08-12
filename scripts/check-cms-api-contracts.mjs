@@ -45,9 +45,9 @@ const requiredFiles = [
   'docs/svelte-islands.md',
   'docs/testing.md',
   'docs/ui-components.md',
-  'functions/api/stage/rebuild.ts',
-  'scripts/test-stage-webhook-signature.mjs',
-  'scripts/test-stage-signature.mjs',
+  'functions/api/cms/rebuild.ts',
+  'scripts/test-cms-webhook-signature.mjs',
+  'scripts/test-cms-signature.mjs',
   'scripts/test-i18n-helpers.mjs',
   'scripts/test-newsletter-module.mjs',
   'scripts/test-template-modules.mjs',
@@ -57,11 +57,11 @@ const requiredFiles = [
   'scripts/check-content-health.mjs',
   'scripts/setup-client-project.mjs',
   'scripts/setup-module.mjs',
-  'src/components/stage/AnalyticsConsent.astro',
-  'src/components/stage/PreviewBanner.astro',
-  'src/components/stage/PreviewContent.astro',
-  'src/components/stage/StageAnalytics.astro',
-  'src/components/stage/StageImage.astro',
+  'src/components/cms/AnalyticsConsent.astro',
+  'src/components/cms/PreviewBanner.astro',
+  'src/components/cms/PreviewContent.astro',
+  'src/components/cms/CmsAnalytics.astro',
+  'src/components/cms/CmsImage.astro',
   'src/components/islands/IslandStatus.svelte',
   'src/components/ui/ErrorState.astro',
   'src/components/ui/InputField.astro',
@@ -83,10 +83,10 @@ const requiredFiles = [
   'src/components/editor/EditorBoundary.astro',
   'src/lib/posts/client.ts',
   'src/lib/posts/sitemap.ts',
-  'src/lib/stage/client.ts',
-  'src/lib/stage/content-helpers.ts',
-  'src/lib/stage/homepage.ts',
-  'src/lib/stage/mappers.ts',
+  'src/lib/cms/client.ts',
+  'src/lib/cms/content-helpers.ts',
+  'src/lib/cms/homepage.ts',
+  'src/lib/cms/mappers.ts',
   'src/lib/seo/sitemap.ts',
   'src/lib/seo/schema.ts',
   'src/lib/cms-preview/client.ts',
@@ -134,15 +134,14 @@ const forbiddenLocalEnvFiles = [
 ];
 
 const requiredBlankExampleSecrets = [
-  'OOOPS_STAGE_API_TOKEN',
   'OOOPS_CMS_API_TOKEN',
   'OOOPS_CMS_PREVIEW_SESSION_SECRET',
   'PUBLIC_NEWSLETTER_FORM_TOKEN',
-  'PUBLIC_STAGE_ANALYTICS_SCRIPT_URL',
-  'PUBLIC_STAGE_ANALYTICS_WEBSITE_ID',
-  'PUBLIC_STAGE_ANALYTICS_REPLAY_SCRIPT_URL',
+  'PUBLIC_CMS_ANALYTICS_SCRIPT_URL',
+  'PUBLIC_CMS_ANALYTICS_WEBSITE_ID',
+  'PUBLIC_CMS_ANALYTICS_REPLAY_SCRIPT_URL',
   'CLOUDFLARE_PAGES_DEPLOY_HOOK_URL',
-  'STAGE_WEBHOOK_SECRET'
+  'CMS_WEBHOOK_SECRET'
 ];
 
 const browserFacingRoots = [
@@ -211,8 +210,8 @@ function walk(directory) {
 }
 
 const activeRequiredFiles = requiredFiles.filter((file) => {
-  if (file === 'src/components/stage/PreviewContent.astro' || file.startsWith('src/lib/cms-preview/') || file.startsWith('src/pages/preview/content/')) return moduleEnabled('preview');
-  if (file === 'functions/api/stage/rebuild.ts') return moduleEnabled('rebuildWebhook');
+  if (file === 'src/components/cms/PreviewContent.astro' || file.startsWith('src/lib/cms-preview/') || file.startsWith('src/pages/preview/content/')) return moduleEnabled('preview');
+  if (file === 'functions/api/cms/rebuild.ts') return moduleEnabled('rebuildWebhook');
   if (file === 'src/pages/posts/index.astro' || file === 'src/pages/posts/[slug].astro') return moduleEnabled('posts');
   if (file === 'src/components/islands/IslandStatus.svelte') return moduleEnabled('svelteIslands');
   return true;
@@ -234,20 +233,20 @@ for (const file of forbiddenLocalEnvFiles) {
 }
 
 const envExample = read('.env.example');
-const enabledSensitiveEnv = new Set(['OOOPS_STAGE_API_TOKEN']);
+const enabledSensitiveEnv = new Set(['OOOPS_CMS_API_TOKEN']);
 if (moduleEnabled('preview')) {
   enabledSensitiveEnv.add('OOOPS_CMS_API_TOKEN');
   enabledSensitiveEnv.add('OOOPS_CMS_PREVIEW_SESSION_SECRET');
 }
 if (moduleEnabled('newsletter')) enabledSensitiveEnv.add('PUBLIC_NEWSLETTER_FORM_TOKEN');
 if (moduleEnabled('analytics')) {
-  enabledSensitiveEnv.add('PUBLIC_STAGE_ANALYTICS_SCRIPT_URL');
-  enabledSensitiveEnv.add('PUBLIC_STAGE_ANALYTICS_WEBSITE_ID');
-  enabledSensitiveEnv.add('PUBLIC_STAGE_ANALYTICS_REPLAY_SCRIPT_URL');
+  enabledSensitiveEnv.add('PUBLIC_CMS_ANALYTICS_SCRIPT_URL');
+  enabledSensitiveEnv.add('PUBLIC_CMS_ANALYTICS_WEBSITE_ID');
+  enabledSensitiveEnv.add('PUBLIC_CMS_ANALYTICS_REPLAY_SCRIPT_URL');
 }
 if (moduleEnabled('rebuildWebhook')) {
   enabledSensitiveEnv.add('CLOUDFLARE_PAGES_DEPLOY_HOOK_URL');
-  enabledSensitiveEnv.add('STAGE_WEBHOOK_SECRET');
+  enabledSensitiveEnv.add('CMS_WEBHOOK_SECRET');
 }
 
 for (const variable of requiredBlankExampleSecrets.filter((item) => enabledSensitiveEnv.has(item))) {
@@ -373,30 +372,30 @@ for (const manifest of manifests) {
   }
 }
 
-const stageSource = [
-  read('src/lib/stage/client.ts'),
-  read('src/lib/stage/homepage.ts'),
+const cmsSource = [
+  read('src/lib/cms/client.ts'),
+  read('src/lib/cms/homepage.ts'),
   read('src/lib/posts/client.ts')
 ].join('\n');
 
-const stageClientSource = read('src/lib/stage/client.ts');
-if (!stageClientSource.includes("@ooopsstudio/stage-api")) {
-  fail('src/lib/stage/client.ts must use @ooopsstudio/stage-api.');
+const cmsClientSource = read('src/lib/cms/client.ts');
+if (!cmsClientSource.includes("@ooopsstudio/cms-api")) {
+  fail('src/lib/cms/client.ts must use @ooopsstudio/cms-api.');
 }
-if (!stageClientSource.includes("@ooopsstudio/stage-astro")) {
-  fail('src/lib/stage/client.ts must use @ooopsstudio/stage-astro for Astro env/client setup.');
+if (!cmsClientSource.includes("@ooopsstudio/cms-astro")) {
+  fail('src/lib/cms/client.ts must use @ooopsstudio/cms-astro for Astro env/client setup.');
 }
-for (const forbidden of ['class OoopsStageClient', 'authorization:', 'Bearer ${', 'fetchImpl']) {
-  if (stageClientSource.includes(forbidden)) {
-    fail(`src/lib/stage/client.ts must not reimplement a low-level Stage REST client (${forbidden}).`);
+for (const forbidden of ['class OoopsCmsClient', 'authorization:', 'Bearer ${', 'fetchImpl']) {
+  if (cmsClientSource.includes(forbidden)) {
+    fail(`src/lib/cms/client.ts must not reimplement a low-level CMS REST client (${forbidden}).`);
   }
 }
 
 const cloudflareFunctionSource = [
-  moduleEnabled('rebuildWebhook') && exists('functions/api/stage/rebuild.ts') ? read('functions/api/stage/rebuild.ts') : ''
+  moduleEnabled('rebuildWebhook') && exists('functions/api/cms/rebuild.ts') ? read('functions/api/cms/rebuild.ts') : ''
 ].join('\n');
-if (moduleEnabled('rebuildWebhook') && !cloudflareFunctionSource.includes('@ooopsstudio/stage-cloudflare')) {
-  fail('Cloudflare Functions must use @ooopsstudio/stage-cloudflare helpers.');
+if (moduleEnabled('rebuildWebhook') && !cloudflareFunctionSource.includes('@ooopsstudio/cms-cloudflare')) {
+  fail('Cloudflare Functions must use @ooopsstudio/cms-cloudflare helpers.');
 }
 
 for (const [file, label] of [
@@ -404,17 +403,17 @@ for (const [file, label] of [
   ['src/lib/seo/schema.ts', 'schema.org'],
   ['src/lib/i18n/routing.ts', 'i18n routing']
 ]) {
-  if (!read(file).includes('@ooopsstudio/stage-astro')) {
-    fail(`${file} must delegate generic ${label} helpers to @ooopsstudio/stage-astro.`);
+  if (!read(file).includes('@ooopsstudio/cms-astro')) {
+    fail(`${file} must delegate generic ${label} helpers to @ooopsstudio/cms-astro.`);
   }
 }
 
-if (!stageSource.includes('getStageSingle') && !stageSource.includes('getSingle')) {
-  fail('Expected Stage API v1 single-type client usage was not found.');
+if (!cmsSource.includes('getCmsSingle') && !cmsSource.includes('getSingle')) {
+  fail('Expected CMS API v1 single-type client usage was not found.');
 }
 
-if (!stageSource.includes('getStageCollectionEntries') && !stageSource.includes('listCollectionEntries')) {
-  fail('Expected Stage API v1 collection client usage was not found.');
+if (!cmsSource.includes('getCmsCollectionEntries') && !cmsSource.includes('listCollectionEntries')) {
+  fail('Expected CMS API v1 collection client usage was not found.');
 }
 
 const packageScripts = packageJson.scripts && typeof packageJson.scripts === 'object' ? packageJson.scripts : {};
@@ -445,7 +444,7 @@ for (const file of walk(root)) {
   }
 
   if (browserFacingRoots.some((prefix) => file.startsWith(prefix))) {
-    for (const secret of ['OOOPS_STAGE_API_TOKEN', 'STAGE_API_TOKEN', 'STAGE_PREVIEW_TOKEN', 'STAGE_PREVIEW_SECRET', 'OOOPS_CMS_API_TOKEN', 'OOOPS_CMS_PREVIEW_SESSION_SECRET']) {
+    for (const secret of ['OOOPS_CMS_API_TOKEN', 'CMS_PREVIEW_TOKEN', 'CMS_PREVIEW_SECRET', 'OOOPS_CMS_PREVIEW_SESSION_SECRET']) {
       if (source.includes(secret)) {
         fail(`Browser-facing file must not reference ${secret}: ${file}`);
       }
@@ -455,8 +454,8 @@ for (const file of walk(root)) {
 
 for (const [file, forbidden] of Object.entries({
   'src/components/AccessibilityMenu.astro': ['localStorage', 'createModalFocusController', 'addEventListener'],
-  'src/components/stage/AnalyticsConsent.astro': ['localStorage', 'createConsentBanner', 'setConsent(', 'revokeConsent('],
-  'src/components/stage/StageAnalytics.astro': ['configurePublicAnalytics(', 'addEventListener'],
+  'src/components/cms/AnalyticsConsent.astro': ['localStorage', 'createConsentBanner', 'setConsent(', 'revokeConsent('],
+  'src/components/cms/CmsAnalytics.astro': ['configurePublicAnalytics(', 'addEventListener'],
   'src/components/ui/SelectField.astro': ['addEventListener', 'role="listbox"', 'keydown'],
   'src/components/ui/Dialog.astro': ['showModal(', 'addEventListener', 'keydown'],
   'src/components/ui/Modal.astro': ['showModal(', 'addEventListener', 'keydown'],
@@ -472,4 +471,4 @@ if (process.exitCode) {
   process.exit(process.exitCode);
 }
 
-console.log('[template-guard] Stage API and template guard passed.');
+console.log('[template-guard] CMS API and template guard passed.');

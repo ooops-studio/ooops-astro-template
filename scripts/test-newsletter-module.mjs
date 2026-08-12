@@ -8,13 +8,13 @@ assert.match(source, /name="email"/);
 assert.match(source, /type="email"/);
 assert.match(source, /required/);
 assert.match(source, /name="company"/);
-assert.doesNotMatch(source, /STAGE_API_TOKEN/);
-assert.doesNotMatch(source, /OOOPS_STAGE_API_TOKEN/);
-assert.match(functionSource, /PUBLIC_STAGE_API_BASE_URL/);
+assert.doesNotMatch(source, /CMS_API_TOKEN/);
+assert.doesNotMatch(source, /OOOPS_CMS_API_TOKEN/);
+assert.match(functionSource, /PUBLIC_CMS_API_BASE_URL/);
 assert.match(functionSource, /PUBLIC_NEWSLETTER_FORM_TOKEN/);
 assert.match(functionSource, /answers: \{ email \}/);
 assert.match(functionSource, /submitterIdentity: \{ email \}/);
-assert.doesNotMatch(functionSource, /STAGE_API_TOKEN/);
-assert.doesNotMatch(functionSource, /OOOPS_STAGE_API_TOKEN/);
+assert.doesNotMatch(functionSource, /CMS_API_TOKEN/);
+assert.doesNotMatch(functionSource, /OOOPS_CMS_API_TOKEN/);
 
 console.log('[newsletter-test] Optional newsletter module passed.');

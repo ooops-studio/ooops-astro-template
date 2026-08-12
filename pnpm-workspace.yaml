@@ -24,8 +24,8 @@ overrides:
   '@ooopsstudio/editor-astro': file:../ooops-editor/packages/astro
   '@ooopsstudio/editor-protocol': file:../ooops-editor/packages/protocol
   '@ooopsstudio/editor-source-engine': file:../ooops-editor/packages/source-engine
-  '@ooopsstudio/stage-api': file:../ooops-suite-stage-packages/packages/stage-api
-  '@ooopsstudio/stage-astro': file:../ooops-suite-stage-packages/packages/stage-astro
-  '@ooopsstudio/stage-cloudflare': file:../ooops-suite-stage-packages/packages/stage-cloudflare
+  '@ooopsstudio/cms-api': file:../ooops-suite-stage-packages/packages/cms-api
+  '@ooopsstudio/cms-astro': file:../ooops-suite-stage-packages/packages/cms-astro
+  '@ooopsstudio/cms-cloudflare': file:../ooops-suite-stage-packages/packages/cms-cloudflare
   '@ooopsstudio/ui-primitives': file:../ooops-ui/packages/ui-primitives
   '@ooopsstudio/ui-astro': file:../ooops-ui/packages/ui-astro

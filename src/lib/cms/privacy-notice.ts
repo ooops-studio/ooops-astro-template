@@ -1,12 +1,12 @@
 import type { AnalyticsProviderManifest, PrivacyNoticeConfig } from '@ooopsstudio/analytics-consent/privacy';
 
-const scriptUrl = import.meta.env.PUBLIC_STAGE_ANALYTICS_SCRIPT_URL || '';
-const websiteId = import.meta.env.PUBLIC_STAGE_ANALYTICS_WEBSITE_ID || '';
+const scriptUrl = import.meta.env.PUBLIC_CMS_ANALYTICS_SCRIPT_URL || '';
+const websiteId = import.meta.env.PUBLIC_CMS_ANALYTICS_WEBSITE_ID || '';
 const performanceEnabled = ['1', 'true', 'yes', 'on'].includes(
-  (import.meta.env.PUBLIC_STAGE_ANALYTICS_PERFORMANCE_ENABLED || '').toLowerCase()
+  (import.meta.env.PUBLIC_CMS_ANALYTICS_PERFORMANCE_ENABLED || '').toLowerCase()
 );
 const replayEnabled = ['1', 'true', 'yes', 'on'].includes(
-  (import.meta.env.PUBLIC_STAGE_ANALYTICS_REPLAY_ENABLED || '').toLowerCase()
+  (import.meta.env.PUBLIC_CMS_ANALYTICS_REPLAY_ENABLED || '').toLowerCase()
 );
 
 const providers: AnalyticsProviderManifest[] = scriptUrl && websiteId
@@ -27,9 +27,9 @@ const providers: AnalyticsProviderManifest[] = scriptUrl && websiteId
         'Page path without query string or fragment, referrer domain, browser, device, language and approximate location.'
       ],
       dataClassification: 'pseudonymous',
-      classificationDetails: 'The Stage-hosted Umami endpoint receives only the consented public-site analytics payload. It does not receive account email addresses or names from this template.',
+      classificationDetails: 'The Ooops CMS-hosted Umami endpoint receives only the consented public-site analytics payload. It does not receive account email addresses or names from this template.',
       recipients: [],
-      retention: import.meta.env.PUBLIC_STAGE_ANALYTICS_RETENTION || '90 days; raw connected-site analytics is deleted by the Stage retention job.',
+      retention: import.meta.env.PUBLIC_CMS_ANALYTICS_RETENTION || '90 days; raw connected-site analytics is deleted by the CMS retention job.',
       storage: [
         {
           name: 'umami*',

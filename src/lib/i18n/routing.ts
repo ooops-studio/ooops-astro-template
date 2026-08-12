@@ -1,11 +1,11 @@
-import { siteUrl } from '../stage/env';
+import { siteUrl } from '../cms/env';
 import { templateConfig, type TemplateLocale } from '../../template.config';
 import {
   alternateLocales as createAlternateLocales,
   canonicalForLocale as createCanonicalForLocale,
   localeFromPathname as createLocaleFromPathname,
   localePath as createLocalePath
-} from '@ooopsstudio/stage-astro';
+} from '@ooopsstudio/cms-astro';
 
 export const defaultLocale = templateConfig.defaultLocale;
 export const supportedLocales = templateConfig.locales;

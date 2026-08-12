@@ -1,11 +1,11 @@
-import { siteUrl } from '../stage/env';
+import { siteUrl } from '../cms/env';
 import {
   articleJsonLd as createArticleJsonLd,
   websiteJsonLd as createWebsiteJsonLd,
   type JsonLdPayload
-} from '@ooopsstudio/stage-astro';
+} from '@ooopsstudio/cms-astro';
 
-export type { JsonLdPayload } from '@ooopsstudio/stage-astro';
+export type { JsonLdPayload } from '@ooopsstudio/cms-astro';
 
 export const websiteJsonLd = ({ name, url = siteUrl }: { name: string; url?: string }): JsonLdPayload =>
   createWebsiteJsonLd({ name, url });

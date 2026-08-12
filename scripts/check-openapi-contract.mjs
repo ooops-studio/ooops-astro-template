@@ -19,7 +19,7 @@ for (const fileName of ['.env.local', '.env']) {
   }
 }
 
-const baseUrl = (process.env.OOOPS_STAGE_API_BASE_URL || process.env.STAGE_API_BASE_URL || '').replace(/\/$/, '');
+const baseUrl = (process.env.OOOPS_CMS_API_BASE_URL || '').replace(/\/$/, '');
 const requiredPaths = [
   '/imports/validate',
   '/imports/apply',
@@ -33,7 +33,7 @@ const requiredPaths = [
 ];
 
 if (!baseUrl) {
-  console.log('[openapi-contract] OOOPS_STAGE_API_BASE_URL is not set; skipping live OpenAPI check.');
+  console.log('[openapi-contract] OOOPS_CMS_API_BASE_URL is not set; skipping live OpenAPI check.');
   process.exit(0);
 }
 
@@ -48,7 +48,7 @@ try {
     console.error(`[openapi-contract] Failed to fetch ${baseUrl}/openapi.json: ${message}`);
     process.exit(1);
   }
-  console.log(`[openapi-contract] Stage OpenAPI is unavailable; skipping local check: ${message}`);
+  console.log(`[openapi-contract] CMS OpenAPI is unavailable; skipping local check: ${message}`);
   process.exit(0);
 }
 
@@ -58,8 +58,8 @@ const paths = spec && typeof spec === 'object' && spec.paths && typeof spec.path
 
 const missing = requiredPaths.filter((path) => !(path in paths));
 if (missing.length > 0) {
-  console.error(`[openapi-contract] Missing required Stage API paths: ${missing.join(', ')}`);
+  console.error(`[openapi-contract] Missing required CMS API paths: ${missing.join(', ')}`);
   process.exit(1);
 }
 
-console.log('[openapi-contract] Required Stage API v1 paths are present.');
+console.log('[openapi-contract] Required CMS API v1 paths are present.');

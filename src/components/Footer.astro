@@ -3,9 +3,9 @@ type Props = {
   text?: string;
 };
 
-const { text = 'Powered by Stage CMS and Astro.' } = Astro.props;
+const { text = 'Powered by Ooops CMS and Astro.' } = Astro.props;
 const analyticsConfigured = Boolean(
-  import.meta.env.PUBLIC_STAGE_ANALYTICS_SCRIPT_URL && import.meta.env.PUBLIC_STAGE_ANALYTICS_WEBSITE_ID
+  import.meta.env.PUBLIC_CMS_ANALYTICS_SCRIPT_URL && import.meta.env.PUBLIC_CMS_ANALYTICS_WEBSITE_ID
 );
 const showAnalyticsPreferences = analyticsConfigured;
 ---

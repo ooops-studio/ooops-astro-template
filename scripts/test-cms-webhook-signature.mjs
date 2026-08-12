@@ -1,11 +1,11 @@
-import { signStagePayload } from '@ooopsstudio/stage-cloudflare';
+import { signCmsWebhookPayload } from '@ooopsstudio/cms-cloudflare';
 
-const secret = process.env.STAGE_WEBHOOK_SECRET || '';
+const secret = process.env.CMS_WEBHOOK_SECRET || '';
 const targetUrl = process.env.WEBHOOK_TEST_URL || '';
-const eventType = process.env.STAGE_WEBHOOK_TEST_EVENT || 'cms.entry.published';
+const eventType = process.env.CMS_WEBHOOK_TEST_EVENT || 'cms.entry.published';
 
 if (!secret || !targetUrl) {
-  console.error('Usage: STAGE_WEBHOOK_SECRET=... WEBHOOK_TEST_URL=http://localhost:8788/api/stage/rebuild pnpm test:webhook');
+  console.error('Usage: CMS_WEBHOOK_SECRET=... WEBHOOK_TEST_URL=http://localhost:8788/api/cms/rebuild pnpm test:webhook');
   process.exit(1);
 }
 
@@ -20,15 +20,15 @@ const body = JSON.stringify({
 });
 
 const timestamp = new Date().toISOString();
-const signature = await signStagePayload({ secret, timestamp, body });
+const signature = await signCmsWebhookPayload({ secret, timestamp, body });
 
 const response = await fetch(targetUrl, {
   method: 'POST',
   headers: {
     'content-type': 'application/json',
-    'x-stage-timestamp': timestamp,
-    'x-stage-signature': `v1=${signature}`,
-    'x-stage-event': eventType
+    'x-cms-timestamp': timestamp,
+    'x-cms-signature': signature,
+    'x-cms-event': eventType
   },
   body
 });
