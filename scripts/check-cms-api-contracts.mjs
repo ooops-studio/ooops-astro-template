@@ -2,7 +2,7 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { extname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { loadModuleManifests, validateModuleManifest } from './lib/module-manifest.mjs';
+import { getEnabledModulesFromConfig, loadModuleManifests, validateModuleManifest } from './lib/module-manifest.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 
@@ -79,7 +79,6 @@ const requiredFiles = [
   'src/components/ui/NumberInputField.astro',
   'src/components/ui/SegmentedControl.astro',
   'src/lib/i18n/routing.ts',
-  'src/lib/editor/registry.ts',
   'src/components/editor/EditorBoundary.astro',
   'src/lib/posts/client.ts',
   'src/lib/posts/sitemap.ts',
@@ -104,9 +103,6 @@ const requiredFiles = [
   'src/styles/global.css',
   'src/styles/reset.css',
   'src/styles/tokens.css',
-  'editor/template.json',
-  'editor/components.json',
-  'editor/design-tokens.json',
   'src/styles/typography.css',
   'public/assets/fonts/NotoSans-Regular.woff2',
   'public/assets/fonts/NotoSans-Bold.woff2',
@@ -328,10 +324,33 @@ for (const [dependency, expectedRange] of Object.entries(templatePolicy.canonica
   }
 }
 
+const enabledModules = getEnabledModulesFromConfig();
+for (const [moduleId, dependencies] of Object.entries(templatePolicy.optionalCanonicalPackages ?? {})) {
+  for (const [dependency, expectedRange] of Object.entries(dependencies)) {
+    const actual = packageJson.dependencies?.[dependency] ?? packageJson.devDependencies?.[dependency];
+    if (enabledModules[moduleId] && actual !== expectedRange) {
+      fail(`Enabled module ${moduleId} requires ${dependency} at ${expectedRange}.`);
+    }
+    if (!enabledModules[moduleId] && actual !== undefined) {
+      fail(`Disabled module ${moduleId} must not retain ${dependency}.`);
+    }
+  }
+}
+
 for (const [file, imports] of Object.entries(templatePolicy.ownedImports ?? {})) {
   const source = read(file);
   for (const dependency of imports) {
     if (!source.includes(dependency)) fail(`${file} must delegate behavior to ${dependency}.`);
+  }
+}
+
+for (const [moduleId, files] of Object.entries(templatePolicy.optionalOwnedImports ?? {})) {
+  if (!enabledModules[moduleId]) continue;
+  for (const [file, imports] of Object.entries(files)) {
+    const source = read(file);
+    for (const dependency of imports) {
+      if (!source.includes(dependency)) fail(`${file} must delegate behavior to ${dependency}.`);
+    }
   }
 }
 

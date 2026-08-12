@@ -8,6 +8,7 @@
     "output": "static"
   },
   "editor": {
+    "module": "visualEditor",
     "schemaVersion": 2,
     "templateManifest": "editor/template.json",
     "componentRegistry": "editor/components.json",
@@ -27,13 +28,18 @@
     "@ooopsstudio/cms-cloudflare": "^0.1.0",
     "@ooopsstudio/analytics-consent": "^0.3.0",
     "@ooopsstudio/analytics-consent-astro": "^0.3.0",
-    "@ooopsstudio/accessibility": "^0.1.0",
-    "@ooopsstudio/accessibility-astro": "^0.1.0",
-    "@ooopsstudio/editor-contracts": "^0.2.0",
-    "@ooopsstudio/ui-primitives": "^0.1.0",
-    "@ooopsstudio/ui-astro": "^0.1.0"
+    "@ooopsstudio/accessibility": "^0.2.0",
+    "@ooopsstudio/accessibility-astro": "^0.2.0",
+    "@ooopsstudio/ui-primitives": "^0.2.0",
+    "@ooopsstudio/ui-astro": "^0.2.0"
   },
   "optionalCanonicalPackages": {
+    "visualEditor": {
+      "@ooopsstudio/accessibility-editor-manifests": "^0.1.0",
+      "@ooopsstudio/editor-astro": "^0.1.0",
+      "@ooopsstudio/editor-contracts": "^0.3.0",
+      "@ooopsstudio/ui-editor-manifests": "^0.1.0"
+    },
     "interactiveScene": {
       "@ooopsstudio/scene-core": "^0.1.0",
       "@ooopsstudio/scene-three": "^0.1.0",
@@ -64,8 +70,12 @@
     "src/components/ui/SegmentedControl.astro": ["@ooopsstudio/ui-astro/SegmentedControl.astro"],
     "src/components/ui/Dialog.astro": ["@ooopsstudio/ui-astro/Dialog.astro"],
     "src/components/ui/Modal.astro": ["@ooopsstudio/ui-astro/Modal.astro"],
-    "src/components/ui/Popover.astro": ["@ooopsstudio/ui-astro/Popover.astro"],
-    "src/lib/editor/registry.ts": ["@ooopsstudio/editor-contracts", "@ooopsstudio/ui-primitives/editor", "@ooopsstudio/accessibility-astro/editor"]
+    "src/components/ui/Popover.astro": ["@ooopsstudio/ui-astro/Popover.astro"]
+  },
+  "optionalOwnedImports": {
+    "visualEditor": {
+      "src/lib/editor/registry.ts": ["@ooopsstudio/editor-contracts", "@ooopsstudio/ui-editor-manifests", "@ooopsstudio/accessibility-editor-manifests"]
+    }
   },
   "ownershipGuardrails": {
     "uiWrapperRoot": "src/components/ui/",

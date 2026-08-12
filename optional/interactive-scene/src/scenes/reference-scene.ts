@@ -1,13 +1,10 @@
 import {AmbientLight, Color, DirectionalLight, Mesh, Vector2} from 'three'
 import {mix, uniform} from 'three/tsl'
 import {MeshStandardNodeMaterial} from 'three/webgpu'
-import {
-  parseInteractiveSceneManifest,
-  type InteractiveSceneManifest
-} from '@ooopsstudio/editor-contracts'
+import type {InteractiveSceneRuntimeManifest} from '@ooopsstudio/scene-core'
 import {defineThreeScene} from '@ooopsstudio/scene-three'
 
-import manifestSource from '../../editor/scenes/reference-scene.json'
+import runtimeManifestSource from './reference-scene.runtime.json'
 
 type ReferenceSceneConfig = {
   intensity?: number;
@@ -32,14 +29,9 @@ const safeAsset = (value: unknown) =>
     ? value
     : '/assets/scenes/reference.glb';
 
-const parsedManifest = parseInteractiveSceneManifest(manifestSource);
-if (!parsedManifest.ok) {
-  throw new Error(
-    `Invalid reference scene manifest: ${parsedManifest.issues.map((issue) => `${issue.path} ${issue.message}`).join('; ')}`
-  );
-}
+const runtimeManifest = Object.freeze(runtimeManifestSource as InteractiveSceneRuntimeManifest);
 
-const createReferenceScene = (manifest: InteractiveSceneManifest) =>
+const createReferenceScene = (manifest: InteractiveSceneRuntimeManifest) =>
   defineThreeScene<ReferenceSceneConfig>({
   manifest,
   async setup({scene, camera, assets, resources, config}) {
@@ -93,18 +85,11 @@ const createReferenceScene = (manifest: InteractiveSceneManifest) =>
   }
   });
 
-const webglManifest = parseInteractiveSceneManifest({
-  ...parsedManifest.value,
+const webglManifest = Object.freeze({
+  ...runtimeManifest,
   id: 'reference-scene-webgl2',
-  label: 'Reference scene WebGL 2 diagnostic',
-  insertable: false,
   backend: 'webgl2'
-});
-if (!webglManifest.ok) {
-  throw new Error(
-    `Invalid WebGL 2 scene manifest: ${webglManifest.issues.map((issue) => `${issue.path} ${issue.message}`).join('; ')}`
-  );
-}
+} as const satisfies InteractiveSceneRuntimeManifest);
 
-export const referenceScene = createReferenceScene(parsedManifest.value);
-export const referenceSceneWebgl2 = createReferenceScene(webglManifest.value);
+export const referenceScene = createReferenceScene(runtimeManifest);
+export const referenceSceneWebgl2 = createReferenceScene(webglManifest);

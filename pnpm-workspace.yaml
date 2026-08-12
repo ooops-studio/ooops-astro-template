@@ -14,16 +14,6 @@ overrides:
   esbuild: ^0.28.1
   '@ooopsstudio/accessibility': file:../ooops-accessibility/packages/accessibility
   '@ooopsstudio/accessibility-astro': file:../ooops-accessibility/packages/accessibility-astro
-  '@ooopsstudio/accessibility-editor-manifests': file:../ooops-accessibility/packages/accessibility-editor-manifests
-  # editor-astro is not published yet and currently requires the unreleased
-  # editor-contracts 0.3 line.
-  '@ooopsstudio/editor-contracts': file:../ooops-ui/packages/editor-contracts
-  '@ooopsstudio/editor-framework': file:../ooops-editor/packages/framework
-  '@ooopsstudio/editor-browser-runtime': file:../ooops-editor/packages/browser-runtime
-  '@ooopsstudio/editor-vite': file:../ooops-editor/packages/vite-bridge
-  '@ooopsstudio/editor-astro': file:../ooops-editor/packages/astro
-  '@ooopsstudio/editor-protocol': file:../ooops-editor/packages/protocol
-  '@ooopsstudio/editor-source-engine': file:../ooops-editor/packages/source-engine
   '@ooopsstudio/cms-api': file:../ooops-suite-stage-packages/packages/cms-api
   '@ooopsstudio/cms-astro': file:../ooops-suite-stage-packages/packages/cms-astro
   '@ooopsstudio/cms-cloudflare': file:../ooops-suite-stage-packages/packages/cms-cloudflare

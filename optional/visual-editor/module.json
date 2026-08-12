@@ -1,0 +1,38 @@
+{
+  "id": "visualEditor",
+  "label": "Ooops visual editor integration",
+  "defaultEnabled": false,
+  "readme": "optional/visual-editor/README.md",
+  "deps": [
+    "@ooopsstudio/editor-astro",
+    "@ooopsstudio/ui-editor-manifests",
+    "@ooopsstudio/accessibility-editor-manifests"
+  ],
+  "dependencies": {
+    "@ooopsstudio/accessibility-editor-manifests": "^0.1.0",
+    "@ooopsstudio/editor-astro": "^0.1.0",
+    "@ooopsstudio/ui-editor-manifests": "^0.1.0"
+  },
+  "devDependencies": {
+    "@ooopsstudio/editor-contracts": "^0.3.0"
+  },
+  "localOverrides": {
+    "@ooopsstudio/accessibility-editor-manifests": "file:../ooops-accessibility/packages/accessibility-editor-manifests",
+    "@ooopsstudio/editor-astro": "file:../ooops-editor/packages/astro",
+    "@ooopsstudio/editor-browser-runtime": "file:../ooops-editor/packages/browser-runtime",
+    "@ooopsstudio/editor-contracts": "file:../ooops-editor/packages/contracts",
+    "@ooopsstudio/editor-framework": "file:../ooops-editor/packages/framework",
+    "@ooopsstudio/editor-protocol": "file:../ooops-editor/packages/protocol",
+    "@ooopsstudio/editor-source-engine": "file:../ooops-editor/packages/source-engine",
+    "@ooopsstudio/editor-vite": "file:../ooops-editor/packages/vite-bridge",
+    "@ooopsstudio/ui-editor-manifests": "file:../ooops-ui/packages/ui-editor-manifests"
+  },
+  "env": [],
+  "files": [
+    {"from": "optional/visual-editor/editor", "to": "editor"},
+    {"from": "optional/visual-editor/src/lib/editor", "to": "src/lib/editor"},
+    {"from": "optional/visual-editor/scripts/lib/editor-metadata.mjs", "to": "scripts/lib/editor-metadata.mjs"}
+  ],
+  "cleanupTargets": ["editor", "src/lib/editor", "scripts/lib/editor-metadata.mjs"],
+  "validationChecks": ["editor-manifest-contracts", "editor-adapter-resolution"]
+}

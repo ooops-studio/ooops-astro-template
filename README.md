@@ -93,7 +93,9 @@ Optional examples live in `optional/`. Copy them into `src/` only if you need th
 
 ## Visual Editor Metadata
 
-The template includes a schema-validated, framework-neutral registry in `editor/`. Global visual tokens are edited in `editor/design-tokens.json`; `pnpm generate:editor` deterministically rebuilds `src/styles/tokens.css`, and `pnpm check:editor` enforces registry, token, controlled positioning and read-only CMS binding consistency. Positioning uses logical offsets and semantic z-index layers from `base` through `toast`; package-owned overlay positioning remains locked.
+Visual-editor integration is the optional, disabled-by-default `visualEditor` module. When enabled, it installs the editor runtime plus the UI/accessibility manifest adapters and copies a schema-validated, framework-neutral registry into `editor/`. Projects that leave it disabled keep the same UI and template packages without editor runtime or metadata dependencies.
+
+With the module enabled, global visual tokens are edited in `editor/design-tokens.json`; `pnpm generate:editor` deterministically rebuilds `src/styles/tokens.css`, and `pnpm check:editor` enforces registry, token, controlled positioning and read-only CMS binding consistency. Positioning uses logical offsets and semantic z-index layers from `base` through `toast`; package-owned overlay positioning remains locked.
 
 ## UI Primitives
 

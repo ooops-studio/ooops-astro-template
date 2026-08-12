@@ -1,13 +1,17 @@
 import {existsSync, readFileSync, readdirSync} from 'node:fs'
 import {join, resolve} from 'node:path'
 
-import {parseEditorExtensionManifest, parseInteractiveSceneManifest} from '@ooopsstudio/editor-contracts'
-
-import {loadEditorMetadata, renderTokenCss, root} from './lib/editor-metadata.mjs'
 import {getEnabledModulesFromConfig, loadModuleManifests} from './lib/module-manifest.mjs'
 
-const {template, components, tokens} = loadEditorMetadata()
 const enabledModules = getEnabledModulesFromConfig()
+if (!enabledModules.visualEditor) {
+	console.log('[editor] visual editor integration is disabled; metadata validation skipped.')
+	process.exit(0)
+}
+
+const {parseEditorExtensionManifest, parseInteractiveSceneManifest} = await import('@ooopsstudio/editor-contracts')
+const {loadEditorMetadata, renderTokenCss, root} = await import('./lib/editor-metadata.mjs')
+const {template, components, tokens} = loadEditorMetadata()
 const moduleManifests = loadModuleManifests()
 const errors = []
 const fail = (message) => errors.push(message)
@@ -85,6 +89,17 @@ for (const reference of components.scenes ?? []) {
 	}
 	if (parsed.value.id !== reference.manifestId) {
 		fail(`${reference.id} references scene manifest ${reference.manifestId}, found ${parsed.value.id}.`)
+	}
+	const runtimeManifestPath = reference.source.replace(/\.ts$/, '.runtime.json')
+	if (existsSync(resolve(root, runtimeManifestPath))) {
+		const runtimeManifest = JSON.parse(readFileSync(resolve(root, runtimeManifestPath), 'utf8'))
+		for (const key of ['id', 'backend']) {
+			if (runtimeManifest[key] !== parsed.value[key]) fail(`${reference.id} runtime ${key} does not match its editor manifest.`)
+		}
+		if (JSON.stringify(runtimeManifest.quality) !== JSON.stringify(parsed.value.quality)) fail(`${reference.id} runtime quality does not match its editor manifest.`)
+		for (const key of ['reducedMotion', 'contextLoss']) {
+			if (runtimeManifest.fallbacks?.[key] !== parsed.value.fallbacks[key]) fail(`${reference.id} runtime fallback ${key} does not match its editor manifest.`)
+		}
 	}
 	if (parsed.value.internals !== 'locked') fail(`${reference.id} scene internals must stay locked.`)
 	for (const asset of parsed.value.assets) {

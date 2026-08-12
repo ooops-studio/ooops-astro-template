@@ -4,7 +4,6 @@
   "label": "Reference scene",
   "category": "interactive",
   "owner": "ooops-astro-template",
-  "insertable": true,
   "internals": "locked",
   "adapters": {
     "astro": "@ooopsstudio/scene-astro/InteractiveScene.astro",

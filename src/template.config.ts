@@ -17,7 +17,8 @@ export const templateConfig = {
     search: false,
     svelteIslands: true,
     posts: true,
-    projects: false
+    projects: false,
+    visualEditor: false
   }
 } as const;
 

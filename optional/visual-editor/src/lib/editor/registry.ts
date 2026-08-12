@@ -3,8 +3,8 @@ import {
   parseTemplateComponentRegistry,
   parseTemplateManifest
 } from '@ooopsstudio/editor-contracts';
-import { accessibilityAstroEditorManifest } from '@ooopsstudio/accessibility-astro/editor';
-import { uiComponentManifests } from '@ooopsstudio/ui-primitives/editor';
+import { accessibilityAstroEditorManifest } from '@ooopsstudio/accessibility-editor-manifests';
+import { uiComponentManifests } from '@ooopsstudio/ui-editor-manifests';
 
 import componentSource from '../../../editor/components.json';
 import tokenSource from '../../../editor/design-tokens.json';

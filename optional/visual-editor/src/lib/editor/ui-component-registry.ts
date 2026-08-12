@@ -2,7 +2,7 @@ export {
   getUiComponentManifest,
   uiComponentManifests,
   validateUiComponentManifest
-} from '@ooopsstudio/ui-primitives/editor';
+} from '@ooopsstudio/ui-editor-manifests';
 
 export type {
   UiComponentManifest,
@@ -10,4 +10,4 @@ export type {
   UiComponentPartDefinition,
   UiComponentPropDefinition,
   UiComponentSlotDefinition
-} from '@ooopsstudio/ui-primitives/editor';
+} from '@ooopsstudio/ui-editor-manifests';

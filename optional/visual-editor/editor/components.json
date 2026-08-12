@@ -7,7 +7,6 @@
       "label": "Button",
       "category": "actions",
       "owner": "ooops-astro-template",
-      "insertable": true,
       "adapters": {
         "astro": "ooops-astro-template/Button.astro"
       },
@@ -297,7 +296,6 @@
       "label": "Container",
       "category": "layout",
       "owner": "ooops-astro-template",
-      "insertable": true,
       "adapters": {
         "astro": "ooops-astro-template/Container.astro"
       },
@@ -389,7 +387,6 @@
       "label": "Section",
       "category": "layout",
       "owner": "ooops-astro-template",
-      "insertable": true,
       "adapters": {
         "astro": "ooops-astro-template/Section.astro"
       },
@@ -501,7 +498,6 @@
       "label": "Error state",
       "category": "feedback",
       "owner": "ooops-astro-template",
-      "insertable": true,
       "adapters": {
         "astro": "ooops-astro-template/ErrorState.astro"
       },
@@ -697,7 +693,6 @@
       "label": "Icon",
       "category": "media",
       "owner": "ooops-astro-template",
-      "insertable": true,
       "adapters": {"astro": "ooops-astro-template/Icon.astro"},
       "props": [
         {"id": "name", "label": "Icon", "schema": {"kind": "enum", "values": ["arrow-right", "check", "external-link", "mail", "menu", "search", "x"]}, "required": true, "default": "arrow-right", "editable": true, "control": "enum"},
@@ -715,7 +710,6 @@
       "label": "Video",
       "category": "media",
       "owner": "ooops-astro-template",
-      "insertable": true,
       "adapters": {"astro": "ooops-astro-template/Video.astro"},
       "props": [
         {"id": "src", "label": "Video asset", "schema": {"kind": "string"}, "required": true, "editable": true, "control": "asset", "asset": {"kinds": ["video"], "delivery": ["public-copy"]}},
@@ -739,7 +733,6 @@
       "label": "List",
       "category": "content",
       "owner": "ooops-astro-template",
-      "insertable": true,
       "adapters": {"astro": "ooops-astro-template/List.astro"},
       "props": [
         {"id": "items", "label": "Items", "schema": {"kind": "array", "max": 100, "item": {"kind": "object", "fields": [{"id": "label", "label": "Label", "required": true, "schema": {"kind": "string"}}, {"id": "href", "label": "Link", "schema": {"kind": "string"}}]}}, "required": true, "editable": true},
@@ -758,7 +751,6 @@
       "label": "YouTube or Vimeo",
       "category": "media",
       "owner": "ooops-astro-template",
-      "insertable": true,
       "adapters": {"astro": "ooops-astro-template/VideoEmbed.astro"},
       "props": [
         {"id": "url", "label": "YouTube or Vimeo URL", "schema": {"kind": "string"}, "required": true, "editable": true, "control": "text"},
@@ -808,25 +800,21 @@
       "styleSources": ["src/components/ui/ErrorState.astro"]
     },
     {
-      "id": "icon", "source": "src/components/ui/Icon.astro", "manifest": "editor/components.json", "manifestId": "icon", "editorIdProp": "editorId", "behavior": "template", "styleSources": ["src/styles/global.css"],
-      "insertion": {"name": "Icon", "exportName": "default", "defaultProps": {"name": "arrow-right", "decorative": true}}
+      "id": "icon", "source": "src/components/ui/Icon.astro", "manifest": "editor/components.json", "manifestId": "icon", "editorIdProp": "editorId", "behavior": "template", "styleSources": ["src/styles/global.css"]
     },
     {
-      "id": "video", "source": "src/components/ui/Video.astro", "manifest": "editor/components.json", "manifestId": "video", "editorIdProp": "editorId", "behavior": "template", "styleSources": ["src/styles/global.css"],
-      "insertion": {"name": "Video", "exportName": "default", "defaultProps": {"src": "/media/video.mp4", "description": "Describe the video"}}
+      "id": "video", "source": "src/components/ui/Video.astro", "manifest": "editor/components.json", "manifestId": "video", "editorIdProp": "editorId", "behavior": "template", "styleSources": ["src/styles/global.css"]
     },
     {
-      "id": "list", "source": "src/components/ui/List.astro", "manifest": "editor/components.json", "manifestId": "list", "editorIdProp": "editorId", "behavior": "template", "styleSources": ["src/styles/global.css"],
-      "insertion": {"name": "List", "exportName": "default", "defaultProps": {"items": [{"label": "List item"}], "ordered": false}}
+      "id": "list", "source": "src/components/ui/List.astro", "manifest": "editor/components.json", "manifestId": "list", "editorIdProp": "editorId", "behavior": "template", "styleSources": ["src/styles/global.css"]
     },
     {
-      "id": "video-embed", "source": "src/components/ui/VideoEmbed.astro", "manifest": "editor/components.json", "manifestId": "video-embed", "editorIdProp": "editorId", "behavior": "template", "styleSources": ["src/styles/global.css"],
-      "insertion": {"name": "VideoEmbed", "exportName": "default", "defaultProps": {"url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ", "title": "Embedded video"}}
+      "id": "video-embed", "source": "src/components/ui/VideoEmbed.astro", "manifest": "editor/components.json", "manifestId": "video-embed", "editorIdProp": "editorId", "behavior": "template", "styleSources": ["src/styles/global.css"]
     },
     {
       "id": "field",
       "source": "src/components/ui/Field.astro",
-      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifest": "@ooopsstudio/ui-editor-manifests",
       "manifestId": "field",
       "editorIdProp": "editorId",
       "behavior": "canonical"
@@ -834,7 +822,7 @@
     {
       "id": "input",
       "source": "src/components/ui/InputField.astro",
-      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifest": "@ooopsstudio/ui-editor-manifests",
       "manifestId": "input",
       "editorIdProp": "editorId",
       "behavior": "canonical"
@@ -842,7 +830,7 @@
     {
       "id": "textarea",
       "source": "src/components/ui/TextareaField.astro",
-      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifest": "@ooopsstudio/ui-editor-manifests",
       "manifestId": "textarea",
       "editorIdProp": "editorId",
       "behavior": "canonical"
@@ -850,7 +838,7 @@
     {
       "id": "checkbox",
       "source": "src/components/ui/CheckboxField.astro",
-      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifest": "@ooopsstudio/ui-editor-manifests",
       "manifestId": "checkbox",
       "editorIdProp": "editorId",
       "behavior": "canonical"
@@ -858,7 +846,7 @@
     {
       "id": "radio-group",
       "source": "src/components/ui/RadioGroupField.astro",
-      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifest": "@ooopsstudio/ui-editor-manifests",
       "manifestId": "radio-group",
       "editorIdProp": "editorId",
       "behavior": "canonical"
@@ -866,7 +854,7 @@
     {
       "id": "switch",
       "source": "src/components/ui/SwitchField.astro",
-      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifest": "@ooopsstudio/ui-editor-manifests",
       "manifestId": "switch",
       "editorIdProp": "editorId",
       "behavior": "canonical"
@@ -874,7 +862,7 @@
     {
       "id": "combobox",
       "source": "src/components/ui/ComboboxField.astro",
-      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifest": "@ooopsstudio/ui-editor-manifests",
       "manifestId": "combobox",
       "editorIdProp": "editorId",
       "behavior": "canonical"
@@ -882,7 +870,7 @@
     {
       "id": "multi-select",
       "source": "src/components/ui/MultiSelectField.astro",
-      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifest": "@ooopsstudio/ui-editor-manifests",
       "manifestId": "multi-select",
       "editorIdProp": "editorId",
       "behavior": "canonical"
@@ -890,7 +878,7 @@
     {
       "id": "dropdown-menu",
       "source": "src/components/ui/DropdownMenu.astro",
-      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifest": "@ooopsstudio/ui-editor-manifests",
       "manifestId": "dropdown-menu",
       "editorIdProp": "editorId",
       "behavior": "canonical"
@@ -898,7 +886,7 @@
     {
       "id": "tooltip",
       "source": "src/components/ui/Tooltip.astro",
-      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifest": "@ooopsstudio/ui-editor-manifests",
       "manifestId": "tooltip",
       "editorIdProp": "editorId",
       "behavior": "canonical"
@@ -906,7 +894,7 @@
     {
       "id": "tabs",
       "source": "src/components/ui/Tabs.astro",
-      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifest": "@ooopsstudio/ui-editor-manifests",
       "manifestId": "tabs",
       "editorIdProp": "editorId",
       "behavior": "canonical"
@@ -914,7 +902,7 @@
     {
       "id": "accordion",
       "source": "src/components/ui/Accordion.astro",
-      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifest": "@ooopsstudio/ui-editor-manifests",
       "manifestId": "accordion",
       "editorIdProp": "editorId",
       "behavior": "canonical"
@@ -922,7 +910,7 @@
     {
       "id": "slider",
       "source": "src/components/ui/SliderField.astro",
-      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifest": "@ooopsstudio/ui-editor-manifests",
       "manifestId": "slider",
       "editorIdProp": "editorId",
       "behavior": "canonical"
@@ -930,7 +918,7 @@
     {
       "id": "number-input",
       "source": "src/components/ui/NumberInputField.astro",
-      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifest": "@ooopsstudio/ui-editor-manifests",
       "manifestId": "number-input",
       "editorIdProp": "editorId",
       "behavior": "canonical"
@@ -938,7 +926,7 @@
     {
       "id": "segmented-control",
       "source": "src/components/ui/SegmentedControl.astro",
-      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifest": "@ooopsstudio/ui-editor-manifests",
       "manifestId": "segmented-control",
       "editorIdProp": "editorId",
       "behavior": "canonical"
@@ -946,7 +934,7 @@
     {
       "id": "select",
       "source": "src/components/ui/SelectField.astro",
-      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifest": "@ooopsstudio/ui-editor-manifests",
       "manifestId": "select",
       "editorIdProp": "editorId",
       "behavior": "canonical"
@@ -954,7 +942,7 @@
     {
       "id": "dialog",
       "source": "src/components/ui/Dialog.astro",
-      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifest": "@ooopsstudio/ui-editor-manifests",
       "manifestId": "dialog",
       "editorIdProp": "editorId",
       "behavior": "canonical"
@@ -962,7 +950,7 @@
     {
       "id": "modal",
       "source": "src/components/ui/Modal.astro",
-      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifest": "@ooopsstudio/ui-editor-manifests",
       "manifestId": "modal",
       "editorIdProp": "editorId",
       "behavior": "canonical"
@@ -970,7 +958,7 @@
     {
       "id": "popover",
       "source": "src/components/ui/Popover.astro",
-      "manifest": "@ooopsstudio/ui-primitives/editor",
+      "manifest": "@ooopsstudio/ui-editor-manifests",
       "manifestId": "popover",
       "editorIdProp": "editorId",
       "behavior": "canonical"
@@ -978,42 +966,42 @@
     {
       "id": "accessibility-head",
       "source": "src/layouts/BaseLayout.astro",
-      "manifest": "@ooopsstudio/accessibility-astro/editor",
+      "manifest": "@ooopsstudio/accessibility-editor-manifests",
       "manifestId": "accessibility-head",
       "behavior": "canonical"
     },
     {
       "id": "accessibility-menu",
       "source": "src/components/AccessibilityMenu.astro",
-      "manifest": "@ooopsstudio/accessibility-astro/editor",
+      "manifest": "@ooopsstudio/accessibility-editor-manifests",
       "manifestId": "accessibility-menu",
       "behavior": "canonical"
     },
     {
       "id": "skip-link",
       "source": "src/layouts/BaseLayout.astro",
-      "manifest": "@ooopsstudio/accessibility-astro/editor",
+      "manifest": "@ooopsstudio/accessibility-editor-manifests",
       "manifestId": "skip-link",
       "behavior": "canonical"
     }
   ],
   "bindings": [
     {
-      "id": "homepage-title",
+      "id": "homepage-heading",
       "provider": "cms",
       "mode": "read-only",
       "resource": "single",
       "apiId": "homepage",
-      "fieldPath": "title",
+      "fieldPath": "heading",
       "target": "src/pages/index.astro#hero-title"
     },
     {
-      "id": "homepage-intro",
+      "id": "homepage-description",
       "provider": "cms",
       "mode": "read-only",
       "resource": "single",
       "apiId": "homepage",
-      "fieldPath": "intro",
+      "fieldPath": "description",
       "target": "src/pages/index.astro#hero-intro"
     },
     {
@@ -1027,8 +1015,5 @@
     }
   ],
   "scenes": [],
-  "extensions": [],
-  "regions": [
-    {"id": "home-main", "routeId": "home", "source": "src/pages/index.astro", "editorId": "home-hero", "slot": "default", "allowedComponents": ["button", "icon", "video", "list", "video-embed"], "min": 0, "max": 24}
-  ]
+  "extensions": []
 }

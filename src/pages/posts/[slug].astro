@@ -10,6 +10,7 @@ export const getStaticPaths = async () => {
 
 const { slug } = Astro.params;
 const post = slug ? await getPost(slug) : null;
+const editorMode = import.meta.env.DEV && import.meta.env.OOOPS_EDITOR_MODE === '1';
 
 if (!post) {
   return Astro.redirect('/');
@@ -20,7 +21,7 @@ if (!post) {
   <article class="section">
     <div class="rich-text">
       <span class="meta">{post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en') : 'Post'}</span>
-      <h1>{post.title}</h1>
+      <h1 data-ooops-editor-id={editorMode ? 'post-title' : undefined}>{post.title}</h1>
       <p>{post.excerpt}</p>
       {post.heroImageUrl ? (
         <CmsImage src={post.heroImageUrl} alt={post.heroImageAlt} width="1200" height="760" loading="eager" />

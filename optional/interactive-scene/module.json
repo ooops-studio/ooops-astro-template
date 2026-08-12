@@ -29,6 +29,7 @@
   "files": [
     {"from": "optional/interactive-scene/src/scenes/index.ts", "to": "src/scenes/index.ts"},
     {"from": "optional/interactive-scene/src/scenes/reference-scene.ts", "to": "src/scenes/reference-scene.ts"},
+    {"from": "optional/interactive-scene/src/scenes/reference-scene.runtime.json", "to": "src/scenes/reference-scene.runtime.json"},
     {"from": "optional/interactive-scene/src/components/scenes/ReferenceScene.astro", "to": "src/components/scenes/ReferenceScene.astro"},
     {"from": "optional/interactive-scene/src/pages/interactive-scene.astro", "to": "src/pages/interactive-scene.astro"},
     {"from": "optional/interactive-scene/src/pages/interactive-scene-webgl2.astro", "to": "src/pages/interactive-scene-webgl2.astro"},

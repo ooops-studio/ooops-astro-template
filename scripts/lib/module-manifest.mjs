@@ -178,6 +178,7 @@ export function getEnabledModulesFromConfig() {
 
 export function renderSetupMarkdown({ projectName, manifests, enabledModules, packageSource = 'published' }) {
   const enabled = manifests.filter((manifest) => enabledModules[manifest.id]);
+  const editorEnabled = Boolean(enabledModules.visualEditor);
   const envRows = [
     { module: 'core', name: 'OOOPS_CMS_API_BASE_URL', required: true },
     { module: 'core', name: 'PUBLIC_SITE_URL', required: true },
@@ -207,11 +208,11 @@ ${cloudflareRows.length ? cloudflareRows.join('\n') : '- No Cloudflare-specific 
 
 ## Editor Metadata
 
-- Portable registry: \`editor/template.json\` and \`editor/components.json\`.
+${editorEnabled ? `- Portable registry: \`editor/template.json\` and \`editor/components.json\`.
 - Design-token source: \`editor/design-tokens.json\`.
 - Run \`pnpm generate:editor\` after token edits and \`pnpm check:editor\` before merge.
 - CMS bindings are read-only metadata. Keep credentials and write capabilities outside the registry.
-- \`OOOPS_EDITOR_MODE=1\` is development-only and enables markers only for components with an \`editorId\`.
+- \`OOOPS_EDITOR_MODE=1\` is development-only and enables markers only for components with an \`editorId\`.` : '- The optional `visualEditor` integration is disabled. This project has no editor registry or editor package dependency.'}
 
 ## Module Documentation
 

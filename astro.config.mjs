@@ -4,13 +4,11 @@ import { defineConfig } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
 import svelte from '@astrojs/svelte';
 
-// The visual editor integration is only needed for an explicit editor session.
-// Keeping it opt-in keeps production and CMS-preview builds independent from
-// editor-only manifest packages.
-const ooopsEditor =
-  process.env.OOOPS_EDITOR_MODE === '1'
-    ? (await import('@ooopsstudio/editor-astro')).default
-    : null;
+import { templateConfig } from './src/template.config.ts';
+
+const ooopsEditor = templateConfig.optionalModules.visualEditor
+  ? (await import('@ooopsstudio/editor-astro')).default
+  : null;
 
 export default defineConfig({
   output: 'static',

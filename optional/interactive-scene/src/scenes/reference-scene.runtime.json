@@ -1,0 +1,6 @@
+{
+  "id": "reference-scene",
+  "backend": "auto",
+  "quality": {"default": "auto", "allowed": ["low", "auto", "high"]},
+  "fallbacks": {"reducedMotion": "poster", "contextLoss": "poster"}
+}

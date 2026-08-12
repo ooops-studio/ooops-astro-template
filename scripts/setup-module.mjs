@@ -28,6 +28,7 @@ const args = process.argv.slice(2).filter((argument) => argument !== '--')
 const command = args[0]
 const moduleId = args[1]
 const packageSourceArgument = args.find((argument) => argument.startsWith('--package-source='))
+const skipInstall = args.includes('--skip-install')
 const packageSource = packageSourceArgument?.split('=')[1]
 	?? (readText('pnpm-workspace.yaml').includes('file:../ooops-') ? 'local' : 'published')
 const manifests = loadModuleManifests()
@@ -45,7 +46,7 @@ const enabledModules = getEnabledModulesFromConfig()
 const manifest = manifests.find((item) => item.id === moduleId)
 const usage = () => {
 	console.log(
-		'Usage: pnpm setup:module -- list|status|add <module>|remove <module> [--package-source=local|published]'
+		'Usage: pnpm setup:module -- list|status|add <module>|remove <module> [--package-source=local|published] [--skip-install]'
 	)
 }
 
@@ -79,8 +80,8 @@ const targets = new Set([
 	'.env.example',
 	'SETUP.md',
 	'editor/components.json',
-	...(manifest.files ?? []).map((file) => file.to),
-	...(manifest.cleanupTargets ?? [])
+	...manifests.flatMap((item) => (item.files ?? []).map((file) => file.to)),
+	...manifests.flatMap((item) => item.cleanupTargets ?? [])
 ])
 const snapshots = [...targets].map((target) => {
 	const source = resolve(root, target)
@@ -110,15 +111,19 @@ const restore = () => {
 
 try {
 	enabledModules[manifest.id] = command === 'add'
-	if (command === 'add') {
-		for (const file of manifest.files ?? []) {
-			mkdirSync(dirname(resolve(root, file.to)), {recursive: true})
-			cpSync(resolve(root, file.from), resolve(root, file.to), {recursive: true})
+	for (const item of manifests) {
+		for (const file of item.files ?? []) {
+			const editorOwned = file.to === 'editor' || file.to.startsWith('editor/')
+			const shouldCopy = enabledModules[item.id] && (!editorOwned || enabledModules.visualEditor)
+			if (shouldCopy) {
+				mkdirSync(dirname(resolve(root, file.to)), {recursive: true})
+				cpSync(resolve(root, file.from), resolve(root, file.to), {recursive: true})
+			} else {
+				rmSync(resolve(root, file.to), {recursive: true, force: true})
+			}
 		}
-	} else {
-		for (const file of manifest.files ?? []) {
-			rmSync(resolve(root, file.to), {recursive: true, force: true})
-		}
+	}
+	if (!enabledModules[manifest.id]) {
 		for (const target of manifest.cleanupTargets ?? []) {
 			rmSync(resolve(root, target), {recursive: true, force: true})
 		}
@@ -149,14 +154,16 @@ try {
 		'pnpm-workspace.yaml',
 		syncModuleOverrides(readText('pnpm-workspace.yaml'), manifests, enabledModules, packageSource)
 	)
-	writeJson(
-		'editor/components.json',
-		syncModuleEditorExtensions(
-			syncModuleEditorScenes(readJson('editor/components.json'), manifests, enabledModules),
-			manifests,
-			enabledModules
+	if (enabledModules.visualEditor) {
+		writeJson(
+			'editor/components.json',
+			syncModuleEditorExtensions(
+				syncModuleEditorScenes(readJson('editor/components.json'), manifests, enabledModules),
+				manifests,
+				enabledModules
+			)
 		)
-	)
+	}
 	write('.env.example', renderEnvExample({manifests, enabledModules}))
 	write(
 		'SETUP.md',
@@ -167,7 +174,7 @@ try {
 			packageSource
 		})
 	)
-	execFileSync('pnpm', ['install'], {cwd: root, stdio: 'inherit'})
+	if (!skipInstall) execFileSync('pnpm', ['install'], {cwd: root, stdio: 'inherit'})
 	console.log(`[setup:module] ${command === 'add' ? 'enabled' : 'removed'} ${manifest.id}`)
 } catch (error) {
 	restore()

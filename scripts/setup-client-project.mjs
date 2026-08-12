@@ -165,15 +165,14 @@ packageJson.dependencies = {
   '@ooopsstudio/analytics-consent': packageJson.dependencies?.['@ooopsstudio/analytics-consent'] || '^0.3.0',
   '@ooopsstudio/analytics-consent-astro':
     packageJson.dependencies?.['@ooopsstudio/analytics-consent-astro'] || '^0.3.0',
-  '@ooopsstudio/accessibility': packageJson.dependencies?.['@ooopsstudio/accessibility'] || '^0.1.0',
+  '@ooopsstudio/accessibility': packageJson.dependencies?.['@ooopsstudio/accessibility'] || '^0.2.0',
   '@ooopsstudio/accessibility-astro':
-    packageJson.dependencies?.['@ooopsstudio/accessibility-astro'] || '^0.1.0',
-  '@ooopsstudio/editor-contracts': packageJson.dependencies?.['@ooopsstudio/editor-contracts'] || '^0.2.0',
+    packageJson.dependencies?.['@ooopsstudio/accessibility-astro'] || '^0.2.0',
 	'@ooopsstudio/cms-api': packageJson.dependencies?.['@ooopsstudio/cms-api'] || '^0.1.0',
 	'@ooopsstudio/cms-astro': packageJson.dependencies?.['@ooopsstudio/cms-astro'] || '^0.1.0',
 	'@ooopsstudio/cms-cloudflare': packageJson.dependencies?.['@ooopsstudio/cms-cloudflare'] || '^0.1.0',
-  '@ooopsstudio/ui-primitives': packageJson.dependencies?.['@ooopsstudio/ui-primitives'] || '^0.1.0',
-  '@ooopsstudio/ui-astro': packageJson.dependencies?.['@ooopsstudio/ui-astro'] || '^0.1.0',
+  '@ooopsstudio/ui-primitives': packageJson.dependencies?.['@ooopsstudio/ui-primitives'] || '^0.2.0',
+  '@ooopsstudio/ui-astro': packageJson.dependencies?.['@ooopsstudio/ui-astro'] || '^0.2.0',
   astro: packageJson.dependencies?.astro || '^7.0.6',
   svelte: packageJson.dependencies?.svelte || '^5.56.4'
 };
@@ -183,15 +182,6 @@ write(
   'pnpm-workspace.yaml',
   syncModuleOverrides(readText('pnpm-workspace.yaml'), manifests, enabledModules, packageSource)
 );
-writeJson(
-  'editor/components.json',
-  syncModuleEditorExtensions(
-    syncModuleEditorScenes(readJson('editor/components.json'), manifests, enabledModules),
-    manifests,
-    enabledModules
-  )
-);
-
 const optionalModuleLines = manifests
   .map((manifest) => `    ${manifest.id}: ${Boolean(enabledModules[manifest.id])}`)
   .join(',\n');
@@ -216,12 +206,28 @@ write('.env.example', renderEnvExample({ manifests, enabledModules }));
 
 for (const manifest of manifests) {
   for (const file of manifest.files ?? []) {
-    if (enabledModules[manifest.id]) copyIfPresent(file.from, file.to);
+    const editorOwned = file.to === 'editor' || file.to.startsWith('editor/');
+    const shouldCopy = enabledModules[manifest.id] && (!editorOwned || enabledModules.visualEditor);
+    if (shouldCopy) copyIfPresent(file.from, file.to);
     else if (cleanup) removeIfPresent(file.to);
   }
   if (!enabledModules[manifest.id] && cleanup) {
     for (const target of manifest.cleanupTargets ?? []) removeIfPresent(target);
   }
+}
+
+if (enabledModules.visualEditor) {
+  const registry = existsSync(resolve(root, 'editor/components.json'))
+    ? readJson('editor/components.json')
+    : readJson('optional/visual-editor/editor/components.json');
+  writeJson(
+    'editor/components.json',
+    syncModuleEditorExtensions(
+      syncModuleEditorScenes(registry, manifests, enabledModules),
+      manifests,
+      enabledModules
+    )
+  );
 }
 
 write('SETUP.md', renderSetupMarkdown({ projectName, manifests, enabledModules, packageSource }));
