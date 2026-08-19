@@ -21,15 +21,14 @@ for (const fileName of ['.env.local', '.env']) {
 
 const baseUrl = (process.env.OOOPS_CMS_API_BASE_URL || '').replace(/\/$/, '');
 const requiredPaths = [
-  '/imports/validate',
-  '/imports/apply',
   '/content/singles/{apiId}',
   '/content/collections/{apiId}/entries',
   '/content/collections/{apiId}/entries/{idOrSlug}',
   '/forms',
   '/analytics/overview',
   '/seo',
-  '/webhooks'
+  '/preview/content/collections/{apiId}/{slug}',
+  '/preview/content/singles/{apiId}'
 ];
 
 if (!baseUrl) {

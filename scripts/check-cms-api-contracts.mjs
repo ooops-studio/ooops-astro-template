@@ -32,7 +32,6 @@ const scannedExtensions = new Set([
 
 const requiredFiles = [
   '.env.example',
-  'optional/cloudflare-rebuild/README.md',
   'optional/newsletter/README.md',
   'optional/preview/README.md',
   'docs/deployment.md',
@@ -45,9 +44,6 @@ const requiredFiles = [
   'docs/svelte-islands.md',
   'docs/testing.md',
   'docs/ui-components.md',
-  'functions/api/cms/rebuild.ts',
-  'scripts/test-cms-webhook-signature.mjs',
-  'scripts/test-cms-signature.mjs',
   'scripts/test-i18n-helpers.mjs',
   'scripts/test-newsletter-module.mjs',
   'scripts/test-template-modules.mjs',
@@ -136,8 +132,6 @@ const requiredBlankExampleSecrets = [
   'PUBLIC_CMS_ANALYTICS_SCRIPT_URL',
   'PUBLIC_CMS_ANALYTICS_WEBSITE_ID',
   'PUBLIC_CMS_ANALYTICS_REPLAY_SCRIPT_URL',
-  'CLOUDFLARE_PAGES_DEPLOY_HOOK_URL',
-  'CMS_WEBHOOK_SECRET'
 ];
 
 const browserFacingRoots = [
@@ -207,7 +201,6 @@ function walk(directory) {
 
 const activeRequiredFiles = requiredFiles.filter((file) => {
   if (file === 'src/components/cms/PreviewContent.astro' || file.startsWith('src/lib/cms-preview/') || file.startsWith('src/pages/preview/content/')) return moduleEnabled('preview');
-  if (file === 'functions/api/cms/rebuild.ts') return moduleEnabled('rebuildWebhook');
   if (file === 'src/pages/posts/index.astro' || file === 'src/pages/posts/[slug].astro') return moduleEnabled('posts');
   if (file === 'src/components/islands/IslandStatus.svelte') return moduleEnabled('svelteIslands');
   return true;
@@ -239,10 +232,6 @@ if (moduleEnabled('analytics')) {
   enabledSensitiveEnv.add('PUBLIC_CMS_ANALYTICS_SCRIPT_URL');
   enabledSensitiveEnv.add('PUBLIC_CMS_ANALYTICS_WEBSITE_ID');
   enabledSensitiveEnv.add('PUBLIC_CMS_ANALYTICS_REPLAY_SCRIPT_URL');
-}
-if (moduleEnabled('rebuildWebhook')) {
-  enabledSensitiveEnv.add('CLOUDFLARE_PAGES_DEPLOY_HOOK_URL');
-  enabledSensitiveEnv.add('CMS_WEBHOOK_SECRET');
 }
 
 for (const variable of requiredBlankExampleSecrets.filter((item) => enabledSensitiveEnv.has(item))) {
@@ -410,11 +399,9 @@ for (const forbidden of ['class OoopsCmsClient', 'authorization:', 'Bearer ${', 
   }
 }
 
-const cloudflareFunctionSource = [
-  moduleEnabled('rebuildWebhook') && exists('functions/api/cms/rebuild.ts') ? read('functions/api/cms/rebuild.ts') : ''
-].join('\n');
-if (moduleEnabled('rebuildWebhook') && !cloudflareFunctionSource.includes('@ooopsstudio/cms-cloudflare')) {
-  fail('Cloudflare Functions must use @ooopsstudio/cms-cloudflare helpers.');
+const previewSessionSource = read('src/lib/cms-preview/session.ts');
+if (!previewSessionSource.includes('@ooopsstudio/cms-cloudflare')) {
+  fail('CMS preview sessions must use @ooopsstudio/cms-cloudflare helpers.');
 }
 
 for (const [file, label] of [
@@ -436,7 +423,7 @@ if (!cmsSource.includes('getCmsCollectionEntries') && !cmsSource.includes('listC
 }
 
 const packageScripts = packageJson.scripts && typeof packageJson.scripts === 'object' ? packageJson.scripts : {};
-for (const script of ['test:i18n', 'test:signatures', 'test:newsletter', 'setup:client']) {
+for (const script of ['test:i18n', 'test:newsletter', 'setup:client']) {
   if (!packageScripts[script]) {
     fail(`Missing package script: ${script}`);
   }

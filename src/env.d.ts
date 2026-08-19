@@ -21,8 +21,6 @@ interface ImportMetaEnv {
   readonly PUBLIC_CMS_ANALYTICS_REPLAY_BLOCK_SELECTOR?: string;
   readonly PUBLIC_CMS_ANALYTICS_EXCLUDED_PATHS?: string;
   readonly PUBLIC_CMS_ANALYTICS_INTERNAL_REFERRER_DOMAINS?: string;
-  readonly CLOUDFLARE_PAGES_DEPLOY_HOOK_URL?: string;
-  readonly CMS_WEBHOOK_SECRET?: string;
 }
 
 interface ImportMeta {

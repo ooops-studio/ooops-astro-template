@@ -59,7 +59,6 @@ optional/
   analytics/
   accessibility-menu/
   newsletter/
-  cloudflare-rebuild/
   cookie-consent/
   filters/
   gallery/
@@ -82,7 +81,7 @@ docs/
 - Empty-content build behavior when CMS env vars are missing, so the template can validate before it is connected to CMS.
 - Small copy-editable Astro UI primitives.
 - `CmsImage.astro` for CMS media URLs, alt fallback, responsive sizing, lazy loading, and fallback image handling.
-- Cloudflare Worker preview routes for CMS drafts and a Pages Function for rebuild webhooks.
+- Cloudflare Worker preview routes for CMS drafts using the published CMS preview contract.
 - Preview banner and exit preview link when preview mode is active.
 - `validate-env` and content health scripts for production readiness.
 - Manifest-driven optional modules and installer.
@@ -208,8 +207,6 @@ Recommended setup scopes:
 - `cms:content:publish`
 - `forms:read`
 - `forms:write`
-- `webhooks:read`
-- `webhooks:write`
 
 After bootstrap, rotate to a narrower read-focused token for production builds when you no longer need setup write access.
 
@@ -331,18 +328,6 @@ Restart `pnpm dev` after changing these values. Accept analytics in the banner, 
 
 For production, use the analytics script URL and website id from your CMS analytics setup. Keep the private `OOOPS_CMS_API_TOKEN` server/build-only; analytics uses only public browser config.
 
-## Cloudflare Pages Rebuild
-
-Cloudflare Pages rebuild support is included in `functions/api/cms/rebuild.ts`.
-
-The endpoint verifies CMS HMAC signatures using `CMS_WEBHOOK_SECRET` and queues a Cloudflare Pages deploy hook for `cms.*`, `media.*`, and `form.*` events.
-
-Test a rebuild endpoint with:
-
-```bash
-CMS_WEBHOOK_SECRET=your_secret WEBHOOK_TEST_URL=https://your-site.com/api/cms/rebuild pnpm test:webhook
-```
-
 ## Deployment And Security
 
 - [Deployment guide](docs/deployment.md)
@@ -369,5 +354,3 @@ Never expose these to browser code:
 
 - `OOOPS_CMS_API_TOKEN`
 - `OOOPS_CMS_PREVIEW_SESSION_SECRET`
-- `CLOUDFLARE_PAGES_DEPLOY_HOOK_URL`
-- `CMS_WEBHOOK_SECRET`

@@ -10,7 +10,6 @@ Every project should keep `pnpm validate` passing.
 - `pnpm validate:env`
 - `pnpm check:openapi`
 - `pnpm check:content-health`
-- `pnpm test:signatures`
 - `pnpm test:modules`
 - `pnpm test:cms:integration` when `OOOPS_CMS_API_BASE_URL` and `OOOPS_CMS_API_TOKEN` are configured
 - `pnpm build`

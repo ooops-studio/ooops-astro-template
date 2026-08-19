@@ -29,8 +29,6 @@ Recommended setup scopes:
 - `cms:content:publish`
 - `forms:read`
 - `forms:write`
-- `webhooks:read`
-- `webhooks:write`
 
 Use a short expiry for this setup token. After bootstrap, you can rotate to a read-focused token for production builds.
 

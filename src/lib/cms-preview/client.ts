@@ -1,4 +1,6 @@
 import { env as cloudflareEnv } from 'cloudflare:workers';
+import { createCmsPreviewClient } from '@ooopsstudio/cms-api';
+import { cmsPreviewPath } from '@ooopsstudio/cms-cloudflare';
 import { createPreviewSession, type PreviewKind, readPreviewSession, serializePreviewSessionCookie } from './session';
 
 type RuntimeEnv = Record<string, string | undefined>;
@@ -21,11 +23,6 @@ const apiConfig = (env: RuntimeEnv) => ({
 
 const isSecureRequest = (request: Request) => new URL(request.url).protocol === 'https:';
 
-const previewPath = ({ kind, apiId, slug }: { kind: PreviewKind; apiId: string; slug?: string }) =>
-  kind === 'collection'
-    ? `/preview/content/collections/${encodeURIComponent(apiId)}/${encodeURIComponent(slug || '')}`
-    : `/preview/content/singles/${encodeURIComponent(apiId)}`;
-
 const fetchPreview = async ({
   apiId,
   env,
@@ -41,20 +38,15 @@ const fetchPreview = async ({
 }): Promise<CmsPreviewResponse | null> => {
   const { baseUrl, token } = apiConfig(env);
   if (!baseUrl || !token || !previewToken) return null;
-  const route = kind === 'collection'
-    ? `/preview/content/collections/${encodeURIComponent(apiId)}/${encodeURIComponent(slug || '')}`
-    : `/preview/content/singles/${encodeURIComponent(apiId)}`;
-  const url = new URL(`${baseUrl}${route}`);
-  url.searchParams.set('preview', previewToken);
-  const response = await fetch(url, {
-    headers: {
-      accept: 'application/json',
-      authorization: `Bearer ${token}`
-    }
-  });
-  if (!response.ok) return null;
-  const payload = await response.json() as CmsPreviewResponse;
-  return payload.ok && payload.preview ? payload : null;
+  const client = createCmsPreviewClient({ baseUrl, token, previewToken });
+  try {
+    const payload = kind === 'collection'
+      ? await client.content.getCollectionEntry<CmsPreviewResponse>(apiId, slug || '')
+      : await client.content.getSingle<CmsPreviewResponse>(apiId);
+    return payload.ok && payload.preview ? payload : null;
+  } catch {
+    return null;
+  }
 };
 
 export const cloudflareRuntimeEnv = () => {
@@ -77,7 +69,7 @@ export const preparePreview = async ({
   previewToken: string | null;
 }) => {
   const env = cloudflareRuntimeEnv();
-  const expectedPath = previewPath({ apiId, kind, slug });
+  const expectedPath = cmsPreviewPath({ apiId, kind, slug });
   if (previewToken) {
     const payload = await fetchPreview({ apiId, env, kind, previewToken, slug });
     if (!payload) return { payload: null, redirect: null, setCookie: null };

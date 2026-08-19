@@ -6,13 +6,6 @@ settings:
 
 overrides:
   esbuild: ^0.28.1
-  '@ooopsstudio/accessibility': file:../ooops-accessibility/packages/accessibility
-  '@ooopsstudio/accessibility-astro': file:../ooops-accessibility/packages/accessibility-astro
-  '@ooopsstudio/cms-api': file:../ooops-cms-packages/packages/cms-api
-  '@ooopsstudio/cms-astro': file:../ooops-cms-packages/packages/cms-astro
-  '@ooopsstudio/cms-cloudflare': file:../ooops-cms-packages/packages/cms-cloudflare
-  '@ooopsstudio/ui-primitives': file:../ooops-ui/packages/ui-primitives
-  '@ooopsstudio/ui-astro': file:../ooops-ui/packages/ui-astro
 
 importers:
 
@@ -25,11 +18,11 @@ importers:
         specifier: ^1.28.0
         version: 1.28.0(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))
       '@ooopsstudio/accessibility':
-        specifier: file:../ooops-accessibility/packages/accessibility
-        version: file:../ooops-accessibility/packages/accessibility
+        specifier: ^0.2.0
+        version: 0.2.0
       '@ooopsstudio/accessibility-astro':
-        specifier: file:../ooops-accessibility/packages/accessibility-astro
-        version: file:../ooops-accessibility/packages/accessibility-astro(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))
+        specifier: ^0.2.0
+        version: 0.2.0(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))
       '@ooopsstudio/analytics-consent':
         specifier: ^0.3.0
         version: 0.3.0
@@ -37,20 +30,20 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))
       '@ooopsstudio/cms-api':
-        specifier: file:../ooops-cms-packages/packages/cms-api
-        version: file:../ooops-cms-packages/packages/cms-api
+        specifier: ^0.2.0
+        version: 0.2.0
       '@ooopsstudio/cms-astro':
-        specifier: file:../ooops-cms-packages/packages/cms-astro
-        version: file:../ooops-cms-packages/packages/cms-astro
+        specifier: ^0.2.1
+        version: 0.2.1
       '@ooopsstudio/cms-cloudflare':
-        specifier: file:../ooops-cms-packages/packages/cms-cloudflare
-        version: file:../ooops-cms-packages/packages/cms-cloudflare
+        specifier: ^0.2.1
+        version: 0.2.1
       '@ooopsstudio/ui-astro':
-        specifier: file:../ooops-ui/packages/ui-astro
-        version: file:../ooops-ui/packages/ui-astro(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))
+        specifier: ^0.2.0
+        version: 0.2.0(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))
       '@ooopsstudio/ui-primitives':
-        specifier: file:../ooops-ui/packages/ui-primitives
-        version: file:../ooops-ui/packages/ui-primitives
+        specifier: ^0.2.0
+        version: 0.2.0
       astro:
         specifier: ^7.1.4
         version: 7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0)
@@ -989,8 +982,8 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@ooopsstudio/accessibility-astro@file:../ooops-accessibility/packages/accessibility-astro':
-    resolution: {directory: ../ooops-accessibility/packages/accessibility-astro, type: directory}
+  '@ooopsstudio/accessibility-astro@0.2.0':
+    resolution: {integrity: sha512-E3B7332EPNRxsP233NS3wEjih1drJqTmTwA+1O9/+4cJZAyYW1/VOeir1bWO/M+v9MCetJ7ca1dcOWm8oyU0Gw==}
     engines: {node: '>=22.14.0'}
     peerDependencies:
       astro: '>=7 <8'
@@ -998,8 +991,12 @@ packages:
       astro:
         optional: true
 
-  '@ooopsstudio/accessibility@file:../ooops-accessibility/packages/accessibility':
-    resolution: {directory: ../ooops-accessibility/packages/accessibility, type: directory}
+  '@ooopsstudio/accessibility@0.1.0':
+    resolution: {integrity: sha512-j5o06dhu2MdOK7i0TutHbypyNFwgVTim+oNTP16cgRKv9BgBblfqIfnDRJUNYYfZzjE733Ds7UK8+OWjJEw1FA==}
+    engines: {node: '>=22.14.0'}
+
+  '@ooopsstudio/accessibility@0.2.0':
+    resolution: {integrity: sha512-ys6DbEUbATHdh0HTmFg36sBA1wz8P7iAFywAVAreo0T5wBR/a8ynrhOfg+9h/2NIwpkPJOKAN+A21uPfbbfxqg==}
     engines: {node: '>=22.14.0'}
 
   '@ooopsstudio/analytics-consent-astro@0.3.0':
@@ -1015,26 +1012,44 @@ packages:
     resolution: {integrity: sha512-dZbLUtspKSlIev1bbv9miNYnrNGUDWQyexrBfBLg4FZtcudBXJDu5JKr3VWpxlvMHpdvFlt9N3uLNY/3G/M7Qw==}
     engines: {node: '>=20'}
 
-  '@ooopsstudio/cms-api@file:../ooops-cms-packages/packages/cms-api':
-    resolution: {directory: ../ooops-cms-packages/packages/cms-api, type: directory}
+  '@ooopsstudio/cms-api@0.2.0':
+    resolution: {integrity: sha512-oXUOrbhys2d5Sj6PBwUosVN1VIfILXDlFxjlMO7m1KRf6xT2aZliC+xRfrZ2hBjRel98pyikCnNPSyI+RVaZXA==}
     engines: {node: '>=22.14.0'}
 
-  '@ooopsstudio/cms-astro@file:../ooops-cms-packages/packages/cms-astro':
-    resolution: {directory: ../ooops-cms-packages/packages/cms-astro, type: directory}
+  '@ooopsstudio/cms-astro@0.2.1':
+    resolution: {integrity: sha512-kTZL9E+U70RGv8LZquapEPhzF/ciWiWKNQkZLuQ3J3+uBl82pYkfdgOpws6k6RGRfX/z1EQty6fl/n2vddFeyw==}
     engines: {node: '>=22.14.0'}
 
-  '@ooopsstudio/cms-cloudflare@file:../ooops-cms-packages/packages/cms-cloudflare':
-    resolution: {directory: ../ooops-cms-packages/packages/cms-cloudflare, type: directory}
+  '@ooopsstudio/cms-cloudflare@0.2.1':
+    resolution: {integrity: sha512-e3H2tU03JJX2RfUeq77K3j13WVfeJFpfFXGF0XBo3lz1KcZTYZc6Xmvej8L0RRUQkhJHFM9dmyI7pq9/HHYvyA==}
     engines: {node: '>=22.14.0'}
 
-  '@ooopsstudio/ui-astro@file:../ooops-ui/packages/ui-astro':
-    resolution: {directory: ../ooops-ui/packages/ui-astro, type: directory}
+  '@ooopsstudio/editor-contracts@0.1.0':
+    resolution: {integrity: sha512-R82yLwdwzNSTjI6ajt+/q0MV8ueZq2sSClu4wFT2wgHJG9C9HGlcNauOpkiukL1j/t8Gt1xYgKJ8V+1jHeekzg==}
+    engines: {node: '>=22.14.0'}
+
+  '@ooopsstudio/editor-contracts@0.2.0':
+    resolution: {integrity: sha512-O1S1hKr5w9OgImgQTlGxW0BXEiB0o/DFDKMq296Hp2d8z2BDxYD++VE6wa6KsqqHa4+MVjA7Kahqu4z3gP/ozQ==}
+    engines: {node: '>=22.14.0'}
+
+  '@ooopsstudio/ui-astro@0.1.0':
+    resolution: {integrity: sha512-aYC1/Tz2EhnRCYx9VMy33W08nP18fo7dp5rODD16ZB+cJMBrqKJ9trKeUMK+fWxYGhIoNm0+SMNCXX3nLsDRGw==}
     engines: {node: '>=22.14.0'}
     peerDependencies:
       astro: '>=7 <8'
 
-  '@ooopsstudio/ui-primitives@file:../ooops-ui/packages/ui-primitives':
-    resolution: {directory: ../ooops-ui/packages/ui-primitives, type: directory}
+  '@ooopsstudio/ui-astro@0.2.0':
+    resolution: {integrity: sha512-v2XawBLB5nNj1txrkX+F9IZOf33G0wJZ2QhrdYscElsB2CydspNDn9xHBW4+dOL+pByRe2kk0dpSiT+0g3BItA==}
+    engines: {node: '>=22.14.0'}
+    peerDependencies:
+      astro: '>=7 <8'
+
+  '@ooopsstudio/ui-primitives@0.1.0':
+    resolution: {integrity: sha512-8i2lX4HgPrmCmyc13L/7KCb7WwqYX41ZL/4h+MaVKwk/gX+27w1/BhxnpSh/mkbiIJE4PpfN4S7WKkFFtTH3uQ==}
+    engines: {node: '>=22.14.0'}
+
+  '@ooopsstudio/ui-primitives@0.2.0':
+    resolution: {integrity: sha512-YHQ8MZ/NUdvm90Q/Q0RVMRcZEnLle1vpghSerG2nYZuhKybe24NNDtmm9oXvjYZoeyaloD7LWgua826AUclP5g==}
     engines: {node: '>=22.14.0'}
 
   '@oslojs/encoding@1.1.0':
@@ -3726,40 +3741,64 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.20.1
 
-  '@ooopsstudio/accessibility-astro@file:../ooops-accessibility/packages/accessibility-astro(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))':
+  '@ooopsstudio/accessibility-astro@0.2.0(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))':
     dependencies:
-      '@ooopsstudio/accessibility': file:../ooops-accessibility/packages/accessibility
-      '@ooopsstudio/ui-astro': file:../ooops-ui/packages/ui-astro(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))
+      '@ooopsstudio/accessibility': 0.2.0
+      '@ooopsstudio/editor-contracts': 0.1.0
+      '@ooopsstudio/ui-astro': 0.1.0(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))
     optionalDependencies:
       astro: 7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0)
 
-  '@ooopsstudio/accessibility@file:../ooops-accessibility/packages/accessibility': {}
+  '@ooopsstudio/accessibility@0.1.0':
+    dependencies:
+      '@ooopsstudio/editor-contracts': 0.1.0
+
+  '@ooopsstudio/accessibility@0.2.0':
+    dependencies:
+      '@ooopsstudio/editor-contracts': 0.1.0
 
   '@ooopsstudio/analytics-consent-astro@0.3.0(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))':
     dependencies:
       '@ooopsstudio/analytics-consent': 0.3.0
-      '@ooopsstudio/ui-astro': file:../ooops-ui/packages/ui-astro(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))
+      '@ooopsstudio/ui-astro': 0.1.0(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))
     optionalDependencies:
       astro: 7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0)
 
   '@ooopsstudio/analytics-consent@0.3.0': {}
 
-  '@ooopsstudio/cms-api@file:../ooops-cms-packages/packages/cms-api': {}
+  '@ooopsstudio/cms-api@0.2.0': {}
 
-  '@ooopsstudio/cms-astro@file:../ooops-cms-packages/packages/cms-astro':
+  '@ooopsstudio/cms-astro@0.2.1':
     dependencies:
-      '@ooopsstudio/cms-api': file:../ooops-cms-packages/packages/cms-api
+      '@ooopsstudio/cms-api': 0.2.0
 
-  '@ooopsstudio/cms-cloudflare@file:../ooops-cms-packages/packages/cms-cloudflare': {}
-
-  '@ooopsstudio/ui-astro@file:../ooops-ui/packages/ui-astro(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))':
+  '@ooopsstudio/cms-cloudflare@0.2.1':
     dependencies:
-      '@ooopsstudio/ui-primitives': file:../ooops-ui/packages/ui-primitives
+      '@ooopsstudio/cms-api': 0.2.0
+
+  '@ooopsstudio/editor-contracts@0.1.0': {}
+
+  '@ooopsstudio/editor-contracts@0.2.0': {}
+
+  '@ooopsstudio/ui-astro@0.1.0(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))':
+    dependencies:
+      '@ooopsstudio/ui-primitives': 0.1.0
       astro: 7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0)
 
-  '@ooopsstudio/ui-primitives@file:../ooops-ui/packages/ui-primitives':
+  '@ooopsstudio/ui-astro@0.2.0(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))':
     dependencies:
-      '@ooopsstudio/accessibility': file:../ooops-accessibility/packages/accessibility
+      '@ooopsstudio/ui-primitives': 0.2.0
+      astro: 7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0)
+
+  '@ooopsstudio/ui-primitives@0.1.0':
+    dependencies:
+      '@ooopsstudio/accessibility': 0.1.0
+      '@ooopsstudio/editor-contracts': 0.1.0
+
+  '@ooopsstudio/ui-primitives@0.2.0':
+    dependencies:
+      '@ooopsstudio/accessibility': 0.2.0
+      '@ooopsstudio/editor-contracts': 0.2.0
 
   '@oslojs/encoding@1.1.0': {}
 
