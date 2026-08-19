@@ -82,6 +82,7 @@ docs/
 - Small copy-editable Astro UI primitives.
 - `CmsImage.astro` for CMS media URLs, alt fallback, responsive sizing, lazy loading, and fallback image handling.
 - Cloudflare Worker preview routes for CMS drafts using the published CMS preview contract.
+- Signed `/api/cms/rebuild` Worker endpoint with durable replay protection for CMS-triggered Workers Builds.
 - Preview banner and exit preview link when preview mode is active.
 - `validate-env` and content health scripts for production readiness.
 - Manifest-driven optional modules and installer.
@@ -162,6 +163,8 @@ pnpm validate:env
 pnpm check:content-health
 pnpm validate
 ```
+
+`pnpm test:cms-rebuild` covers valid and invalid signatures, completed replays, already-queued builds, concurrent delivery, and retry after a failed Cloudflare trigger.
 
 `pnpm check` runs Astro type checking plus the template guard in `scripts/check-cms-api-contracts.mjs`. The guard enforces `template-policy.json`, canonical package ownership, Node/pnpm/Astro policy, published dependency ranges, forbidden duplicated behavior, secret boundaries, and required template files.
 
@@ -331,6 +334,7 @@ For production, use the analytics script URL and website id from your CMS analyt
 ## Deployment And Security
 
 - [Deployment guide](docs/deployment.md)
+- [CMS-triggered Cloudflare rebuilds](docs/cms-triggered-rebuilds.md)
 - [Security notes](docs/security.md)
 
 ## CMS API Examples
@@ -354,3 +358,5 @@ Never expose these to browser code:
 
 - `OOOPS_CMS_API_TOKEN`
 - `OOOPS_CMS_PREVIEW_SESSION_SECRET`
+- `OOOPS_CMS_REBUILD_SECRET`
+- `OOOPS_CLOUDFLARE_DEPLOY_HOOK_URL` (Worker only; never stored in CMS)

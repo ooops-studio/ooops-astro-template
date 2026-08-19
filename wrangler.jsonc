@@ -1,6 +1,21 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "ooops-astro-template",
+  "main": "./src/worker.ts",
   "compatibility_date": "2026-08-11",
-  "compatibility_flags": ["nodejs_compat"]
+  "compatibility_flags": ["nodejs_compat"],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "CMS_REBUILD_REPLAY_GUARD",
+        "class_name": "CmsRebuildReplayGuard"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["CmsRebuildReplayGuard"]
+    }
+  ]
 }
