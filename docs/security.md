@@ -17,23 +17,11 @@ Recommended defaults:
 - Optional analytics is always consent-gated. The template has no configuration bypass for anonymous or identified analytics.
 - Keep `PUBLIC_CMS_ANALYTICS_RESPECT_DNT=true`.
 - Keep performance analytics and replay disabled until you have the correct consent UX and legal basis for your site.
-- Do not put private CMS API tokens, webhook secrets, or preview-session secrets in any `PUBLIC_*` variable.
+- Do not put private CMS API tokens or preview-session secrets in any `PUBLIC_*` variable.
 
 ## Bootstrap
 
 `pnpm cms:bootstrap` uses `OOOPS_CMS_API_TOKEN` server-side from your terminal to create starter schemas/content/forms in the CMS organization attached to that token. It does not create a new organization. Use a short-lived token with only the documented bootstrap scopes, and revoke or rotate it after setup if you do not need ongoing write access.
-
-## Webhooks
-
-Use a long random `CMS_WEBHOOK_SECRET`. The optional Cloudflare rebuild endpoint verifies:
-
-- `x-cms-timestamp`
-- `x-cms-signature`
-- `x-cms-event`
-
-The signature is `HMAC-SHA256(timestamp + "." + rawBody)`.
-
-`functions/api/cms/rebuild.ts` verifies the signature and timestamp before triggering a deploy hook.
 
 ## Preview Mode
 
@@ -44,7 +32,9 @@ Preview tokens are server-only:
 
 Do not import these from browser components, islands, or client scripts.
 
-The Cloudflare Worker routes under `/preview/content/**` validate a CMS-issued opaque token server-to-server, encrypt it into an `HttpOnly` preview-session cookie, and redirect to a tokenless URL. The browser never receives the CMS API token or the preview-session encryption secret.
+The Cloudflare Worker routes under `/preview/content/**` use `@ooopsstudio/cms-api` and `@ooopsstudio/cms-cloudflare` to validate a CMS-issued opaque token server-to-server, encrypt it into an `HttpOnly` preview-session cookie, and redirect to a tokenless URL. The browser never receives the CMS API token or the preview-session encryption secret.
+
+The current CMS contract does not expose outgoing publish webhooks. Do not configure or document a CMS rebuild endpoint unless that capability is added to the CMS and its public contract first.
 
 ## Environment Files
 

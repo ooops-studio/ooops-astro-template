@@ -13,7 +13,6 @@ export const templateConfig = {
     mediaPlayer: false,
     newsletter: false,
     preview: true,
-    rebuildWebhook: true,
     search: false,
     svelteIslands: true,
     posts: true,
