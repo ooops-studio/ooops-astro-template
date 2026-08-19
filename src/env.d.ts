@@ -5,6 +5,8 @@ interface ImportMetaEnv {
   readonly OOOPS_CMS_API_BASE_URL?: string;
   readonly OOOPS_CMS_API_TOKEN?: string;
   readonly OOOPS_CMS_PREVIEW_SESSION_SECRET?: string;
+  readonly OOOPS_CMS_REBUILD_SECRET?: string;
+  readonly OOOPS_CLOUDFLARE_DEPLOY_HOOK_URL?: string;
   readonly PUBLIC_SITE_URL?: string;
   readonly PUBLIC_CMS_API_BASE_URL?: string;
   readonly PUBLIC_NEWSLETTER_FORM_TOKEN?: string;

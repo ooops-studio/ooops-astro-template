@@ -34,12 +34,16 @@ OOOPS_CMS_API_TOKEN=
 OOOPS_CMS_PREVIEW_SESSION_SECRET=
 ```
 
-## Cloudflare Pages
+## Cloudflare Workers Builds
 
-1. Set build command to `pnpm build`.
-2. Set output directory to `dist`.
-3. Add the required env vars in Pages settings.
+1. Connect the GitHub repository to Cloudflare Workers Builds.
+2. Set the build command to `pnpm build` and the deploy command to `pnpm exec wrangler deploy`.
+3. Add the required build-time CMS variables.
 4. Add `OOOPS_CMS_API_BASE_URL`, `OOOPS_CMS_API_TOKEN`, and `OOOPS_CMS_PREVIEW_SESSION_SECRET` if editors need CMS draft previews. These are Worker-only secrets; never prefix them with `PUBLIC_`.
+5. Create a Deploy Hook for `main`, then store it only as the `OOOPS_CLOUDFLARE_DEPLOY_HOOK_URL` Worker secret.
+6. Store the CMS-generated signing secret as the `OOOPS_CMS_REBUILD_SECRET` Worker secret.
+
+The committed custom Worker serves `/api/cms/rebuild`, verifies the signed event, uses a Durable Object for replay protection, and triggers Workers Builds. Full setup: [CMS-triggered Cloudflare rebuilds](cms-triggered-rebuilds.md).
 
 Before deploy, run:
 
@@ -119,4 +123,4 @@ https://your-site.com/preview/content/singles/{apiId}?preview={opaque-token}
 
 The Worker sends the opaque token only to the CMS preview endpoint using `OOOPS_CMS_API_TOKEN`, stores the validated token in an encrypted 30-minute `HttpOnly` cookie, then redirects to the tokenless preview URL. Preview HTML and the exit endpoint are `private, no-store`; preview responses are also `noindex, nofollow`, have no analytics/replay, and cannot leak the token through canonical or referrer metadata. The exit control calls `/preview/content/exit` and clears the preview cookie before returning to the published page.
 
-The committed `wrangler.jsonc` enables `nodejs_compat` for the Astro/Svelte SSR runtime. Keep that compatibility flag when deploying the Worker.
+The committed `wrangler.jsonc` enables `nodejs_compat`, selects the custom Worker entrypoint, and declares the replay Durable Object. Keep those settings when deploying the Worker.

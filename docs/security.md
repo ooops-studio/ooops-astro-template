@@ -34,7 +34,16 @@ Do not import these from browser components, islands, or client scripts.
 
 The Cloudflare Worker routes under `/preview/content/**` use `@ooopsstudio/cms-api` and `@ooopsstudio/cms-cloudflare` to validate a CMS-issued opaque token server-to-server, encrypt it into an `HttpOnly` preview-session cookie, and redirect to a tokenless URL. The browser never receives the CMS API token or the preview-session encryption secret.
 
-The current CMS contract does not expose outgoing publish webhooks. Do not configure or document a CMS rebuild endpoint unless that capability is added to the CMS and its public contract first.
+## CMS-triggered rebuilds
+
+The `/api/cms/rebuild` Worker endpoint accepts only timestamped HMAC-signed CMS events. A Durable Object provides atomic replay/idempotency state, and failed Cloudflare triggers release their claim so the CMS can safely retry the same event.
+
+Keep both values as Cloudflare Worker secrets:
+
+- `OOOPS_CMS_REBUILD_SECRET`: shared with the CMS site registration and used for HMAC only.
+- `OOOPS_CLOUDFLARE_DEPLOY_HOOK_URL`: private to the site's Worker and never stored in CMS or Git.
+
+See [CMS-triggered Cloudflare rebuilds](cms-triggered-rebuilds.md) for setup and verification.
 
 ## Environment Files
 

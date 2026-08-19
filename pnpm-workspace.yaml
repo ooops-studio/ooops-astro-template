@@ -11,7 +11,7 @@ minimumReleaseAgeExclude:
   - '@ooopsstudio/analytics-consent@0.3.0'
   - '@ooopsstudio/cms-api@0.2.0'
   - '@ooopsstudio/cms-astro@0.2.1'
-  - '@ooopsstudio/cms-cloudflare@0.2.1'
+  - '@ooopsstudio/cms-cloudflare@0.3.1'
 
 overrides:
   esbuild: ^0.28.1

@@ -9,7 +9,8 @@ export default [
       '.astro/**',
       '.cache/**',
       'dist/**',
-      'node_modules/**'
+      'node_modules/**',
+      'worker-configuration.d.ts'
     ]
   },
   js.configs.recommended,

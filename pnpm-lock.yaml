@@ -39,8 +39,8 @@ importers:
         specifier: ^0.2.1
         version: 0.2.1
       '@ooopsstudio/cms-cloudflare':
-        specifier: ^0.2.1
-        version: 0.2.1
+        specifier: ^0.3.1
+        version: 0.3.1
       '@ooopsstudio/ui-astro':
         specifier: ^0.2.0
         version: 0.2.0(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))
@@ -1023,8 +1023,8 @@ packages:
     resolution: {integrity: sha512-kTZL9E+U70RGv8LZquapEPhzF/ciWiWKNQkZLuQ3J3+uBl82pYkfdgOpws6k6RGRfX/z1EQty6fl/n2vddFeyw==}
     engines: {node: '>=22.14.0'}
 
-  '@ooopsstudio/cms-cloudflare@0.2.1':
-    resolution: {integrity: sha512-e3H2tU03JJX2RfUeq77K3j13WVfeJFpfFXGF0XBo3lz1KcZTYZc6Xmvej8L0RRUQkhJHFM9dmyI7pq9/HHYvyA==}
+  '@ooopsstudio/cms-cloudflare@0.3.1':
+    resolution: {integrity: sha512-LOji+XdYLsuZ9q52yu3Phq1lHUUodao6+ak4hCXw4+XEhi69guyN5puOWe0bFzfmdn/MuuwQ794pDoIo+E/IUg==}
     engines: {node: '>=22.14.0'}
 
   '@ooopsstudio/editor-contracts@0.1.0':
@@ -3775,7 +3775,7 @@ snapshots:
     dependencies:
       '@ooopsstudio/cms-api': 0.2.0
 
-  '@ooopsstudio/cms-cloudflare@0.2.1':
+  '@ooopsstudio/cms-cloudflare@0.3.1':
     dependencies:
       '@ooopsstudio/cms-api': 0.2.0
 

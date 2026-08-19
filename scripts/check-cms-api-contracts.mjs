@@ -35,6 +35,7 @@ const requiredFiles = [
   'optional/newsletter/README.md',
   'optional/preview/README.md',
   'docs/deployment.md',
+  'docs/cms-triggered-rebuilds.md',
   'docs/security.md',
   'docs/accessibility.md',
   'docs/content-models.md',
@@ -87,6 +88,9 @@ const requiredFiles = [
   'src/lib/cms-preview/client.ts',
   'src/lib/cms-preview/content.ts',
   'src/lib/cms-preview/session.ts',
+  'src/lib/cms-rebuild/handler.ts',
+  'src/worker.ts',
+  'worker-configuration.d.ts',
   'src/pages/preview/content/exit.ts',
   'src/pages/preview/content/singles/[apiId].astro',
   'src/pages/preview/content/collections/[apiId]/[slug].astro',
@@ -128,6 +132,8 @@ const forbiddenLocalEnvFiles = [
 const requiredBlankExampleSecrets = [
   'OOOPS_CMS_API_TOKEN',
   'OOOPS_CMS_PREVIEW_SESSION_SECRET',
+  'OOOPS_CMS_REBUILD_SECRET',
+  'OOOPS_CLOUDFLARE_DEPLOY_HOOK_URL',
   'PUBLIC_NEWSLETTER_FORM_TOKEN',
   'PUBLIC_CMS_ANALYTICS_SCRIPT_URL',
   'PUBLIC_CMS_ANALYTICS_WEBSITE_ID',
@@ -223,6 +229,8 @@ for (const file of forbiddenLocalEnvFiles) {
 
 const envExample = read('.env.example');
 const enabledSensitiveEnv = new Set(['OOOPS_CMS_API_TOKEN']);
+enabledSensitiveEnv.add('OOOPS_CMS_REBUILD_SECRET');
+enabledSensitiveEnv.add('OOOPS_CLOUDFLARE_DEPLOY_HOOK_URL');
 if (moduleEnabled('preview')) {
   enabledSensitiveEnv.add('OOOPS_CMS_API_TOKEN');
   enabledSensitiveEnv.add('OOOPS_CMS_PREVIEW_SESSION_SECRET');
