@@ -30,7 +30,10 @@ export const alternateLocales = (path = '/') =>
   createAlternateLocales({
     ...templateConfig,
     siteUrl,
-    pathByLocale: Object.fromEntries(supportedLocales.map((locale) => [locale, path]))
+    locales: templateConfig.i18nEnabled ? supportedLocales : [defaultLocale],
+    pathByLocale: Object.fromEntries(
+      (templateConfig.i18nEnabled ? supportedLocales : [defaultLocale]).map((locale) => [locale, path])
+    )
   }).map(({ locale, href }) => ({
     locale: locale as TemplateLocale,
     hreflang: locale,
