@@ -36,6 +36,9 @@ OOOPS_CMS_PREVIEW_SESSION_SECRET=
 
 ## Cloudflare Workers Builds
 
+For the complete CMS, preview, analytics, SEO, forms, and publish acceptance
+flow, use [Ooops CMS production integration](cms-integration-guide.md).
+
 1. Connect the GitHub repository to Cloudflare Workers Builds.
 2. Set the build command to `pnpm build` and the deploy command to `pnpm exec wrangler deploy`.
 3. Add the required build-time CMS variables.
@@ -104,13 +107,11 @@ PUBLIC_CMS_ANALYTICS_RESPECT_DNT=true
 
 Restart the Astro dev server after changing public env vars. Accept analytics in the banner, then browser-side events should appear in CMS Analytics for the matching website id.
 
-If this is a fresh CMS organization, run the bootstrap once before expecting live content:
-
-```bash
-pnpm cms:bootstrap
-```
-
-See [CMS bootstrap](bootstrap.md).
+For a fresh CMS organization, create the required content models and starter
+entries in the CMS UI. The checked-in starter bundle remains a reference
+fixture; the current public CMS API does not expose schema/content creation and
+publication endpoints required for unattended production bootstrap. See
+[Ooops CMS production integration](cms-integration-guide.md).
 
 ## CMS Draft Preview
 

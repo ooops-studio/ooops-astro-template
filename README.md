@@ -248,6 +248,7 @@ Expected collection API id: `posts`.
 
 ## Production Starter Guides
 
+- [Complete CMS production integration](docs/cms-integration-guide.md)
 - [Accessibility](docs/accessibility.md)
 - [Content model examples](docs/content-models.md)
 - [Internationalization](docs/i18n.md)

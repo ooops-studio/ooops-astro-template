@@ -1,4 +1,12 @@
-# CMS Bootstrap
+# CMS Bootstrap Reference
+
+> **Current production limitation:** the public CMS API exposes published
+> reads and field-scoped draft updates, but not the schema/content creation,
+> publication, and bundle-import endpoints used by this script. Use the CMS UI
+> procedure in [Ooops CMS production integration](cms-integration-guide.md) for
+> a real production site. Keep this document and the bundle as a reference for
+> a future supported import endpoint; do not create broad write tokens based on
+> this guide today.
 
 Use the bootstrap flow when you want this template to create the starter CMS schemas, content, and form in your own CMS organization.
 
