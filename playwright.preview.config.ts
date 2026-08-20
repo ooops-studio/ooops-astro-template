@@ -25,7 +25,7 @@ export default defineConfig({
 			timeout: 30_000
 		},
 		{
-			command: `pnpm exec wrangler dev --config dist/server/wrangler.json --ip 127.0.0.1 --port 4404 --local --var OOOPS_CMS_API_BASE_URL:${cmsApiBaseUrl} --var OOOPS_CMS_API_TOKEN:${cmsToken} --var OOOPS_CMS_PREVIEW_SESSION_SECRET:${previewSecret}`,
+			command: `pnpm exec wrangler dev --config dist/server/wrangler.json --ip 127.0.0.1 --port 4404 --local --var OOOPS_CMS_API_BASE_URL:${cmsApiBaseUrl} --var OOOPS_CMS_API_TOKEN:${cmsToken} --var OOOPS_CMS_PREVIEW_SESSION_SECRET:${previewSecret} --var OOOPS_CMS_PREVIEW_ENABLED:true`,
 			url: 'http://127.0.0.1:4404/',
 			reuseExistingServer: false,
 			timeout: 120_000

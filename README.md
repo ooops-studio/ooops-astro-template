@@ -276,9 +276,10 @@ Configure these server-only Cloudflare variables (never `PUBLIC_` variables):
 OOOPS_CMS_API_BASE_URL=https://cms.example/api/cms/v1
 OOOPS_CMS_API_TOKEN=
 OOOPS_CMS_PREVIEW_SESSION_SECRET=
+OOOPS_CMS_PREVIEW_ENABLED=false
 ```
 
-The CMS token needs only `cms:content:read`. See [Deployment](docs/deployment.md) and run `pnpm test:preview:e2e` to exercise the complete handoff.
+Preview is deny-by-default. Set `OOOPS_CMS_PREVIEW_ENABLED=true` only after the deployed CMS proves that invalid opaque tokens are rejected. The CMS token needs only `cms:content:read`. See [Deployment](docs/deployment.md) and run `pnpm test:preview:e2e` to exercise the complete handoff.
 
 ## Optional Newsletter Form
 

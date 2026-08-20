@@ -69,6 +69,9 @@ export const preparePreview = async ({
   previewToken: string | null;
 }) => {
   const env = cloudflareRuntimeEnv();
+  if (env.OOOPS_CMS_PREVIEW_ENABLED !== 'true') {
+    return { payload: null, redirect: null, setCookie: null };
+  }
   const expectedPath = cmsPreviewPath({ apiId, kind, slug });
   if (previewToken) {
     const payload = await fetchPreview({ apiId, env, kind, previewToken, slug });

@@ -32,6 +32,7 @@ PUBLIC_CMS_ANALYTICS_REPLAY_SCRIPT_URL=
 OOOPS_CMS_API_BASE_URL=https://cms.example/api/cms/v1
 OOOPS_CMS_API_TOKEN=
 OOOPS_CMS_PREVIEW_SESSION_SECRET=
+OOOPS_CMS_PREVIEW_ENABLED=false
 ```
 
 ## Cloudflare Workers Builds
@@ -42,7 +43,7 @@ flow, use [Ooops CMS production integration](cms-integration-guide.md).
 1. Connect the GitHub repository to Cloudflare Workers Builds.
 2. Set the build command to `pnpm build` and the deploy command to `pnpm exec wrangler deploy`.
 3. Add the required build-time CMS variables.
-4. Add `OOOPS_CMS_API_BASE_URL`, `OOOPS_CMS_API_TOKEN`, and `OOOPS_CMS_PREVIEW_SESSION_SECRET` if editors need CMS draft previews. These are Worker-only secrets; never prefix them with `PUBLIC_`.
+4. Add `OOOPS_CMS_API_BASE_URL`, `OOOPS_CMS_API_TOKEN`, and `OOOPS_CMS_PREVIEW_SESSION_SECRET` if editors need CMS draft previews. Keep `OOOPS_CMS_PREVIEW_ENABLED=false` until production rejects arbitrary opaque preview tokens, then set it to `true`. These are Worker-only values; never prefix them with `PUBLIC_`.
 5. Create a Deploy Hook for `main`, then store it only as the `OOOPS_CLOUDFLARE_DEPLOY_HOOK_URL` Worker secret.
 6. Store the CMS-generated signing secret as the `OOOPS_CMS_REBUILD_SECRET` Worker secret.
 

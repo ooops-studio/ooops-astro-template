@@ -131,6 +131,7 @@ secrets:
 OOOPS_CMS_API_BASE_URL=https://cms.ooops.studio/api/cms/v1
 OOOPS_CMS_API_TOKEN=<content-read-token>
 OOOPS_CMS_PREVIEW_SESSION_SECRET=<long-random-secret>
+OOOPS_CMS_PREVIEW_ENABLED=false
 ```
 
 The CMS should open one of these routes with its short-lived opaque token:
