@@ -81,7 +81,16 @@ export const handleCmsRebuildRequest = async (
   if (missing.length > 0) return configurationError(missing);
 
   const deployHookFetch: typeof globalThis.fetch = async (input, init) => {
-    const response = await fetchImpl(input, init);
+    let response: Response;
+    try {
+      response = await fetchImpl(input, init);
+    } catch (error) {
+      console.error('Cloudflare deploy hook request threw before receiving a response.', {
+        name: error instanceof Error ? error.name : 'UnknownError',
+        message: error instanceof Error ? error.message : 'Unknown deploy hook fetch error.'
+      });
+      throw error;
+    }
     if (!response.ok) {
       const body = await response.clone().text().catch(() => '');
       console.error('Cloudflare deploy hook request failed.', {
