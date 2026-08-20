@@ -7,7 +7,7 @@ import {
   type OoopsCmsClient
 } from '@ooopsstudio/cms-api';
 import { createCmsClientFromAstroEnv } from '@ooopsstudio/cms-astro';
-import { cmsApiBaseUrl, cmsApiToken } from './env';
+import { cmsApiBaseUrl, cmsApiToken, cmsRuntimeEnv } from './env';
 
 export type {
   CmsCollectionEntryResponse,
@@ -18,17 +18,21 @@ export type {
   OoopsCmsClient
 } from '@ooopsstudio/cms-api';
 
+type CmsSingleRuntimeResponse =
+  | CmsSingleResponse<CmsRecord>
+  | { ok: true; apiId?: string; data: CmsRecord };
+
 export const hasCmsConfig = Boolean(cmsApiBaseUrl && cmsApiToken);
 
 export const createCmsClient = (): OoopsCmsClient | null => {
-  return createCmsClientFromAstroEnv((import.meta as ImportMeta & { env?: Record<string, string | undefined> }).env ?? process.env);
+  return createCmsClientFromAstroEnv(cmsRuntimeEnv);
 };
 
 export const getCmsSingle = async (apiId: string) => {
   const cms = createCmsClient();
   if (!cms) return null;
-  const response = await cms.content.getSingle<CmsSingleResponse<CmsRecord>>(apiId);
-  return response.content;
+  const response = await cms.content.getSingle<CmsSingleRuntimeResponse>(apiId);
+  return 'content' in response ? response.content : response.data;
 };
 
 export const getCmsCollectionEntries = async (apiId: string, query?: CmsQuery) => {

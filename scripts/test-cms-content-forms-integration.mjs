@@ -21,7 +21,7 @@ assert(isRecord(singles), 'listSingles must return an object response.');
 
 const homepage = await cms.content.getSingle('homepage');
 assert(isRecord(homepage), 'homepage must return an object response.');
-assert(isRecord(homepage.content), 'homepage response must contain content.');
+assert(isRecord(homepage.content) || isRecord(homepage.data), 'homepage response must contain content or data.');
 
 const collections = await cms.content.listCollections();
 assert(isRecord(collections), 'listCollections must return an object response.');
