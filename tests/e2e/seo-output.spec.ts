@@ -8,7 +8,9 @@ test('home output exposes complete crawl and sharing metadata', async({page}) =>
 	await page.goto('/')
 
 	await expect(page).toHaveTitle(/Ooops CMS Astro Site/)
-	expect(await metaContent(page, 'meta[name="description"]')).toBeTruthy()
+	const description = await metaContent(page, 'meta[name="description"]')
+	expect(description).toBeTruthy()
+	expect(description).not.toContain('<')
 	expect(await page.locator('link[rel="canonical"]').getAttribute('href')).toMatch(/\/$/)
 	expect(await metaContent(page, 'meta[property="og:type"]')).toBe('website')
 	expect(await metaContent(page, 'meta[property="og:title"]')).toBe(await page.title())

@@ -1,5 +1,5 @@
 import { getCmsSingle } from './client';
-import { asRecord, asString } from './content-helpers';
+import { asRecord, asString, htmlToText } from './content-helpers';
 import { seoFromFields } from './seo';
 import type { HomepageContent } from './types';
 import { alternateLocales } from '../i18n/routing';
@@ -21,7 +21,7 @@ export const getHome = async (): Promise<HomepageContent> => {
   const content = await getCmsSingle('homepage');
   const fields = asRecord(content?.fields || content);
   const heading = asString(fields.heading) || asString(fields.title) || 'Ooops CMS Astro Site';
-  const description = asString(fields.description) || 'Public website powered by Ooops CMS.';
+  const description = htmlToText(asString(fields.description)) || 'Public website powered by Ooops CMS.';
 
   return {
     eyebrow: asString(fields.title) || asString(fields.eyebrow) || 'Ooops CMS + Astro',
