@@ -81,11 +81,13 @@ const cloudflareSuccess = (alreadyExists = false) =>
 test('accepts a valid signed CMS publish event and triggers one build', async () => {
   const replay = createReplayNamespace();
   let hookCalls = 0;
+  let redirectMode: RequestRedirect | undefined;
   const response = await handleCmsRebuildRequest(
     await signedRequest(),
     createEnvironment(replay.namespace),
-    async () => {
+    async (_input, init) => {
       hookCalls += 1;
+      redirectMode = init?.redirect;
       return cloudflareSuccess();
     }
   );
@@ -99,7 +101,25 @@ test('accepts a valid signed CMS publish event and triggers one build', async ()
     branch: 'main'
   });
   assert.equal(hookCalls, 1);
+  assert.equal(redirectMode, 'manual');
   assert.equal(replay.states.get(event.id), 'completed');
+});
+
+test('rejects a deploy hook redirect while using the Workers-compatible manual mode', async () => {
+  const replay = createReplayNamespace();
+  let redirectMode: RequestRedirect | undefined;
+  const response = await handleCmsRebuildRequest(
+    await signedRequest(),
+    createEnvironment(replay.namespace),
+    async (_input, init) => {
+      redirectMode = init?.redirect;
+      return new Response(null, { status: 302, headers: { location: 'https://example.com/' } });
+    }
+  );
+
+  assert.equal(response.status, 502);
+  assert.equal(redirectMode, 'manual');
+  assert.equal(replay.states.has(event.id), false);
 });
 
 test('rejects an invalid signature without calling Cloudflare', async () => {

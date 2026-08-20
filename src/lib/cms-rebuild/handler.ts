@@ -83,7 +83,12 @@ export const handleCmsRebuildRequest = async (
   const deployHookFetch: typeof globalThis.fetch = async (input, init) => {
     let response: Response;
     try {
-      response = await fetchImpl(input, init);
+      response = await fetchImpl(input, {
+        ...init,
+        // Workers does not implement `redirect: "error"`. Manual mode preserves
+        // the package contract because every 3xx response remains non-successful.
+        redirect: init?.redirect === 'error' ? 'manual' : init?.redirect
+      });
     } catch (error) {
       console.error('Cloudflare deploy hook request threw before receiving a response.', {
         name: error instanceof Error ? error.name : 'UnknownError',
