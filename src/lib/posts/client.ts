@@ -41,7 +41,7 @@ const mapPostSummary = (entry: Record<string, unknown>): PostSummary => {
     heroImage,
     heroImageUrl: mediaUrl(heroImage, mediaMap),
     heroImageAlt: mediaAlt(heroImage, title, mediaMap),
-    publishedAt: asDateString(fields.publishedAt),
+    publishedAt: asDateString(entry.publishedAt) || asDateString(fields.publishedAt),
     updatedAt: asDateString(entry.updatedAt) || asDateString(fields.updatedAt)
   };
 };

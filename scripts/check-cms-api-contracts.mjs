@@ -134,6 +134,7 @@ const requiredBlankExampleSecrets = [
   'OOOPS_CMS_PREVIEW_SESSION_SECRET',
   'OOOPS_CMS_REBUILD_SECRET',
   'OOOPS_CLOUDFLARE_DEPLOY_HOOK_URL',
+  'PUBLIC_CONTACT_FORM_TOKEN',
   'PUBLIC_NEWSLETTER_FORM_TOKEN',
   'PUBLIC_CMS_ANALYTICS_SCRIPT_URL',
   'PUBLIC_CMS_ANALYTICS_WEBSITE_ID',
@@ -231,6 +232,7 @@ const envExample = read('.env.example');
 const enabledSensitiveEnv = new Set(['OOOPS_CMS_API_TOKEN']);
 enabledSensitiveEnv.add('OOOPS_CMS_REBUILD_SECRET');
 enabledSensitiveEnv.add('OOOPS_CLOUDFLARE_DEPLOY_HOOK_URL');
+enabledSensitiveEnv.add('PUBLIC_CONTACT_FORM_TOKEN');
 if (moduleEnabled('preview')) {
   enabledSensitiveEnv.add('OOOPS_CMS_API_TOKEN');
   enabledSensitiveEnv.add('OOOPS_CMS_PREVIEW_SESSION_SECRET');

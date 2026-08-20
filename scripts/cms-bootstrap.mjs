@@ -64,10 +64,9 @@ try {
   printCounts('Updated', result.summary?.updates);
   printCounts('Skipped', result.summary?.skips);
 
-  const newsletter = result.summary?.outputs?.forms?.find((form) => form.key === 'newsletter');
-  if (newsletter?.publicShareToken) {
-    console.log('\nAdd this to .env if you copy optional/newsletter into your site:');
-    console.log(`PUBLIC_NEWSLETTER_FORM_TOKEN=${newsletter.publicShareToken}`);
+  const contact = result.summary?.outputs?.forms?.find((form) => form.key === 'contact');
+  if (contact?.publicShareToken) {
+    console.log('\nA public contact share token was created. Store it as PUBLIC_CONTACT_FORM_TOKEN without printing or committing its value.');
   }
 
   const webhooks = result.summary?.outputs?.webhooks ?? [];

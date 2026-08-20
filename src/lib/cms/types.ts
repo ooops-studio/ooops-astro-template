@@ -16,7 +16,11 @@ export type SeoPayload = {
 };
 
 export type HomepageContent = {
+  eyebrow: string;
   heading: string;
   description: string;
+  proofText: string;
+  ctaLabel: string;
+  ctaHref: string;
   seo: SeoPayload;
 };

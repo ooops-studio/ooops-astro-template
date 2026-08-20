@@ -45,22 +45,27 @@ const forms = await cms.forms.list();
 assert(isRecord(forms), 'forms must return an object response.');
 const formItems = Array.isArray(forms.forms) ? forms.forms : Array.isArray(forms.items) ? forms.items : [];
 assert(Array.isArray(formItems), 'forms response must contain forms or items.');
-const newsletter = formItems.find((form) => isRecord(form) && (form.key === 'newsletter' || form.title === 'Newsletter signup'));
-assert(newsletter, 'the bootstrap newsletter form was not found. Run pnpm cms:bootstrap for this CMS organization.');
-const newsletterId = typeof newsletter.id === 'string' ? newsletter.id : '';
-assert(Boolean(newsletterId), 'the newsletter form must expose an id.');
-const newsletterDetail = await cms.forms.get(newsletterId);
-assert(isRecord(newsletterDetail), 'the newsletter form detail response must be an object.');
+const contact = formItems.find((form) => isRecord(form) && (form.key === 'contact' || form.title === 'Contact request'));
+assert(contact, 'the contact form was not found. Create the production fixture documented in cms/starter-bundle.json.');
+const contactId = typeof contact.id === 'string' ? contact.id : '';
+assert(Boolean(contactId), 'the contact form must expose an id.');
+const contactDetail = await cms.forms.get(contactId);
+assert(isRecord(contactDetail), 'the contact form detail response must be an object.');
 
 if (formShareToken || formTestEmail) {
   assert(formShareToken && formTestEmail, 'set both OOOPS_CMS_INTEGRATION_FORM_SHARE_TOKEN and OOOPS_CMS_INTEGRATION_FORM_TEST_EMAIL to test a public submission.');
   const publicForms = createCmsPublicFormsClient({baseUrl, timeoutMs: 15_000});
   const submission = await publicForms.forms.submit(formShareToken, {
-    answers: {email: formTestEmail},
-    metadata: {source: 'ooops-astro-template-cms-integration'}
+    answers: {
+      name: 'Ooops SSG integration test',
+      email: formTestEmail,
+      message: 'Disposable production integration submission.'
+    },
+    submitterIdentity: {name: 'Ooops SSG integration test', email: formTestEmail},
+    metadata: {source: 'ooops-ssg-test-cms-integration'}
   });
-  assert(isRecord(submission), 'the public newsletter submission response must be an object.');
+  assert(isRecord(submission), 'the public contact submission response must be an object.');
 }
 
-const formMessage = formShareToken ? 'newsletter public submission accepted' : 'newsletter form readable';
+const formMessage = formShareToken ? 'contact public submission accepted' : 'contact form readable';
 console.log(`[cms-integration] Passed: homepage, posts (${posts.items.length} inspected), and ${formMessage} from ${new URL(baseUrl).origin}.`);

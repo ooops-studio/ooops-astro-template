@@ -9,6 +9,7 @@ interface ImportMetaEnv {
   readonly OOOPS_CLOUDFLARE_DEPLOY_HOOK_URL?: string;
   readonly PUBLIC_SITE_URL?: string;
   readonly PUBLIC_CMS_API_BASE_URL?: string;
+  readonly PUBLIC_CONTACT_FORM_TOKEN?: string;
   readonly PUBLIC_NEWSLETTER_FORM_TOKEN?: string;
   readonly PUBLIC_CMS_ANALYTICS_SCRIPT_URL?: string;
   readonly PUBLIC_CMS_ANALYTICS_WEBSITE_ID?: string;

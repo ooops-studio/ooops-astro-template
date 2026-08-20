@@ -14,13 +14,14 @@ const headingLines = home.heading === 'Build an Ooops CMS-powered Astro site'
 
 <BaseLayout seo={home.seo}>
   <Section spacing="lg" class="hero" editorId="home-hero" editorSource="src/pages/index.astro">
-    <span class="eyebrow">Ooops CMS + Astro</span>
+    <span class="eyebrow">{home.eyebrow}</span>
     <h1 data-ooops-editor-id={editorMode ? 'hero-title' : undefined}>
       {headingLines.map((line) => <span>{line}</span>)}
     </h1>
     <p data-ooops-editor-id={editorMode ? 'hero-intro' : undefined}>{home.description}</p>
+    {home.proofText ? <p class="publish-proof" data-cms-publish-proof>{home.proofText}</p> : null}
     <div class="hero-actions">
-      <Button href="http://localhost:4274/developers/api" target="_blank" editorId="home-docs" editorSource="src/pages/index.astro">Read docs</Button>
+      <Button href={home.ctaHref} editorId="home-primary-cta" editorSource="src/pages/index.astro">{home.ctaLabel}</Button>
       <Button href="/contact" variant="secondary" editorId="home-contact" editorSource="src/pages/index.astro">Contact</Button>
       <IslandStatus client:idle />
     </div>

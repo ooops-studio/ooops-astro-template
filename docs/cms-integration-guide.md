@@ -32,7 +32,7 @@ build:
 - a single type with API ID `homepage`;
 - a collection with API ID `posts`;
 - one published homepage and at least one published post;
-- a public newsletter form if the site will test form submissions;
+- a published public-share contact form with `name`, `email`, and `message`;
 - SEO metadata for the homepage and post.
 
 The expected starter fields are documented in
@@ -202,17 +202,19 @@ pnpm test:e2e -- --grep "SEO"
 
 ## 7. Configure public forms
 
-Create a form in CMS, publish a public share, and set the returned public token:
+Create the `Contact request` form in CMS, publish it, enable its public share,
+and set the returned public share token:
 
 ```env
-PUBLIC_NEWSLETTER_FORM_TOKEN=<public-share-token>
-PUBLIC_CMS_API_BASE_URL=https://cms.ooops.studio
+PUBLIC_CONTACT_FORM_TOKEN=<public-share-token>
+PUBLIC_CMS_API_BASE_URL=https://cms.ooops.studio/api/cms/v1
 ```
 
-The browser submits only to
-`/api/cms/v1/forms/shares/{token}/submissions`; no private CMS API token is
-exposed. Verify one valid submission appears in CMS and that invalid input,
-rate limiting, and revoked/expired share tokens fail safely.
+The browser uses `@ooopsstudio/cms-api` to submit only to
+`/api/cms/public/forms/{token}/submissions`; no private CMS API token is
+exposed. The public share token authorizes only rate-limited submissions to
+that published form. Verify one valid submission appears in CMS and that
+invalid input, rate limiting, and revoked/expired share tokens fail safely.
 
 Run the local module contract with:
 

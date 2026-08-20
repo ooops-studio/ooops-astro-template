@@ -6,7 +6,9 @@ CMS controls content only. Layout and design stay in code.
 
 - `siteSettings`: site name, default SEO, social links, analytics settings.
 - `navigation`: primary and footer navigation items.
-- `homepage`: homepage copy and media references.
+- `homepage`: `title`, `heading`, `description`, `proof-text`, `cta-label`,
+  `cta-url`, and page-level SEO fields. `proof-text` is intentionally visible so
+  a publish can prove that a new static deployment reached production.
 
 ## Optional Collections
 

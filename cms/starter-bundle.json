@@ -12,6 +12,12 @@
       "includeSeoFields": false,
       "fields": [
         {
+          "apiId": "title",
+          "displayName": "Page title",
+          "kind": "text",
+          "isRequired": true
+        },
+        {
           "apiId": "heading",
           "displayName": "Heading",
           "kind": "text",
@@ -21,6 +27,24 @@
           "apiId": "description",
           "displayName": "Description",
           "kind": "rich_text",
+          "isRequired": true
+        },
+        {
+          "apiId": "proof-text",
+          "displayName": "Publish proof text",
+          "kind": "text",
+          "isRequired": true
+        },
+        {
+          "apiId": "cta-label",
+          "displayName": "CTA label",
+          "kind": "text",
+          "isRequired": true
+        },
+        {
+          "apiId": "cta-url",
+          "displayName": "CTA URL",
+          "kind": "text",
           "isRequired": true
         },
         {
@@ -119,20 +143,36 @@
       "apiId": "homepage",
       "publish": true,
       "payload": {
+        "title": {
+          "value": "Ooops CMS Astro Test",
+          "localized": {}
+        },
         "heading": {
-          "value": "Build a CMS-powered Astro site",
+          "value": "A real CMS-to-Astro publishing chain",
           "localized": {}
         },
         "description": {
-          "value": "This template gives you a secure CMS API connection, starter CMS content, SEO metadata, sitemap support, and optional modules you can copy in when needed.",
+          "value": "Published in Ooops CMS, signed at the rebuild endpoint, and deployed as static Astro output through Cloudflare Workers Builds.",
+          "localized": {}
+        },
+        "proof-text": {
+          "value": "CMS publish proof: initial release",
+          "localized": {}
+        },
+        "cta-label": {
+          "value": "Read the launch post",
+          "localized": {}
+        },
+        "cta-url": {
+          "value": "/posts/hello-from-cms",
           "localized": {}
         },
         "seo-title": {
-          "value": "CMS Astro Site Template",
+          "value": "Ooops CMS Astro Publishing Test",
           "localized": {}
         },
         "seo-description": {
-          "value": "A minimal Astro template for public websites powered by Ooops CMS.",
+          "value": "A production-verified CMS to Astro SSG publishing chain on Cloudflare.",
           "localized": {}
         },
         "robots-index": {
@@ -160,11 +200,11 @@
               "localized": {}
             },
             "excerpt": {
-              "value": "A starter post created by the CMS Astro template bootstrap.",
+              "value": "How this production test connects Ooops CMS publishing to an Astro SSG deployment.",
               "localized": {}
             },
             "body": {
-              "value": "This starter collection entry is safe to delete after you connect your own content model.",
+              "value": "This article is published from Ooops CMS and generated into the static Astro site by Cloudflare Workers Builds.",
               "localized": {}
             },
             "seo-title": {
@@ -172,7 +212,7 @@
               "localized": {}
             },
             "seo-description": {
-              "value": "Starter content for a CMS-powered Astro site.",
+              "value": "Production test article for the Ooops CMS and Astro publishing chain.",
               "localized": {}
             }
           }
@@ -182,19 +222,31 @@
   ],
   "forms": [
     {
-      "key": "newsletter",
-      "title": "Newsletter signup",
-      "description": "Collect newsletter subscribers from the public site.",
+      "key": "contact",
+      "title": "Contact request",
+      "description": "Collect contact requests from the public Astro site.",
       "navigationMode": "free",
       "publicShareEnabled": true,
-      "thankYouTitle": "You're subscribed",
-      "thankYouMessage": "Thanks for signing up.",
+      "thankYouTitle": "Message received",
+      "thankYouMessage": "Thanks. Your message has been received.",
       "publish": true,
       "fields": [
+        {
+          "apiId": "name",
+          "displayName": "Name",
+          "kind": "text",
+          "isRequired": true
+        },
         {
           "apiId": "email",
           "displayName": "Email",
           "kind": "email",
+          "isRequired": true
+        },
+        {
+          "apiId": "message",
+          "displayName": "Message",
+          "kind": "long_text",
           "isRequired": true
         }
       ]

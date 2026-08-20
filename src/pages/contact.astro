@@ -1,11 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/ui/Button.astro';
-import CheckboxField from '../components/ui/CheckboxField.astro';
 import Dialog from '../components/ui/Dialog.astro';
 import InputField from '../components/ui/InputField.astro';
 import Section from '../components/ui/Section.astro';
-import SelectField from '../components/ui/SelectField.astro';
 import TextareaField from '../components/ui/TextareaField.astro';
 import {siteUrl} from '../lib/cms/env';
 
@@ -15,11 +13,6 @@ const seo = {
   canonical: `${siteUrl}/contact`,
   type: 'website' as const
 };
-const topics = [
-  {value: 'project', label: 'New project'},
-  {value: 'support', label: 'Support'},
-  {value: 'other', label: 'Other'}
-];
 ---
 
 <BaseLayout {seo}>
@@ -33,9 +26,7 @@ const topics = [
     <form id="contact-form" class="contact-form">
       <InputField id="contact-name" name="name" label="Name" autocomplete="name" required editorId="contact-name" />
       <InputField id="contact-email" name="email" type="email" label="Email" autocomplete="email" required editorId="contact-email" />
-      <SelectField id="contact-topic" name="topic" label="Topic" options={topics} required editorId="contact-topic" />
       <TextareaField id="contact-message" name="message" label="Message" rows={3} minRows={3} maxRows={6} autoResize required editorId="contact-message" />
-      <CheckboxField id="contact-consent" name="consent" label="I agree to be contacted" required editorId="contact-consent" />
       <div class="contact-actions">
         <Button type="submit" label="Send request" editorId="contact-submit" />
         <Dialog id="contact-privacy" title="Privacy note" triggerLabel="Privacy note" confirmLabel="Understood" cancelLabel="Close" editorId="contact-privacy">
@@ -47,18 +38,48 @@ const topics = [
   </Section>
 
   <script>
+    import { createCmsPublicFormsClient } from '@ooopsstudio/cms-api'
+
     const installContactForm = () => {
       const form = document.querySelector<HTMLFormElement>('#contact-form')
       const output = document.querySelector<HTMLOutputElement>('#contact-result')
       if (!form || !output || form.dataset.mounted === 'true') return
       form.dataset.mounted = 'true'
       const abort = new AbortController()
-      form.addEventListener('submit', (event) => {
+      form.addEventListener('submit', async (event) => {
         event.preventDefault()
         if (!form.reportValidity()) return
-        output.value = [...new FormData(form).entries()]
-          .map(([key, value]) => `${key}=${String(value)}`)
-          .join('&')
+        const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')
+        const data = new FormData(form)
+        const name = String(data.get('name') || '').trim()
+        const email = String(data.get('email') || '').trim()
+        const message = String(data.get('message') || '').trim()
+        const baseUrl = import.meta.env.PUBLIC_CMS_API_BASE_URL || ''
+        const shareToken = import.meta.env.PUBLIC_CONTACT_FORM_TOKEN || ''
+
+        if (!baseUrl || !shareToken) {
+          output.value = 'Contact form is temporarily unavailable.'
+          return
+        }
+
+        button?.setAttribute('disabled', '')
+        output.value = 'Sending…'
+        try {
+          const response = await createCmsPublicFormsClient({baseUrl}).forms.submit<{
+            submitted?: boolean
+            thankYouMessage?: string
+          }>(shareToken, {
+            answers: {name, email, message},
+            submitterIdentity: {name, email},
+            metadata: {source: 'ooops-ssg-test-contact'}
+          })
+          output.value = response.thankYouMessage || 'Thanks. Your message has been received.'
+          form.reset()
+        } catch {
+          output.value = 'We could not send your message. Please try again.'
+        } finally {
+          button?.removeAttribute('disabled')
+        }
       }, {signal: abort.signal})
       document.addEventListener('astro:before-swap', () => abort.abort(), {once: true, signal: abort.signal})
     }

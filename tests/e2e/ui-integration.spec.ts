@@ -7,20 +7,29 @@ test.beforeEach(async({page}) => {
 })
 
 test('canonical UI wrappers work inside the real layout, form, CSS, and view transitions', async({page}) => {
+	let submitted: Record<string, unknown> | null = null
+	await page.route('https://cms.example.test/api/cms/public/forms/e2e-contact-share/submissions', async(route) => {
+		submitted = route.request().postDataJSON() as Record<string, unknown>
+		await route.fulfill({
+			status: 200,
+			contentType: 'application/json',
+			body: JSON.stringify({submitted: true, thankYouMessage: 'Thanks. Your message has been received.'})
+		})
+	})
 	await page.getByLabel('Name').fill('Ada')
 	await page.getByLabel('Email').fill('ada@example.test')
-	const topic = page.locator('#contact-topic-trigger')
-	await topic.focus()
-	await topic.press('ArrowDown')
-	await topic.press('Enter')
 	await page.getByLabel('Message').fill('A production portfolio request.')
-	const consent = page.locator('#contact-consent')
-	await consent.focus()
-	await consent.press('Space')
 	await page.getByRole('button', {name: 'Send request'}).click()
-	await expect(page.locator('#contact-result')).toContainText('name=Ada')
-	await expect(page.locator('#contact-result')).toContainText('topic=project')
-	await expect(page.locator('#contact-result')).toContainText('consent=on')
+	await expect(page.locator('#contact-result')).toHaveText('Thanks. Your message has been received.')
+	expect(submitted).toEqual({
+		answers: {
+			name: 'Ada',
+			email: 'ada@example.test',
+			message: 'A production portfolio request.'
+		},
+		submitterIdentity: {name: 'Ada', email: 'ada@example.test'},
+		metadata: {source: 'ooops-ssg-test-contact'}
+	})
 
 	const privacy = page.getByRole('button', {name: 'Privacy note'})
 	await privacy.click()
