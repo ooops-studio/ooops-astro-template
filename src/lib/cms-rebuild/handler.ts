@@ -80,10 +80,23 @@ export const handleCmsRebuildRequest = async (
   ].filter((value): value is string => Boolean(value));
   if (missing.length > 0) return configurationError(missing);
 
+  const deployHookFetch: typeof globalThis.fetch = async (input, init) => {
+    const response = await fetchImpl(input, init);
+    if (!response.ok) {
+      const body = await response.clone().text().catch(() => '');
+      console.error('Cloudflare deploy hook request failed.', {
+        status: response.status,
+        rayId: response.headers.get('cf-ray'),
+        response: body.slice(0, 500)
+      });
+    }
+    return response;
+  };
+
   return createCmsRebuildHandler({
     secret: env.OOOPS_CMS_REBUILD_SECRET!,
     deployHookUrl: env.OOOPS_CLOUDFLARE_DEPLOY_HOOK_URL!,
     replayStore: createDurableObjectReplayStore(env.CMS_REBUILD_REPLAY_GUARD),
-    fetch: fetchImpl
+    fetch: deployHookFetch
   })(request);
 };
