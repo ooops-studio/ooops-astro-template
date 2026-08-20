@@ -8,6 +8,21 @@ test.beforeEach(async({page}) => {
 
 test('canonical UI wrappers work inside the real layout, form, CSS, and view transitions', async({page}) => {
 	let submitted: Record<string, unknown> | null = null
+	await page.route('https://cms.example.test/api/cms/public/forms/e2e-contact-share', async(route) => {
+		await route.fulfill({
+			status: 200,
+			contentType: 'application/json',
+			body: JSON.stringify({
+				form: {
+					pages: [{sections: [{nodes: [
+						{id: 'field-name', apiId: 'name'},
+						{id: 'field-email', apiId: 'email'},
+						{id: 'field-message', apiId: 'message'}
+					]}]}]
+				}
+			})
+		})
+	})
 	await page.route('https://cms.example.test/api/cms/public/forms/e2e-contact-share/submissions', async(route) => {
 		submitted = route.request().postDataJSON() as Record<string, unknown>
 		await route.fulfill({
@@ -23,9 +38,9 @@ test('canonical UI wrappers work inside the real layout, form, CSS, and view tra
 	await expect(page.locator('#contact-result')).toHaveText('Thanks. Your message has been received.')
 	expect(submitted).toEqual({
 		answers: {
-			name: 'Ada',
-			email: 'ada@example.test',
-			message: 'A production portfolio request.'
+			'field-name': 'Ada',
+			'field-email': 'ada@example.test',
+			'field-message': 'A production portfolio request.'
 		},
 		submitterIdentity: {name: 'Ada', email: 'ada@example.test'},
 		metadata: {source: 'ooops-ssg-test-contact'}

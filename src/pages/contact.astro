@@ -40,6 +40,32 @@ const seo = {
   <script>
     import { createCmsPublicFormsClient } from '@ooopsstudio/cms-api'
 
+    type PublicFormNode = { id?: string; apiId?: string }
+    type PublicFormSchema = {
+      form?: { pages?: Array<{ sections?: Array<{ nodes?: PublicFormNode[] }> }> }
+    }
+
+    const publicFormsBaseUrl = (baseUrl: string) => {
+      const normalized = baseUrl.replace(/\/+$/, '')
+      if (normalized.endsWith('/api/cms/v1')) return `${normalized.slice(0, -11)}/api/cms/public`
+      if (normalized.endsWith('/api/cms/public')) return normalized
+      return `${normalized}/api/cms/public`
+    }
+
+    const loadAnswerIds = async (baseUrl: string, shareToken: string) => {
+      const response = await fetch(`${publicFormsBaseUrl(baseUrl)}/forms/${encodeURIComponent(shareToken)}`, {
+        headers: { accept: 'application/json' }
+      })
+      if (!response.ok) throw new Error('Unable to load the public form schema.')
+      const payload = await response.json() as PublicFormSchema
+      const nodes = payload.form?.pages?.flatMap((page) =>
+        page.sections?.flatMap((section) => section.nodes || []) || []
+      ) || []
+      return new Map(nodes.flatMap((node) =>
+        node.apiId && node.id ? [[node.apiId, node.id] as const] : []
+      ))
+    }
+
     const installContactForm = () => {
       const form = document.querySelector<HTMLFormElement>('#contact-form')
       const output = document.querySelector<HTMLOutputElement>('#contact-result')
@@ -65,11 +91,16 @@ const seo = {
         button?.setAttribute('disabled', '')
         output.value = 'Sending…'
         try {
+          const answerIds = await loadAnswerIds(baseUrl, shareToken)
+          const nameId = answerIds.get('name')
+          const emailId = answerIds.get('email')
+          const messageId = answerIds.get('message')
+          if (!nameId || !emailId || !messageId) throw new Error('Required public form fields are missing.')
           const response = await createCmsPublicFormsClient({baseUrl}).forms.submit<{
             submitted?: boolean
             thankYouMessage?: string
           }>(shareToken, {
-            answers: {name, email, message},
+            answers: {[nameId]: name, [emailId]: email, [messageId]: message},
             submitterIdentity: {name, email},
             metadata: {source: 'ooops-ssg-test-contact'}
           })
