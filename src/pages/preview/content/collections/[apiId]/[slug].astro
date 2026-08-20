@@ -33,7 +33,14 @@ Astro.response.headers.set('cache-control', 'private, no-store');
 Astro.response.headers.set('referrer-policy', 'no-referrer');
 Astro.response.headers.set('x-robots-tag', 'noindex, nofollow');
 
-if (!result.payload?.item) return new Response('Preview not found.', { status: 404 });
+if (!result.payload?.item) return new Response('Preview not found.', {
+  status: 404,
+  headers: {
+    'cache-control': 'private, no-store',
+    'referrer-policy': 'no-referrer',
+    'x-robots-tag': 'noindex, nofollow'
+  }
+});
 
 const content = previewContent(result.payload.item, Astro.url.pathname, slug || apiId);
 const exitPath = publicPreviewPath({ apiId, kind: 'collection', slug });

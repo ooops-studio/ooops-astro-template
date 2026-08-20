@@ -30,6 +30,9 @@ test('CMS draft preview trades the opaque token for a private cookie and exits t
 test('an invalid opaque token cannot render draft content', async({page}) => {
 	const response = await page.goto('/preview/content/singles/homepage?preview=invalid-token')
 	expect(response?.status()).toBe(404)
+	expect(response?.headers()['cache-control']).toContain('private, no-store')
+	expect(response?.headers()['referrer-policy']).toBe('no-referrer')
+	expect(response?.headers()['x-robots-tag']).toBe('noindex, nofollow')
 	await expect(page.locator('body')).not.toContainText('Draft homepage')
 })
 
