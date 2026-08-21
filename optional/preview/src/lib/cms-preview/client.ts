@@ -38,7 +38,7 @@ const fetchPreview = async ({
 }): Promise<CmsPreviewResponse | null> => {
   const { baseUrl, token } = apiConfig(env);
   if (!baseUrl || !token || !previewToken) return null;
-  const client = createCmsPreviewClient({ baseUrl, token, previewToken });
+  const client = createCmsPreviewClient({ baseUrl, token, previewToken, timeoutMs: 5_000 });
   try {
     const payload = kind === 'collection'
       ? await client.content.getCollectionEntry<CmsPreviewResponse>(apiId, slug || '')
