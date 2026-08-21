@@ -7,12 +7,10 @@ type Props = {
   editorId?: string;
   backend?: 'auto' | 'webgl2';
   intensity?: number;
-  rotationSpeed?: number;
   pointerStrength?: number;
   distortion?: number;
   primaryColor?: string;
   secondaryColor?: string;
-  model?: string;
   quality?: 'low' | 'auto' | 'high';
   poster?: string;
   description?: string;
@@ -22,15 +20,13 @@ const {
   editorId,
   backend = 'auto',
   intensity = 1,
-  rotationSpeed = 0.35,
   pointerStrength = 0.8,
   distortion = 0.5,
-  primaryColor = '#5de2c2',
-  secondaryColor = '#ff6f61',
-  model = '/assets/scenes/reference.glb',
+  primaryColor = '#cd0208',
+  secondaryColor = '#f1efef',
   quality = 'auto',
   poster = '/assets/scenes/reference-poster.png',
-  description = 'A faceted geometric object rotates and changes color with pointer movement.'
+  description = 'A red distortion field follows pointer movement across a pale surface.'
 } = Astro.props;
 const scene = backend === 'webgl2' ? 'reference-scene-webgl2' : 'reference-scene';
 ---
@@ -38,7 +34,7 @@ const scene = backend === 'webgl2' ? 'reference-scene-webgl2' : 'reference-scene
 <EditorBoundary editorId={editorId} manifestId="reference-scene">
   <InteractiveScene
     scene={scene}
-    config={{intensity, rotationSpeed, pointerStrength, distortion, primaryColor, secondaryColor, model}}
+    config={{intensity, pointerStrength, distortion, primaryColor, secondaryColor}}
     {quality}
     {poster}
     {description}

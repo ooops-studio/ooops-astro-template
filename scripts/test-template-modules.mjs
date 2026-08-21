@@ -19,10 +19,6 @@ if (errors.length) {
   throw new Error(errors.join('\n'));
 }
 
-const interactiveScene = manifests.find((manifest) => manifest.id === 'interactiveScene');
-if (!interactiveScene?.devDependencies?.['@types/three']) {
-  throw new Error('interactiveScene must own its Three.js declaration dependency.');
-}
 const enabledModules = Object.fromEntries(manifests.map((manifest) => [manifest.id, false]));
 const editorPackageNames = [
   '@ooopsstudio/accessibility-editor-manifests',
@@ -39,11 +35,8 @@ for (const dependency of editorPackageNames) {
 
 enabledModules.interactiveScene = true;
 const packageFixture = syncModuleDependencies({dependencies: {}, devDependencies: {}}, manifests, enabledModules);
-for (const dependency of ['@ooopsstudio/scene-core', '@ooopsstudio/scene-three', '@ooopsstudio/scene-astro', 'three']) {
+for (const dependency of ['@ooopsstudio/scene-core', '@ooopsstudio/scene-gpu', '@ooopsstudio/scene-astro']) {
   if (!packageFixture.dependencies[dependency]) throw new Error(`interactiveScene is missing ${dependency}.`);
-}
-if (!packageFixture.devDependencies['@types/three']) {
-  throw new Error('interactiveScene did not add @types/three to devDependencies.');
 }
 for (const dependency of ['pngjs', '@types/pngjs']) {
   if (!packageFixture.devDependencies[dependency]) {
@@ -53,6 +46,9 @@ for (const dependency of ['pngjs', '@types/pngjs']) {
 const localWorkspace = syncModuleOverrides('packages: []\n\noverrides:\n  esbuild: ^0.28.1\n', manifests, enabledModules, 'local');
 if (!localWorkspace.includes("'@ooopsstudio/scene-core': file:../ooops-ui/packages/scene-core")) {
   throw new Error('Local module setup did not generate the scene-core override.');
+}
+if (!localWorkspace.includes("'@ooopsstudio/scene-gpu': file:../ooops-ui/packages/scene-gpu")) {
+  throw new Error('Local module setup did not generate the scene-gpu override.');
 }
 const publishedWorkspace = syncModuleOverrides(localWorkspace, manifests, enabledModules, 'published');
 if (publishedWorkspace.includes('@ooopsstudio/scene-core')) {
@@ -128,7 +124,7 @@ const sourceExpectations = [
   ['optional/media-player/src/lib/media-player/headless.ts', 'mediaKeyAction'],
   ['optional/newsletter/src/components/newsletter/NewsletterForm.astro', 'role="status"'],
   ['src/components/cms/PreviewBanner.astro', 'Exit preview'],
-  ['optional/interactive-scene/src/scenes/reference-scene.ts', 'defineThreeScene'],
+  ['optional/interactive-scene/src/scenes/reference-scene.ts', 'defineGpuScene'],
   ['optional/interactive-scene/src/scenes/reference-scene.runtime.json', 'reducedMotion'],
   ['optional/interactive-scene/editor/scenes/reference-scene.json', '"internals": "locked"'],
   ['optional/interactive-scene/editor/extensions/reference-scene.json', '"pointer-influence"'],

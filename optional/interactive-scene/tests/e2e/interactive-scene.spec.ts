@@ -7,8 +7,11 @@ const sceneRoot = (
 	scene = 'reference-scene'
 ) => page.locator(`[data-ooops-scene-root="${scene}"]`)
 
-const waitForScene = async(page: import('@playwright/test').Page) => {
-	const root = sceneRoot(page)
+const waitForScene = async(
+	page: import('@playwright/test').Page,
+	scene = 'reference-scene'
+) => {
+	const root = sceneRoot(page, scene)
 	await expect(root).toHaveAttribute('data-ooops-scene-state', 'running', {timeout: 30_000})
 	await expect(root).toHaveAttribute('data-ooops-scene-backend', /^(webgpu|webgl2)$/)
 	return root
@@ -21,6 +24,36 @@ test('forced WebGL 2 renders nonblank pixels in every browser', async({page}) =>
 	await expect(root).toHaveAttribute('data-ooops-scene-backend', 'webgl2')
 	const canvas = root.locator('canvas')
 	await expect.poll(async() => screenshotHasPixels(await canvas.screenshot()), {timeout: 15_000}).toBe(true)
+})
+
+test('auto backend prefers WebGPU when the browser exposes an adapter', async({page}, testInfo) => {
+	test.skip(testInfo.project.name !== 'chromium')
+	await page.goto('/interactive-scene')
+	const root = await waitForScene(page)
+	const canUseWebGpu = await page.evaluate(async() => {
+		const gpu = (navigator as Navigator & {
+			gpu?: {requestAdapter(): Promise<unknown>}
+		}).gpu
+		return Boolean(gpu && await gpu.requestAdapter())
+	})
+	expect(await root.getAttribute('data-ooops-scene-backend')).toBe(
+		canUseWebGpu ? 'webgpu' : 'webgl2'
+	)
+})
+
+test('auto backend falls back to WebGL 2 when WebGPU is unavailable', async({page}) => {
+	await page.addInitScript(() => {
+		Object.defineProperty(navigator, 'gpu', {
+			configurable: true,
+			value: undefined
+		})
+	})
+	await page.goto('/interactive-scene')
+	const root = await waitForScene(page)
+	await expect(root).toHaveAttribute('data-ooops-scene-backend', 'webgl2')
+	await expect.poll(async() => screenshotHasPixels(await root.locator('canvas').screenshot()), {
+		timeout: 15_000
+	}).toBe(true)
 })
 
 const screenshotHasPixels = (screenshot: Buffer) => {
@@ -49,7 +82,7 @@ test('reference scene renders pixels, exposes its backend and respects Select/In
 	await expect.poll(async() => screenshotHasPixels(await canvas.screenshot())).toBe(true)
 })
 
-test('reference scene pause, reduced-motion and context-loss fallbacks are deterministic', async({page}) => {
+test('reference scene pause, reduced-motion and WebGL context-loss fallbacks are deterministic', async({page}) => {
 	await page.goto('/interactive-scene')
 	const root = await waitForScene(page)
 	const pause = page.getByRole('button', {name: 'Pause animation'})
@@ -58,14 +91,17 @@ test('reference scene pause, reduced-motion and context-loss fallbacks are deter
 	await expect(page.getByRole('button', {name: 'Resume animation'})).toHaveAttribute('aria-pressed', 'true')
 	await page.getByRole('button', {name: 'Resume animation'}).click()
 	await expect(root).toHaveAttribute('data-ooops-scene-state', 'running')
-	await root.locator('canvas').evaluate((canvas) => {
+
+	await page.goto('/interactive-scene-webgl2')
+	const webGlRoot = await waitForScene(page, 'reference-scene-webgl2')
+	await webGlRoot.locator('canvas').evaluate((canvas) => {
 		canvas.dispatchEvent(new Event('webglcontextlost', {cancelable: true}))
 	})
-	await expect(root).toHaveAttribute('data-ooops-scene-state', 'fallback')
-	await expect(root).toHaveAttribute('data-ooops-scene-fallback', 'context-lost')
+	await expect(webGlRoot).toHaveAttribute('data-ooops-scene-state', 'fallback')
+	await expect(webGlRoot).toHaveAttribute('data-ooops-scene-fallback', 'context-lost')
 
 	await page.emulateMedia({reducedMotion: 'reduce'})
-	await page.reload()
+	await page.goto('/interactive-scene')
 	await expect(sceneRoot(page)).toHaveAttribute('data-ooops-scene-state', 'paused', {timeout: 30_000})
 	await expect(sceneRoot(page).locator('[data-part="poster"]')).toBeVisible()
 })

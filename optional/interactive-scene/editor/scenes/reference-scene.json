@@ -7,7 +7,7 @@
   "internals": "locked",
   "adapters": {
     "astro": "@ooopsstudio/scene-astro/InteractiveScene.astro",
-    "runtime": "@ooopsstudio/scene-three"
+    "runtime": "@ooopsstudio/scene-gpu"
   },
   "backend": "auto",
   "controls": [
@@ -16,14 +16,6 @@
       "label": "Intensity",
       "schema": {"kind": "number", "min": 0.2, "max": 3, "step": 0.05},
       "default": 1,
-      "editable": true,
-      "control": "range"
-    },
-    {
-      "id": "rotationSpeed",
-      "label": "Rotation speed",
-      "schema": {"kind": "number", "min": 0, "max": 1.5, "step": 0.05},
-      "default": 0.35,
       "editable": true,
       "control": "range"
     },
@@ -47,7 +39,7 @@
       "id": "primaryColor",
       "label": "Primary color",
       "schema": {"kind": "string", "pattern": "^#[0-9a-fA-F]{6}$"},
-      "default": "#5de2c2",
+      "default": "#cd0208",
       "editable": true,
       "control": "color"
     },
@@ -55,25 +47,17 @@
       "id": "secondaryColor",
       "label": "Secondary color",
       "schema": {"kind": "string", "pattern": "^#[0-9a-fA-F]{6}$"},
-      "default": "#ff6f61",
+      "default": "#f1efef",
       "editable": true,
       "control": "color"
     }
   ],
-  "assets": [
-    {
-      "id": "model",
-      "label": "Reference model",
-      "kind": "model",
-      "source": "public/assets/scenes/reference.glb",
-      "required": true
-    }
-  ],
+  "assets": [],
   "inputs": ["pointer", "velocity", "time", "viewport"],
   "quality": {"default": "auto", "allowed": ["low", "auto", "high"]},
   "fallbacks": {
     "poster": "public/assets/scenes/reference-poster.png",
-    "description": "A faceted geometric object rotates and changes color with pointer movement.",
+    "description": "A red distortion field follows pointer movement across a pale surface.",
     "reducedMotion": "poster",
     "contextLoss": "poster"
   }

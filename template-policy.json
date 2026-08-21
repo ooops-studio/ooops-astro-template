@@ -42,9 +42,8 @@
     },
     "interactiveScene": {
       "@ooopsstudio/scene-core": "^0.1.0",
-      "@ooopsstudio/scene-three": "^0.1.0",
-      "@ooopsstudio/scene-astro": "^0.1.0",
-      "three": "^0.185.0"
+      "@ooopsstudio/scene-gpu": "^0.1.0",
+      "@ooopsstudio/scene-astro": "^0.1.0"
     }
   },
   "ownedImports": {

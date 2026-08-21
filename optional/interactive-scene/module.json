@@ -1,28 +1,25 @@
 {
   "id": "interactiveScene",
-  "label": "Interactive Three.js scene",
+  "label": "Interactive WebGPU scene",
   "defaultEnabled": false,
   "readme": "optional/interactive-scene/README.md",
   "deps": [
     "@ooopsstudio/scene-core",
-    "@ooopsstudio/scene-three",
-    "@ooopsstudio/scene-astro",
-    "three"
+    "@ooopsstudio/scene-gpu",
+    "@ooopsstudio/scene-astro"
   ],
   "dependencies": {
     "@ooopsstudio/scene-core": "^0.1.0",
-    "@ooopsstudio/scene-three": "^0.1.0",
-    "@ooopsstudio/scene-astro": "^0.1.0",
-    "three": "^0.185.0"
+    "@ooopsstudio/scene-gpu": "^0.1.0",
+    "@ooopsstudio/scene-astro": "^0.1.0"
   },
   "devDependencies": {
     "@types/pngjs": "^6.0.5",
-    "@types/three": "^0.183.1",
     "pngjs": "^7.0.0"
   },
   "localOverrides": {
     "@ooopsstudio/scene-core": "file:../ooops-ui/packages/scene-core",
-    "@ooopsstudio/scene-three": "file:../ooops-ui/packages/scene-three",
+    "@ooopsstudio/scene-gpu": "file:../ooops-ui/packages/scene-gpu",
     "@ooopsstudio/scene-astro": "file:../ooops-ui/packages/scene-astro"
   },
   "env": [],
@@ -36,7 +33,6 @@
     {"from": "optional/interactive-scene/tests/e2e/interactive-scene.spec.ts", "to": "tests/e2e/interactive-scene.spec.ts"},
     {"from": "optional/interactive-scene/editor/scenes/reference-scene.json", "to": "editor/scenes/reference-scene.json"},
     {"from": "optional/interactive-scene/editor/extensions/reference-scene.json", "to": "editor/extensions/reference-scene.json"},
-    {"from": "optional/interactive-scene/public/assets/scenes/reference.glb", "to": "public/assets/scenes/reference.glb"},
     {"from": "optional/interactive-scene/public/assets/scenes/reference-poster.png", "to": "public/assets/scenes/reference-poster.png"}
   ],
   "cleanupTargets": [

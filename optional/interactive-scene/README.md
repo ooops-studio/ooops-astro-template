@@ -1,7 +1,8 @@
 # Interactive Scene Module
 
-This opt-in module adds the three Ooops scene packages, Three.js and a compact reference scene.
-The scene uses `WebGPURenderer` with automatic WebGL 2 fallback and TSL/Node Materials.
+This opt-in module adds the Ooops scene core/Astro packages and a compact native
+WebGPU-first pointer-distortion reference with an automatic WebGL 2 fallback. It
+avoids shipping the full Three.js renderer stack for a procedural full-screen shader.
 
 ```sh
 pnpm setup:module -- add interactiveScene --package-source=local
@@ -12,7 +13,9 @@ Open `/interactive-scene`. Use the public `ooops:scene-mode` event to switch bet
 selection and scene interaction. Scene internals remain developer-owned and locked; only controls
 declared in `editor/scenes/reference-scene.json` are editor-visible. The companion
 `editor/extensions/reference-scene.json` groups those props into effect, appearance, interaction,
-asset, quality and fallback controls without exposing shaders or the scene graph.
+quality and fallback controls without exposing shader internals.
 
-Projects must host Draco/KTX2 decoder files locally when those formats are used. No CDN defaults,
-microphone/camera access or asset transcoding are provided.
+WebGPU adapter, device or pipeline setup failures fall back before the canvas is
+committed to a renderer. The forced `/interactive-scene-webgl2` route remains a
+cross-browser diagnostic. No CDN runtime, microphone/camera access or asset
+transcoding is used.

@@ -8,14 +8,12 @@
   "tab": {"id": "scene", "label": "Scene", "order": 100},
   "controls": [
     {"id": "intensity", "label": "Intensity", "group": "Effect", "schema": {"kind": "number", "min": 0.2, "max": 3, "step": 0.05}, "default": 1, "editable": true, "control": "range", "binding": {"kind": "prop", "prop": "intensity"}},
-    {"id": "speed", "label": "Speed", "group": "Effect", "schema": {"kind": "number", "min": 0, "max": 1.5, "step": 0.05}, "default": 0.35, "editable": true, "control": "range", "binding": {"kind": "prop", "prop": "rotationSpeed"}},
     {"id": "distortion", "label": "Distortion", "group": "Effect", "schema": {"kind": "number", "min": 0, "max": 1.5, "step": 0.05}, "default": 0.5, "editable": true, "control": "range", "binding": {"kind": "prop", "prop": "distortion"}},
-    {"id": "primary-color", "label": "Primary color", "group": "Appearance", "schema": {"kind": "string", "pattern": "^#[0-9a-fA-F]{6}$"}, "default": "#5de2c2", "editable": true, "control": "color", "binding": {"kind": "prop", "prop": "primaryColor"}},
-    {"id": "secondary-color", "label": "Secondary color", "group": "Appearance", "schema": {"kind": "string", "pattern": "^#[0-9a-fA-F]{6}$"}, "default": "#ff6f61", "editable": true, "control": "color", "binding": {"kind": "prop", "prop": "secondaryColor"}},
+    {"id": "primary-color", "label": "Primary color", "group": "Appearance", "schema": {"kind": "string", "pattern": "^#[0-9a-fA-F]{6}$"}, "default": "#cd0208", "editable": true, "control": "color", "binding": {"kind": "prop", "prop": "primaryColor"}},
+    {"id": "secondary-color", "label": "Secondary color", "group": "Appearance", "schema": {"kind": "string", "pattern": "^#[0-9a-fA-F]{6}$"}, "default": "#f1efef", "editable": true, "control": "color", "binding": {"kind": "prop", "prop": "secondaryColor"}},
     {"id": "pointer-influence", "label": "Pointer influence", "group": "Interaction", "schema": {"kind": "number", "min": 0, "max": 2, "step": 0.1}, "default": 0.8, "editable": true, "control": "range", "binding": {"kind": "prop", "prop": "pointerStrength"}},
-    {"id": "model", "label": "Model", "group": "Assets", "schema": {"kind": "string"}, "required": true, "default": "/assets/scenes/reference.glb", "editable": true, "control": "asset", "asset": {"kinds": ["model"], "delivery": ["public-copy"]}, "binding": {"kind": "prop", "prop": "model"}},
     {"id": "quality", "label": "Quality", "group": "Delivery", "schema": {"kind": "enum", "values": ["low", "auto", "high"]}, "default": "auto", "editable": true, "control": "enum", "binding": {"kind": "prop", "prop": "quality"}},
     {"id": "poster", "label": "Poster", "group": "Fallback", "schema": {"kind": "string"}, "required": true, "default": "/assets/scenes/reference-poster.png", "editable": true, "control": "asset", "asset": {"kinds": ["image"], "delivery": ["astro-import", "public-copy"], "altTextProp": "description"}, "binding": {"kind": "prop", "prop": "poster"}},
-    {"id": "description", "label": "Accessible description", "group": "Fallback", "schema": {"kind": "string"}, "required": true, "default": "A faceted geometric object rotates and changes color with pointer movement.", "editable": true, "control": "text", "binding": {"kind": "prop", "prop": "description"}}
+    {"id": "description", "label": "Accessible description", "group": "Fallback", "schema": {"kind": "string"}, "required": true, "default": "A red distortion field follows pointer movement across a pale surface.", "editable": true, "control": "text", "binding": {"kind": "prop", "prop": "description"}}
   ]
 }
