@@ -5,17 +5,47 @@ import { preparePreview, publicPreviewPath } from '../../../../../lib/cms-previe
 import BaseLayout from '../../../../../layouts/BaseLayout.astro';
 
 export const prerender = false;
+
 const apiId = Astro.params.apiId?.trim() || '';
 const slug = Astro.params.slug?.trim() || '';
-const result = await preparePreview({ apiId, kind: 'collection', request: Astro.request, slug, previewToken: Astro.url.searchParams.get('preview') });
-if (result.redirect && result.setCookie) return new Response(null, { status: 303, headers: { location: result.redirect, 'set-cookie': result.setCookie, 'cache-control': 'private, no-store', 'referrer-policy': 'no-referrer' } });
+const previewToken = Astro.url.searchParams.get('preview');
+const result = await preparePreview({
+  apiId,
+  kind: 'collection',
+  request: Astro.request,
+  slug,
+  previewToken
+});
+
+if (result.redirect && result.setCookie) {
+  return new Response(null, {
+    status: 303,
+    headers: {
+      location: result.redirect,
+      'set-cookie': result.setCookie,
+      'cache-control': 'private, no-store',
+      'referrer-policy': 'no-referrer'
+    }
+  });
+}
+
 Astro.response.headers.set('cache-control', 'private, no-store');
 Astro.response.headers.set('referrer-policy', 'no-referrer');
 Astro.response.headers.set('x-robots-tag', 'noindex, nofollow');
-if (!result.payload?.item) return new Response('Preview not found.', { status: 404 });
+
+if (!result.payload?.item) return new Response('Preview not found.', {
+  status: 404,
+  headers: {
+    'cache-control': 'private, no-store',
+    'referrer-policy': 'no-referrer',
+    'x-robots-tag': 'noindex, nofollow'
+  }
+});
+
 const content = previewContent(result.payload.item, Astro.url.pathname, slug || apiId);
+const exitPath = publicPreviewPath({ apiId, kind: 'collection', slug });
 ---
 
-<BaseLayout seo={content.seo} preview={true} previewExitPath={publicPreviewPath({ apiId, kind: 'collection', slug })}>
+<BaseLayout seo={content.seo} preview={true} previewExitPath={exitPath}>
   <PreviewContent content={content} />
 </BaseLayout>

@@ -8,14 +8,38 @@ const { active = false, exitPath = '/' } = Astro.props;
 const exitHref = `/preview/content/exit?redirect=${encodeURIComponent(exitPath)}`;
 ---
 
-<aside class="preview-banner" data-preview-banner hidden={!active} aria-label="Draft preview">
-  <p><strong>Draft preview</strong><span>This content is private and is not published.</span></p>
-  <a href={exitHref}>Exit preview</a>
+<aside class="preview-banner" role="status" data-cms-preview-banner data-server-preview={active ? 'true' : undefined} hidden={!active}>
+  <span>Preview mode</span>
+  <a href={exitHref} data-cms-preview-exit>Exit preview</a>
 </aside>
 
 <style>
-  .preview-banner { display:flex; justify-content:space-between; gap:var(--space-4); padding:var(--space-3) var(--space-4); background:var(--color-surface-subtle); border-block:1px solid var(--color-border); }
-  .preview-banner p { display:flex; gap:var(--space-2); margin:0; }
-  .preview-banner span { color:var(--color-text-muted); }
-  @media (max-width: 640px) { .preview-banner, .preview-banner p { align-items:flex-start; flex-direction:column; } }
+  .preview-banner {
+    position: fixed;
+    inset-inline: var(--space-4);
+    top: var(--space-4);
+    z-index: 80;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    width: fit-content;
+    margin-inline: auto;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+  }
+
+  .preview-banner[hidden] {
+    display: none;
+  }
+
+  .preview-banner a {
+    color: var(--color-accent);
+    font-weight: 700;
+  }
 </style>

@@ -33,14 +33,14 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))
       '@ooopsstudio/cms-api':
-        specifier: ^0.2.0
-        version: 0.2.0
+        specifier: ^0.3.0
+        version: 0.3.0
       '@ooopsstudio/cms-astro':
-        specifier: ^0.2.1
-        version: 0.2.1
+        specifier: ^0.2.2
+        version: 0.2.2
       '@ooopsstudio/cms-cloudflare':
-        specifier: ^0.3.1
-        version: 0.3.1
+        specifier: ^0.3.2
+        version: 0.3.2
       '@ooopsstudio/ui-astro':
         specifier: ^0.2.0
         version: 0.2.0(astro@7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0))
@@ -1015,16 +1015,16 @@ packages:
     resolution: {integrity: sha512-dZbLUtspKSlIev1bbv9miNYnrNGUDWQyexrBfBLg4FZtcudBXJDu5JKr3VWpxlvMHpdvFlt9N3uLNY/3G/M7Qw==}
     engines: {node: '>=20'}
 
-  '@ooopsstudio/cms-api@0.2.0':
-    resolution: {integrity: sha512-oXUOrbhys2d5Sj6PBwUosVN1VIfILXDlFxjlMO7m1KRf6xT2aZliC+xRfrZ2hBjRel98pyikCnNPSyI+RVaZXA==}
+  '@ooopsstudio/cms-api@0.3.0':
+    resolution: {integrity: sha512-XkkxdRZZ/kx7jU+IKeNYZOESK1VzkR8o/LDGN7nWGUBweJ52+qK6FNuovDqWHJ1Ohdj8XhTvlCJooIYsQuWsYA==}
     engines: {node: '>=22.14.0'}
 
-  '@ooopsstudio/cms-astro@0.2.1':
-    resolution: {integrity: sha512-kTZL9E+U70RGv8LZquapEPhzF/ciWiWKNQkZLuQ3J3+uBl82pYkfdgOpws6k6RGRfX/z1EQty6fl/n2vddFeyw==}
+  '@ooopsstudio/cms-astro@0.2.2':
+    resolution: {integrity: sha512-7sNQInMZyf9z3bHyTfkIIDaTwc0xVtWQfInpCDZxAPnEkxc/BUpYARtJDI0KKUj/LkV8miLu8n0glncGkjZdjQ==}
     engines: {node: '>=22.14.0'}
 
-  '@ooopsstudio/cms-cloudflare@0.3.1':
-    resolution: {integrity: sha512-LOji+XdYLsuZ9q52yu3Phq1lHUUodao6+ak4hCXw4+XEhi69guyN5puOWe0bFzfmdn/MuuwQ794pDoIo+E/IUg==}
+  '@ooopsstudio/cms-cloudflare@0.3.2':
+    resolution: {integrity: sha512-d6gT9CQYDMuvztprdh+stXPhubvFNqPgkWUApodW8kw7MRRG/IDJabX24Gb7NroggI04blApJbVhatyU7CAy2g==}
     engines: {node: '>=22.14.0'}
 
   '@ooopsstudio/editor-contracts@0.1.0':
@@ -1831,6 +1831,7 @@ packages:
   eslint@9.39.5:
     resolution: {integrity: sha512-DgZS62aPLXKlnxILS/AYCoRvHaZeXceIzlXPkkGGzJWSow1aEk0lbTlxUSlyjC8jcaKxAdOnTDz+o1JFSBsyjw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -3769,15 +3770,15 @@ snapshots:
 
   '@ooopsstudio/analytics-consent@0.3.0': {}
 
-  '@ooopsstudio/cms-api@0.2.0': {}
+  '@ooopsstudio/cms-api@0.3.0': {}
 
-  '@ooopsstudio/cms-astro@0.2.1':
+  '@ooopsstudio/cms-astro@0.2.2':
     dependencies:
-      '@ooopsstudio/cms-api': 0.2.0
+      '@ooopsstudio/cms-api': 0.3.0
 
-  '@ooopsstudio/cms-cloudflare@0.3.1':
+  '@ooopsstudio/cms-cloudflare@0.3.2':
     dependencies:
-      '@ooopsstudio/cms-api': 0.2.0
+      '@ooopsstudio/cms-api': 0.3.0
 
   '@ooopsstudio/editor-contracts@0.1.0': {}
 

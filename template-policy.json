@@ -23,9 +23,9 @@
   },
   "forbiddenFeatures": ["rss"],
   "canonicalPackages": {
-    "@ooopsstudio/cms-api": "^0.2.0",
-    "@ooopsstudio/cms-astro": "^0.2.1",
-    "@ooopsstudio/cms-cloudflare": "^0.3.1",
+    "@ooopsstudio/cms-api": "^0.3.0",
+    "@ooopsstudio/cms-astro": "^0.2.2",
+    "@ooopsstudio/cms-cloudflare": "^0.3.2",
     "@ooopsstudio/analytics-consent": "^0.3.0",
     "@ooopsstudio/analytics-consent-astro": "^0.3.0",
     "@ooopsstudio/accessibility": "^0.2.0",

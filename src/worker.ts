@@ -2,6 +2,7 @@ import { handle } from '@astrojs/cloudflare/handler';
 import { DurableObject } from 'cloudflare:workers';
 
 import { handleCmsRebuildRequest, type CmsRebuildWorkerEnv } from './lib/cms-rebuild/handler';
+import { handleNewsletterRequest, type NewsletterWorkerEnv } from './lib/newsletter/handler';
 
 type ReplayRecord = {
   expiresAt: number;
@@ -56,6 +57,9 @@ export default {
     const url = new URL(request.url);
     if (url.pathname === '/api/cms/rebuild') {
       return handleCmsRebuildRequest(request, env as unknown as CmsRebuildWorkerEnv);
+    }
+    if (url.pathname === '/api/newsletter') {
+      return handleNewsletterRequest(request, env as unknown as NewsletterWorkerEnv);
     }
     return handle(request, env, context);
   }
