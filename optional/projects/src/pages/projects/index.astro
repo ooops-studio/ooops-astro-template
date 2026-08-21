@@ -1,0 +1,42 @@
+---
+import CmsImage from '../../components/cms/CmsImage.astro';
+import Section from '../../components/ui/Section.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getProjects } from '../../lib/projects/client';
+import { siteUrl } from '../../lib/cms/env';
+
+const projects = await getProjects();
+const seo = {
+  title: 'Projects · Italiour',
+  description: 'Selected projects from this CMS-powered portfolio.',
+  canonical: `${siteUrl}/projects`,
+  type: 'website'
+};
+---
+
+<BaseLayout {seo}>
+  <Section spacing="sm">
+    <header class="rich-text">
+      <span class="eyebrow">Portfolio</span>
+      <h1>Projects</h1>
+    </header>
+    {projects.length ? (
+      <div class="grid">
+        {projects.map((project) => (
+          <article class="card">
+            {project.coverImageUrl ? (
+              <a href={`/projects/${project.slug}`} aria-label={`View ${project.title}`}>
+                <CmsImage src={project.coverImageUrl} alt={project.coverImageAlt} width="640" height="420" />
+              </a>
+            ) : null}
+            <div>
+              <span class="meta">{project.year || 'Project'}</span>
+              <h2><a href={`/projects/${project.slug}`}>{project.title}</a></h2>
+              {project.summary ? <p>{project.summary}</p> : null}
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : <p>No published projects yet.</p>}
+  </Section>
+</BaseLayout>

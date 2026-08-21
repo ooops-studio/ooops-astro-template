@@ -5,7 +5,12 @@
   "readme": "docs/content-models.md",
   "deps": [],
   "env": [],
-  "files": [],
-  "cleanupTargets": [],
+  "files": [
+    {"from": "optional/projects/src/lib/projects/client.ts", "to": "src/lib/projects/client.ts"},
+    {"from": "optional/projects/src/lib/projects/sitemap.ts", "to": "src/lib/projects/sitemap.ts"},
+    {"from": "optional/projects/src/pages/projects/index.astro", "to": "src/pages/projects/index.astro"},
+    {"from": "optional/projects/src/pages/projects/[slug].astro", "to": "src/pages/projects/[slug].astro"}
+  ],
+  "cleanupTargets": ["src/lib/projects", "src/pages/projects"],
   "validationChecks": ["projects-example"]
 }

@@ -79,6 +79,8 @@ const requiredFiles = [
   'src/components/editor/EditorBoundary.astro',
   'src/lib/posts/client.ts',
   'src/lib/posts/sitemap.ts',
+  'src/lib/projects/client.ts',
+  'src/lib/projects/sitemap.ts',
   'src/lib/cms/client.ts',
   'src/lib/cms/content-helpers.ts',
   'src/lib/cms/homepage.ts',
@@ -98,6 +100,8 @@ const requiredFiles = [
   'src/pages/500.astro',
   'src/pages/posts/index.astro',
   'src/pages/posts/[slug].astro',
+  'src/pages/projects/index.astro',
+  'src/pages/projects/[slug].astro',
   'src/template.config.ts',
   'src/styles/fonts.css',
   'src/styles/global.css',
@@ -208,7 +212,8 @@ function walk(directory) {
 
 const activeRequiredFiles = requiredFiles.filter((file) => {
   if (file === 'src/components/cms/PreviewContent.astro' || file.startsWith('src/lib/cms-preview/') || file.startsWith('src/pages/preview/content/')) return moduleEnabled('preview');
-  if (file === 'src/pages/posts/index.astro' || file === 'src/pages/posts/[slug].astro') return moduleEnabled('posts');
+  if (file.startsWith('src/lib/posts/') || file.startsWith('src/pages/posts/')) return moduleEnabled('posts');
+  if (file.startsWith('src/lib/projects/') || file.startsWith('src/pages/projects/')) return moduleEnabled('projects');
   if (file === 'src/components/islands/IslandStatus.svelte') return moduleEnabled('svelteIslands');
   return true;
 });
@@ -232,7 +237,7 @@ const envExample = read('.env.example');
 const enabledSensitiveEnv = new Set(['OOOPS_CMS_API_TOKEN']);
 enabledSensitiveEnv.add('OOOPS_CMS_REBUILD_SECRET');
 enabledSensitiveEnv.add('OOOPS_CLOUDFLARE_DEPLOY_HOOK_URL');
-enabledSensitiveEnv.add('PUBLIC_CONTACT_FORM_TOKEN');
+if (exists('src/pages/contact.astro')) enabledSensitiveEnv.add('PUBLIC_CONTACT_FORM_TOKEN');
 if (moduleEnabled('preview')) {
   enabledSensitiveEnv.add('OOOPS_CMS_API_TOKEN');
   enabledSensitiveEnv.add('OOOPS_CMS_PREVIEW_SESSION_SECRET');
@@ -393,7 +398,8 @@ for (const manifest of manifests) {
 const cmsSource = [
   read('src/lib/cms/client.ts'),
   read('src/lib/cms/homepage.ts'),
-  read('src/lib/posts/client.ts')
+  ...(moduleEnabled('posts') && exists('src/lib/posts/client.ts') ? [read('src/lib/posts/client.ts')] : []),
+  ...(moduleEnabled('projects') && exists('src/lib/projects/client.ts') ? [read('src/lib/projects/client.ts')] : [])
 ].join('\n');
 
 const cmsClientSource = read('src/lib/cms/client.ts');
@@ -409,9 +415,11 @@ for (const forbidden of ['class OoopsCmsClient', 'authorization:', 'Bearer ${', 
   }
 }
 
-const previewSessionSource = read('src/lib/cms-preview/session.ts');
-if (!previewSessionSource.includes('@ooopsstudio/cms-cloudflare')) {
-  fail('CMS preview sessions must use @ooopsstudio/cms-cloudflare helpers.');
+if (moduleEnabled('preview')) {
+  const previewSessionSource = read('src/lib/cms-preview/session.ts');
+  if (!previewSessionSource.includes('@ooopsstudio/cms-cloudflare')) {
+    fail('CMS preview sessions must use @ooopsstudio/cms-cloudflare helpers.');
+  }
 }
 
 for (const [file, label] of [

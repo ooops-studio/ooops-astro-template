@@ -1,0 +1,30 @@
+---
+import CmsImage from '../../components/cms/CmsImage.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getProject, getProjects } from '../../lib/projects/client';
+
+export const getStaticPaths = async () => {
+  const projects = await getProjects();
+  return projects.map((project) => ({ params: { slug: project.slug } }));
+};
+
+const { slug } = Astro.params;
+const project = slug ? await getProject(slug) : null;
+if (!project) return Astro.redirect('/projects');
+---
+
+<BaseLayout seo={project.seo}>
+  <article class="section">
+    <div class="rich-text">
+      <span class="meta">{project.year || 'Project'}</span>
+      <h1>{project.title}</h1>
+      {project.summary ? <p>{project.summary}</p> : null}
+      {project.coverImageUrl ? (
+        <CmsImage src={project.coverImageUrl} alt={project.coverImageAlt} width="1200" height="760" loading="eager" />
+      ) : null}
+      {project.description ? <div set:html={project.description} /> : null}
+      {project.credits ? <section><h2>Credits</h2><div set:html={project.credits} /></section> : null}
+      {project.tags.length ? <p class="meta">{project.tags.join(' · ')}</p> : null}
+    </div>
+  </article>
+</BaseLayout>

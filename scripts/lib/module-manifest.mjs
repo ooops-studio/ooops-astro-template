@@ -231,6 +231,9 @@ export function renderEnvExample({ manifests, enabledModules }) {
   const coreLines = [
     'OOOPS_CMS_API_BASE_URL=http://cms.localhost:4175/api/cms/v1',
     'OOOPS_CMS_API_TOKEN=',
+    'OOOPS_CMS_REBUILD_SECRET=',
+    'OOOPS_CLOUDFLARE_DEPLOY_HOOK_URL=',
+    ...(pathExists('src/pages/contact.astro') ? ['PUBLIC_CONTACT_FORM_TOKEN='] : []),
     'PUBLIC_SITE_URL=http://localhost:4321'
   ];
 
