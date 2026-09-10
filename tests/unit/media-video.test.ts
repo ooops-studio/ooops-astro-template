@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mediaVideo } from '../../src/lib/cms/content-helpers';
+import { mediaAlt, mediaIsDecorative, mediaVideo } from '../../src/lib/cms/content-helpers';
 import { responsiveRichTextImages } from '../../src/lib/cms/rich-text-images';
 const asset = { id:'video-el',url:'https://media.example/original.mov',width:1920,height:1080,video:{width:1280,height:720,mp4:{url:'https://media.example/fallback.mp4'},hls:{url:'https://media.example/master.m3u8'},poster:{url:'https://media.example/poster.webp'}} };
 const map = {'video-el':asset,'video-en':{id:'video-en',url:'https://media.example/english.mp4'}};
@@ -11,6 +11,19 @@ test('localized video fields and nested group references resolve stable media ID
 });
 test('pending and missing variants preserve the original without fabricated URLs',()=>{
  assert.equal(mediaVideo('video-en',map).mp4,null);assert.equal(mediaVideo('missing',map).original,null);
+});
+test('localized PNG replacements resolve media-reference arrays as images and retain reference metadata',()=>{
+ const images = { poster: { id: 'poster', mimeType: 'image/png', url: 'https://media.example/poster.png', width: 678, height: 1144, altText: { en: 'Poster', el: 'Αφίσα' } } };
+ const field = { el: [{ assetId: 'poster', metadata: { decorative: true, alt: '' } }], en: [{ assetId: 'poster' }] };
+ const greek = mediaVideo(field, images, 'el');
+ assert.equal(greek.image, images.poster.url);
+ assert.equal(greek.hls, null);
+ assert.equal(greek.mp4, null);
+ assert.equal(greek.width, 678);
+ assert.equal(mediaIsDecorative(greek.record), true);
+ assert.equal(mediaAlt(greek.record, 'fallback', undefined, 'el'), '');
+ assert.equal(mediaAlt(mediaVideo(field, images, 'en').record, '', undefined, 'el'), 'Αφίσα');
+ assert.equal(mediaVideo('video-el', map).image, null);
 });
 test('rich text resolves videos, preserves captions and explicit poster/source children',()=>{
  const html=responsiveRichTextImages('<video controls data-asset-id="video-el" src="https://media.example/original.mov"><track kind="captions" src="/el.vtt"></video>',map,'el');

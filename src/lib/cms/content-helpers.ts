@@ -50,11 +50,18 @@ export const normalizeAssetUrl = (url: string | null | undefined): string | null
 };
 
 export const resolveMediaRecord = (value: unknown, mediaMap?: PublicMediaMap): Record<string, unknown> => {
+  if (Array.isArray(value)) return resolveMediaRecord(value[0], mediaMap);
   if (typeof value === 'string' && value.trim()) return asRecord(mediaMap?.[value.trim()]);
   const record = asRecord(value);
+  const metadata = asRecord(record.metadata);
   const assetId = asString(record.assetId) || asString(record.value) || asString(record.id);
   const asset = assetId && mediaMap?.[assetId] ? asRecord(mediaMap[assetId]) : null;
-  return asset ? { ...record, ...asset, alt: record.alt ?? asset.alt, altText: record.altText ?? asset.altText } : record;
+  return asset ? {
+    ...record, ...asset,
+    metadata: { ...asRecord(asset.metadata), ...metadata },
+    alt: record.alt ?? metadata.alt ?? asset.alt,
+    altText: record.altText ?? asset.altText
+  } : record;
 };
 
 export const mediaUrl = (value: unknown, mediaMap?: PublicMediaMap): string | null => {
@@ -71,7 +78,14 @@ export const mediaMimeType = (value: unknown, mediaMap?: PublicMediaMap): string
 
 export const mediaAlt = (value: unknown, fallback = '', mediaMap?: PublicMediaMap, locale = 'en'): string => {
   const record = resolveMediaRecord(value, mediaMap);
-  return asString(record.alt) || localizedField(record.alt as LocalizedValue, locale) || asString(record.altText) || asString(record[locale === 'el' ? 'altEl' : 'altEn']) || fallback;
+  if (mediaIsDecorative(record)) return '';
+  const alt = record.alt ?? asRecord(record.metadata).alt;
+  return asString(alt) || localizedField(alt as LocalizedValue, locale) || localizedField(record.altText as LocalizedValue, locale) || asString(record[locale === 'el' ? 'altEl' : 'altEn']) || fallback;
+};
+
+export const mediaIsDecorative = (value: unknown, mediaMap?: PublicMediaMap): boolean => {
+  const record = resolveMediaRecord(value, mediaMap);
+  return (asRecord(record.metadata).decorative ?? record.decorative) === true;
 };
 
 export type MediaSource = { url: string; mimeType: 'image/avif' | 'image/webp'; width: number; height: number; sizeBytes: number };
@@ -119,7 +133,8 @@ export const htmlToText = (value: string) =>
 export function mediaVideo(value: unknown, mediaMap?: PublicMediaMap, locale = 'en') {
   const localized = asRecord(value);
   const record = resolveMediaRecord(localized[locale] ?? localized.en ?? value, mediaMap);
+  const image = mediaMimeType(record)?.startsWith('image/') ? mediaUrl(record) : null;
   const video = asRecord(record.video);
   const source = (key: string) => normalizeAssetUrl(asString(asRecord(video[key]).url));
-  return { record, original: mediaUrl(record), mp4: source('mp4'), hls: source('hls'), poster: source('poster'), width: Number(video.width || record.width) || undefined, height: Number(video.height || record.height) || undefined };
+  return { record, image, original: mediaUrl(record), mp4: image ? null : source('mp4'), hls: image ? null : source('hls'), poster: source('poster'), width: Number(video.width || record.width) || undefined, height: Number(video.height || record.height) || undefined };
 }
