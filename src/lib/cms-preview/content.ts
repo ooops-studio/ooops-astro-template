@@ -1,9 +1,10 @@
-import { asRecord, asString } from '../cms/content-helpers';
+import { asRecord, asString, type PublicMediaMap } from '../cms/content-helpers';
 import { seoFromFields } from '../cms/seo';
 import type { SeoPayload } from '../cms/types';
 
 export type PreviewContent = {
   body: string;
+  mediaMap: PublicMediaMap;
   description: string;
   fields: Array<{ key: string; value: string }>;
   seo: SeoPayload;
@@ -27,6 +28,7 @@ export const previewContent = (data: Record<string, unknown>, path: string, fall
     title,
     description,
     body,
+    mediaMap: asRecord(data._media) as PublicMediaMap,
     fields: Object.entries({ ...fields, ...data })
       .filter(([key, value]) => !ignored.has(key) && value !== undefined && value !== null)
       .map(([key, value]) => ({ key, value: displayValue(value) })),

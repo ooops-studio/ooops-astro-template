@@ -53,7 +53,8 @@ export const resolveMediaRecord = (value: unknown, mediaMap?: PublicMediaMap): R
   if (typeof value === 'string' && value.trim()) return asRecord(mediaMap?.[value.trim()]);
   const record = asRecord(value);
   const assetId = asString(record.assetId) || asString(record.value) || asString(record.id);
-  return assetId && mediaMap?.[assetId] ? asRecord(mediaMap[assetId]) : record;
+  const asset = assetId && mediaMap?.[assetId] ? asRecord(mediaMap[assetId]) : null;
+  return asset ? { ...record, ...asset, alt: record.alt ?? asset.alt, altText: record.altText ?? asset.altText } : record;
 };
 
 export const mediaUrl = (value: unknown, mediaMap?: PublicMediaMap): string | null => {
@@ -68,27 +69,37 @@ export const mediaMimeType = (value: unknown, mediaMap?: PublicMediaMap): string
   return asString(record.mimeType) || asString(record.contentType) || null;
 };
 
-export const mediaAlt = (value: unknown, fallback = '', mediaMap?: PublicMediaMap): string => {
+export const mediaAlt = (value: unknown, fallback = '', mediaMap?: PublicMediaMap, locale = 'en'): string => {
   const record = resolveMediaRecord(value, mediaMap);
-  return asString(record.alt) || asString(record.altText) || fallback;
+  return asString(record.alt) || localizedField(record.alt as LocalizedValue, locale) || asString(record.altText) || asString(record[locale === 'el' ? 'altEl' : 'altEn']) || fallback;
 };
 
-export const cmsImageWidths = [320, 640, 960, 1280, 1600];
+export type MediaSource = { url: string; mimeType: 'image/avif' | 'image/webp'; width: number; height: number; sizeBytes: number };
 
-export const withImageWidth = (url: string, width: number): string => {
-  try {
-    const parsed = new URL(url);
-    parsed.searchParams.set('w', String(width));
-    return parsed.toString();
-  } catch {
-    const separator = url.includes('?') ? '&' : '?';
-    return `${url}${separator}w=${width}`;
-  }
+// Only URLs and dimensions supplied by the CMS are responsive candidates.
+export const mediaSources = (value: unknown, mediaMap?: PublicMediaMap): MediaSource[] => {
+  const record = resolveMediaRecord(value, mediaMap);
+  return asArray(record.sources).flatMap(source => {
+    const row = asRecord(source);
+    const url = normalizeAssetUrl(asString(row.url));
+    if (!url || !['image/avif', 'image/webp'].includes(asString(row.mimeType)) ||
+      !Number.isSafeInteger(row.width) || Number(row.width) < 1 ||
+      !Number.isSafeInteger(row.height) || Number(row.height) < 1 ||
+      !Number.isSafeInteger(row.sizeBytes) || Number(row.sizeBytes) < 1) return [];
+    return [{ url, mimeType: row.mimeType as MediaSource['mimeType'], width: Number(row.width), height: Number(row.height), sizeBytes: Number(row.sizeBytes) }];
+  }).sort((a, b) => a.width - b.width);
 };
 
-export const imageSrcSet = (src: string | null, widths = cmsImageWidths): string | null => {
-  if (!src) return null;
-  return widths.map((width) => `${withImageWidth(src, width)} ${width}w`).join(', ');
+export const mediaSourceSet = (value: unknown, mimeType: MediaSource['mimeType'], mediaMap?: PublicMediaMap): string | undefined => {
+  const record = resolveMediaRecord(value, mediaMap);
+  const sources = mediaSources(record).filter(source => source.mimeType === mimeType);
+  // A format with only small survivors must not replace a larger original on
+  // desktop. Other complete formats (or the original) remain available.
+  const width = Number(record.width), height = Number(record.height);
+  const expectedWidth = width > 0 && height > 0 ? Math.round(width * Math.min(1, 2560 / width, 2560 / height)) : 0;
+  if (expectedWidth && Math.max(0, ...sources.map(source => source.width)) < expectedWidth) return undefined;
+  const widths = new Map(sources.map(source => [source.width, source]));
+  return Array.from(widths.values()).map(source => `${source.url} ${source.width}w`).join(', ') || undefined;
 };
 
 export const htmlToText = (value: string) =>
@@ -104,3 +115,11 @@ export const htmlToText = (value: string) =>
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
     .trim();
+
+export function mediaVideo(value: unknown, mediaMap?: PublicMediaMap, locale = 'en') {
+  const localized = asRecord(value);
+  const record = resolveMediaRecord(localized[locale] ?? localized.en ?? value, mediaMap);
+  const video = asRecord(record.video);
+  const source = (key: string) => normalizeAssetUrl(asString(asRecord(video[key]).url));
+  return { record, original: mediaUrl(record), mp4: source('mp4'), hls: source('hls'), poster: source('poster'), width: Number(video.width || record.width) || undefined, height: Number(video.height || record.height) || undefined };
+}

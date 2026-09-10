@@ -23,10 +23,8 @@ const seo = {
             {post.heroImageUrl ? (
               <a href={`/posts/${post.slug}`} aria-label={`Read ${post.title}`}>
                 <CmsImage
-                  src={post.heroImageUrl}
+                  asset={post.heroImage}
                   alt={post.heroImageAlt}
-                  width="640"
-                  height="420"
                 />
               </a>
             ) : null}

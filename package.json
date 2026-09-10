@@ -46,7 +46,8 @@
     "typecheck": "astro check",
     "types:cloudflare": "wrangler types",
     "validate": "pnpm lint && pnpm validate:env && pnpm check:editor && pnpm check && pnpm check:openapi && pnpm check:content-health && pnpm test:i18n && pnpm test:newsletter && pnpm test:newsletter-worker && pnpm test:modules && pnpm test:cms-rebuild && pnpm build",
-    "validate:env": "node scripts/validate-env.mjs"
+    "validate:env": "node scripts/validate-env.mjs",
+    "test:video": "tsx --test tests/unit/media-video.test.ts"
   },
   "dependencies": {
     "@astrojs/svelte": "^9.0.1",
@@ -60,7 +61,9 @@
     "@ooopsstudio/cms-cloudflare": "^0.3.2",
     "@ooopsstudio/ui-astro": "^0.2.0",
     "@ooopsstudio/ui-primitives": "^0.2.0",
-    "astro": "^7.1.4",
+    "astro": "^7.2.8",
+    "hls.js": "1.6.16",
+    "parse5": "7.3.0",
     "svelte": "^5.56.4"
   },
   "devDependencies": {

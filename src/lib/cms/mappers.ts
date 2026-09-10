@@ -1,8 +1,11 @@
-import { asRecord, asString, localizedField, mediaAlt, mediaUrl, type LocalizedValue, type PublicMediaMap } from './content-helpers';
+import { asRecord, asString, resolveMediaRecord, localizedField, mediaAlt, mediaUrl, type LocalizedValue, type PublicMediaMap } from './content-helpers';
 
 export type CmsEntry = Record<string, unknown>;
 
-export const entryFields = (entry: CmsEntry) => asRecord(entry.fields || entry);
+export const entryFields = (entry: CmsEntry) => {
+  const snapshot = asRecord(entry.snapshot || entry.data || entry);
+  return asRecord(snapshot.fields || snapshot.input || snapshot);
+};
 
 export const entryMediaMap = (entry: CmsEntry) => asRecord(entry._media) as PublicMediaMap;
 
@@ -30,7 +33,7 @@ export const entryMedia = (entry: CmsEntry, key: string, fallbackAlt = '') => {
   const mediaMap = entryMediaMap(entry);
   const value = fields[key];
   return {
-    value,
+    value: resolveMediaRecord(value, mediaMap),
     url: mediaUrl(value, mediaMap),
     alt: mediaAlt(value, fallbackAlt, mediaMap)
   };

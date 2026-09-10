@@ -1,4 +1,5 @@
 ---
+import CmsRichText from '../../components/cms/CmsRichText.astro';
 import CmsImage from '../../components/cms/CmsImage.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getPost, getPosts } from '../../lib/posts/client';
@@ -24,9 +25,9 @@ if (!post) {
       <h1 data-ooops-editor-id={editorMode ? 'post-title' : undefined}>{post.title}</h1>
       <p>{post.excerpt}</p>
       {post.heroImageUrl ? (
-        <CmsImage src={post.heroImageUrl} alt={post.heroImageAlt} width="1200" height="760" loading="eager" />
+        <CmsImage asset={post.heroImage} alt={post.heroImageAlt} sizes="(min-width: 800px) 760px, 100vw" priority />
       ) : null}
-      <div set:html={post.body} />
+      <CmsRichText html={post.body} mediaMap={post.mediaMap} />
     </div>
   </article>
 </BaseLayout>

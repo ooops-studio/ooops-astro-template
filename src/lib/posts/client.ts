@@ -1,5 +1,6 @@
+import { entryFields } from '../cms/mappers';
 import { getCmsCollectionEntries, getCmsCollectionEntry } from '../cms/client';
-import { asRecord, asString, mediaAlt, mediaUrl, type PublicMediaMap } from '../cms/content-helpers';
+import { asRecord, asString, mediaAlt, mediaUrl, resolveMediaRecord, type PublicMediaMap } from '../cms/content-helpers';
 import { seoFromFields } from '../cms/seo';
 import type { SeoPayload } from '../cms/types';
 
@@ -17,6 +18,7 @@ export type PostSummary = {
 
 export type PostDetail = PostSummary & {
   body: string;
+  mediaMap: PublicMediaMap;
   seo: SeoPayload;
 };
 
@@ -27,7 +29,7 @@ const asDateString = (value: unknown): string | null => {
 };
 
 const mapPostSummary = (entry: Record<string, unknown>): PostSummary => {
-  const fields = asRecord(entry.fields || entry);
+  const fields = entryFields(entry);
   const mediaMap = asRecord(entry._media) as PublicMediaMap;
   const title = asString(fields.title) || 'Untitled post';
   const slug = asString(fields.slug) || asString(entry.slug) || asString(entry.id);
@@ -38,7 +40,7 @@ const mapPostSummary = (entry: Record<string, unknown>): PostSummary => {
     title,
     slug,
     excerpt: asString(fields.excerpt),
-    heroImage,
+    heroImage: resolveMediaRecord(heroImage, mediaMap),
     heroImageUrl: mediaUrl(heroImage, mediaMap),
     heroImageAlt: mediaAlt(heroImage, title, mediaMap),
     publishedAt: asDateString(entry.publishedAt) || asDateString(fields.publishedAt),
@@ -47,12 +49,13 @@ const mapPostSummary = (entry: Record<string, unknown>): PostSummary => {
 };
 
 const mapPostDetail = (entry: Record<string, unknown>): PostDetail => {
-  const fields = asRecord(entry.fields || entry);
+  const fields = entryFields(entry);
   const summary = mapPostSummary(entry);
 
   return {
     ...summary,
     body: asString(fields.body),
+    mediaMap: asRecord(entry._media) as PublicMediaMap,
     seo: seoFromFields({
       fields,
       path: `/posts/${summary.slug}`,

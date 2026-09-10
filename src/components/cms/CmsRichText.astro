@@ -1,0 +1,13 @@
+---
+import { responsiveRichTextImages } from '../../lib/cms/rich-text-images';
+import type { PublicMediaMap } from '../../lib/cms/content-helpers';
+type Props = { html: string; mediaMap?: PublicMediaMap; locale?: string; sizes?: string; class?: string };
+const { html, mediaMap, locale = 'en', sizes = '100vw', class: className = '' } = Astro.props;
+---
+<div class:list={['rich-text', className]} set:html={responsiveRichTextImages(html, mediaMap, locale, sizes)} />
+
+<script>
+  import { initializeCmsVideos } from '../../lib/cms/video-player';
+  initializeCmsVideos();
+  document.addEventListener('astro:page-load', initializeCmsVideos);
+</script>
