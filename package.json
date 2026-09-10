@@ -61,7 +61,7 @@
     "@ooopsstudio/cms-cloudflare": "^0.3.2",
     "@ooopsstudio/ui-astro": "^0.2.0",
     "@ooopsstudio/ui-primitives": "^0.2.0",
-    "astro": "^7.1.4",
+    "astro": "^7.2.8",
     "hls.js": "1.6.16",
     "parse5": "7.3.0",
     "svelte": "^5.56.4"
