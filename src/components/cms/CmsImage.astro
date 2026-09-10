@@ -1,8 +1,10 @@
 ---
-import { cmsImageWidths, imageSrcSet, mediaAlt, mediaUrl, normalizeAssetUrl } from '../../lib/cms/content-helpers';
+import { mediaSourceSet, resolveMediaRecord, mediaAlt, mediaUrl, normalizeAssetUrl, type PublicMediaMap } from '../../lib/cms/content-helpers';
 
 type Props = {
   asset?: unknown;
+  mediaMap?: PublicMediaMap;
+  locale?: string;
   src?: string | null;
   alt?: string;
   fallbackSrc?: string;
@@ -19,6 +21,8 @@ type Props = {
 
 const {
   asset,
+  mediaMap,
+  locale = 'en',
   src,
   alt,
   fallbackSrc = '/assets/images/fallback-image.svg',
@@ -33,29 +37,39 @@ const {
   class: className = ''
 } = Astro.props;
 
-const resolvedSrc = normalizeAssetUrl(src || '') || mediaUrl(asset) || fallbackSrc;
-const resolvedAlt = alt ?? mediaAlt(asset, '');
+const record = resolveMediaRecord(asset, mediaMap);
+const resolvedSrc = normalizeAssetUrl(src || '') || mediaUrl(record) || fallbackSrc;
+const resolvedAlt = alt ?? mediaAlt(record, '', undefined, locale);
 const resolvedLoading = priority ? 'eager' : loading;
 const resolvedFetchPriority = priority ? 'high' : undefined;
-const resolvedSrcset = srcset ?? (responsive && resolvedSrc !== fallbackSrc ? imageSrcSet(resolvedSrc, cmsImageWidths) : null);
+// Explicit sources remain authoritative and are never overridden by <source>.
+const useVariants = responsive && !src && srcset === undefined;
+const avif = useVariants ? mediaSourceSet(record, 'image/avif') : undefined;
+const webp = useVariants ? mediaSourceSet(record, 'image/webp') : undefined;
+const resolvedWidth = width ?? (typeof record.width === 'number' ? record.width : undefined);
+const resolvedHeight = height ?? (typeof record.height === 'number' ? record.height : undefined);
 
 if (import.meta.env.DEV && asset && !resolvedAlt) {
   console.warn('[CmsImage] Missing alt text for CMS media asset.', asset);
 }
 ---
 
+<picture>
+{avif && <source type="image/avif" srcset={avif} sizes={sizes} />}
+{webp && <source type="image/webp" srcset={webp} sizes={sizes} />}
 <img
   class:list={['cms-image', className]}
   src={resolvedSrc}
   alt={resolvedAlt}
-  srcset={resolvedSrcset}
-  width={width}
-  height={height}
+  srcset={srcset}
+  width={resolvedWidth}
+  height={resolvedHeight}
   sizes={sizes}
   loading={resolvedLoading}
   fetchpriority={resolvedFetchPriority}
   decoding={decoding}
 />
+</picture>
 
 <style>
   .cms-image {

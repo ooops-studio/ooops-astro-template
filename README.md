@@ -363,3 +363,11 @@ Never expose these to browser code:
 - `OOOPS_CMS_PREVIEW_SESSION_SECRET`
 - `OOOPS_CMS_REBUILD_SECRET`
 - `OOOPS_CLOUDFLARE_DEPLOY_HOOK_URL` (Worker only; never stored in CMS)
+
+## CMS media delivery
+
+`CmsImage` renders ready AVIF and WebP sources supplied by the CMS, with the original image as fallback. It does not invent resize URLs. `CmsVideo` uses native HLS when available and loads hls.js lazily elsewhere, retaining the MP4/original fallback and download link. Explicit component sources, poster and subtitle tracks remain supported.
+
+`CmsRichText` applies the same delivery metadata to embedded media. Helpers retain localized values and media inside groups and repeaters. Optimization runs in the CMS workers; the template never transcodes on an HTTP request.
+
+Run `pnpm exec tsx --test tests/unit/image-sources.test.ts tests/unit/media-video.test.ts`, `pnpm typecheck`, `pnpm lint` and `pnpm build` for focused validation. Real Safari seeking, audio review and deployment capacity are separate CMS release acceptance checks.

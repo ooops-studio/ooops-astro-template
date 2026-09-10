@@ -50,6 +50,12 @@ importers:
       astro:
         specifier: ^7.1.4
         version: 7.1.6(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(rollup@4.62.4)(tsx@4.23.1)(yaml@2.9.0)
+      hls.js:
+        specifier: 1.6.16
+        version: 1.6.16
+      parse5:
+        specifier: 7.3.0
+        version: 7.3.0
       svelte:
         specifier: ^5.56.4
         version: 5.56.6(@typescript-eslint/types@8.64.0)
@@ -2007,6 +2013,9 @@ packages:
 
   hastscript@9.0.1:
     resolution: {integrity: sha512-g7df9rMFX/SPi34tyGCyUBREQoKkapwdY/T04Qn9TDWfHhAYt4/I0gMVirzK5wEzeUqIjEB+LXC/ypb7Aqno5w==}
+
+  hls.js@1.6.16:
+    resolution: {integrity: sha512-VSIRpLfRwlAAdGL4wiTucx2ScRipo0ed1FBatWkyt832jC4CReKstga6yIhYVwGu9LOBjuX9wzmRMeQdBJtzEA==}
 
   html-escaper@3.0.3:
     resolution: {integrity: sha512-RuMffC89BOWQoY0WKGpIhn5gX3iI54O6nRA0yC124NYVtzjmFWBIiFd8M0x+ZdX0P9R4lADg1mgP8C7PxGOWuQ==}
@@ -4820,6 +4829,8 @@ snapshots:
       hast-util-parse-selector: 4.0.0
       property-information: 7.2.0
       space-separated-tokens: 2.0.2
+
+  hls.js@1.6.16: {}
 
   html-escaper@3.0.3: {}
 

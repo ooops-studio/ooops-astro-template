@@ -1,0 +1,32 @@
+---
+import { mediaVideo, normalizeAssetUrl, type PublicMediaMap } from '../../lib/cms/content-helpers';
+type Props = {
+  asset?: unknown; mediaMap?: PublicMediaMap; locale?: string; src?: string; poster?: string;
+  width?: number | string; height?: number | string; controls?: boolean; autoplay?: boolean;
+  muted?: boolean; loop?: boolean; preload?: 'none' | 'metadata' | 'auto'; class?: string;
+  tracks?: Array<{ src: string; kind?: 'subtitles' | 'captions' | 'descriptions' | 'chapters' | 'metadata'; srclang?: string; label?: string; default?: boolean }>;
+};
+const { asset, mediaMap, locale = 'en', src, poster, width, height, controls = true, autoplay = false, muted = false, loop = false, preload = 'metadata', tracks = [], class: className = '' } = Astro.props;
+const media = mediaVideo(asset, mediaMap, locale);
+const fallback = normalizeAssetUrl(src) || media.mp4 || media.original;
+const hls = !src ? media.hls : null;
+---
+{fallback && <div class="cms-video-container">
+  <video class:list={['cms-video', className]} src={fallback} data-cms-video data-cms-hls={hls} data-cms-fallback={fallback}
+    poster={normalizeAssetUrl(poster) || media.poster} width={width ?? media.width} height={height ?? media.height}
+    controls={controls} autoplay={autoplay} muted={muted} loop={loop} playsinline preload={preload}>
+    {tracks.map(track => <track {...track} />)}
+    <slot />
+    <a href={src ? fallback : media.original || fallback}>Download video</a>
+  </video>
+  <a class="cms-video-download" href={src ? fallback : media.original || fallback} download>Download video</a>
+</div>}
+<script>
+  import { initializeCmsVideos } from '../../lib/cms/video-player';
+  initializeCmsVideos();
+  document.addEventListener('astro:page-load', initializeCmsVideos);
+</script>
+<style>
+  .cms-video { display: block; max-width: 100%; height: auto; background: #000; border-radius: var(--radius-md); }
+  .cms-video-download { display: inline-block; margin-top: .5rem; font-size: .875em; }
+</style>
