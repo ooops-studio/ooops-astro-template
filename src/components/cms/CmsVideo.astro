@@ -1,17 +1,19 @@
 ---
 import { mediaVideo, normalizeAssetUrl, type PublicMediaMap } from '../../lib/cms/content-helpers';
+import CmsImage from './CmsImage.astro';
 type Props = {
   asset?: unknown; mediaMap?: PublicMediaMap; locale?: string; src?: string; poster?: string;
   width?: number | string; height?: number | string; controls?: boolean; autoplay?: boolean;
   muted?: boolean; loop?: boolean; preload?: 'none' | 'metadata' | 'auto'; class?: string;
   tracks?: Array<{ src: string; kind?: 'subtitles' | 'captions' | 'descriptions' | 'chapters' | 'metadata'; srclang?: string; label?: string; default?: boolean }>;
+  alt?: string;
 };
 const { asset, mediaMap, locale = 'en', src, poster, width, height, controls = true, autoplay = false, muted = false, loop = false, preload = 'metadata', tracks = [], class: className = '' } = Astro.props;
 const media = mediaVideo(asset, mediaMap, locale);
 const fallback = normalizeAssetUrl(src) || media.mp4 || media.original;
 const hls = !src ? media.hls : null;
 ---
-{fallback && <div class="cms-video-container">
+{!src && media.image ? <CmsImage asset={media.record} {locale} {width} {height} alt={Astro.props.alt} class={className} /> : fallback && <div class="cms-video-container">
   <video class:list={['cms-video', className]} src={fallback} data-cms-video data-cms-hls={hls} data-cms-fallback={fallback}
     poster={normalizeAssetUrl(poster) || media.poster} width={width ?? media.width} height={height ?? media.height}
     controls={controls} autoplay={autoplay} muted={muted} loop={loop} playsinline preload={preload}>
