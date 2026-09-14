@@ -1,5 +1,7 @@
 # CMS Astro Site Template
 
+For agent work, start with [AGENTS.md](AGENTS.md) and [project context](docs/project-context.md).
+
 Astro template for public websites powered by Ooops CMS.
 
 The active app is intentionally small and familiar to Astro users:
@@ -170,7 +172,7 @@ pnpm validate
 
 `pnpm check:openapi` fetches `${OOOPS_CMS_API_BASE_URL}/openapi.json` when CMS is configured and checks for the required CMS API v1 paths. It skips locally when CMS is not configured or not running, and fails in CI when a configured OpenAPI endpoint is unreachable.
 
-GitHub Actions validates the published analytics consumer on every push and pull request. The full template validation remains manual because the CMS and Editor packages referenced by the local development overrides are not yet available to a clean GitHub-hosted runner. Restore its push and pull-request trigger after those packages are published or otherwise made available to CI.
+GitHub Actions runs full template validation and Chromium UI integration tests on pushes and pull requests, alongside the published analytics consumer checks. See `.github/workflows/ci.yml` for the authoritative workflow.
 
 ## Client Setup Installer
 
@@ -181,6 +183,8 @@ pnpm setup:module -- list
 pnpm setup:module -- add newsletter
 pnpm setup:module -- remove newsletter
 ```
+
+`AGENTS.md` and `docs/project-context.md` are tracked template files inherited by new repositories. The in-place setup installer preserves them; fill the project context after setup. `pnpm check:template` requires both files.
 
 Each optional module has an `optional/<module>/module.json` manifest describing dependencies, env vars, files, cleanup targets, and validation checks. The installer uses those manifests to generate `.env.example`, `src/template.config.ts`, and `SETUP.md`.
 

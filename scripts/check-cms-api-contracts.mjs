@@ -31,6 +31,8 @@ const scannedExtensions = new Set([
 ]);
 
 const requiredFiles = [
+  'AGENTS.md',
+  'docs/project-context.md',
   '.env.example',
   'optional/newsletter/README.md',
   'optional/preview/README.md',
