@@ -405,11 +405,11 @@ const cmsSource = [
 ].join('\n');
 
 const cmsClientSource = read('src/lib/cms/client.ts');
-if (!cmsClientSource.includes("@ooopsstudio/cms-api")) {
-  fail('src/lib/cms/client.ts must use @ooopsstudio/cms-api.');
+if (!cmsClientSource.includes("@ooopsstudio/workspace-api")) {
+  fail('src/lib/cms/client.ts must use @ooopsstudio/workspace-api.');
 }
-if (!cmsClientSource.includes("@ooopsstudio/cms-astro")) {
-  fail('src/lib/cms/client.ts must use @ooopsstudio/cms-astro for Astro env/client setup.');
+if (!cmsClientSource.includes("@ooopsstudio/workspace-astro")) {
+  fail('src/lib/cms/client.ts must use @ooopsstudio/workspace-astro for Astro env/client setup.');
 }
 for (const forbidden of ['class OoopsCmsClient', 'authorization:', 'Bearer ${', 'fetchImpl']) {
   if (cmsClientSource.includes(forbidden)) {
@@ -419,8 +419,8 @@ for (const forbidden of ['class OoopsCmsClient', 'authorization:', 'Bearer ${', 
 
 if (moduleEnabled('preview')) {
   const previewSessionSource = read('src/lib/cms-preview/session.ts');
-  if (!previewSessionSource.includes('@ooopsstudio/cms-cloudflare')) {
-    fail('CMS preview sessions must use @ooopsstudio/cms-cloudflare helpers.');
+  if (!previewSessionSource.includes('@ooopsstudio/workspace-cloudflare')) {
+    fail('CMS preview sessions must use @ooopsstudio/workspace-cloudflare helpers.');
   }
 }
 
@@ -429,8 +429,8 @@ for (const [file, label] of [
   ['src/lib/seo/schema.ts', 'schema.org'],
   ['src/lib/i18n/routing.ts', 'i18n routing']
 ]) {
-  if (!read(file).includes('@ooopsstudio/cms-astro')) {
-    fail(`${file} must delegate generic ${label} helpers to @ooopsstudio/cms-astro.`);
+  if (!read(file).includes('@ooopsstudio/workspace-astro')) {
+    fail(`${file} must delegate generic ${label} helpers to @ooopsstudio/workspace-astro.`);
   }
 }
 

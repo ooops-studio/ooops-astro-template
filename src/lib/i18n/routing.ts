@@ -5,7 +5,7 @@ import {
   canonicalForLocale as createCanonicalForLocale,
   localeFromPathname as createLocaleFromPathname,
   localePath as createLocalePath
-} from '@ooopsstudio/cms-astro';
+} from '@ooopsstudio/workspace-astro';
 
 export const defaultLocale = templateConfig.defaultLocale;
 export const supportedLocales = templateConfig.locales;

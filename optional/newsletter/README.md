@@ -22,7 +22,7 @@ PUBLIC_NEWSLETTER_FORM_TOKEN=your_public_form_token
 
 Expected form answer key: `email`.
 
-The function uses the public CMS Forms client from `@ooopsstudio/cms-api`. It does not send a private CMS API token.
+The function uses the public CMS Forms client from `@ooopsstudio/workspace-api`. It does not send a private CMS API token.
 
 The default Astro form is progressive-enhancement friendly:
 

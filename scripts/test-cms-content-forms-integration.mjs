@@ -1,4 +1,4 @@
-import {createCmsClient, createCmsPublicFormsClient} from '@ooopsstudio/cms-api';
+import {createCmsClient, createCmsPublicFormsClient} from '@ooopsstudio/workspace-api';
 
 const baseUrl = (process.env.OOOPS_CMS_API_BASE_URL || '').replace(/\/+$/, '');
 const token = process.env.OOOPS_CMS_API_TOKEN || '';

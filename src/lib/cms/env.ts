@@ -1,4 +1,4 @@
-import { readCmsAstroEnv } from '@ooopsstudio/cms-astro';
+import { readCmsAstroEnv } from '@ooopsstudio/workspace-astro';
 
 export const cmsRuntimeEnv = {
   OOOPS_CMS_API_BASE_URL:

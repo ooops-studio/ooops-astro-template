@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { createCmsClient } from '@ooopsstudio/cms-api';
+import { createCmsClient } from '@ooopsstudio/workspace-api';
 
 const loadLocalEnv = async () => {
   for (const fileName of ['.env.local', '.env']) {

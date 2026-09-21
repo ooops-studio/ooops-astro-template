@@ -1,4 +1,4 @@
-import { createCmsPublicFormsClient } from '@ooopsstudio/cms-api';
+import { createCmsPublicFormsClient } from '@ooopsstudio/workspace-api';
 
 const baseUrl = (process.env.PUBLIC_CMS_API_BASE_URL ?? 'http://cms.localhost:4175').replace(/\/$/, '');
 const token = process.env.PUBLIC_NEWSLETTER_FORM_TOKEN ?? '';

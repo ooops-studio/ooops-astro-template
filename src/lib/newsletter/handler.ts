@@ -1,4 +1,4 @@
-import { createCmsPublicFormsClient } from '@ooopsstudio/cms-api';
+import { createCmsPublicFormsClient } from '@ooopsstudio/workspace-api';
 
 export type NewsletterWorkerEnv = {
   PUBLIC_CMS_API_BASE_URL?: string;

@@ -1,6 +1,6 @@
 import { env as cloudflareEnv } from 'cloudflare:workers';
-import { createCmsPreviewClient } from '@ooopsstudio/cms-api';
-import { cmsPreviewPath } from '@ooopsstudio/cms-cloudflare';
+import { createCmsPreviewClient } from '@ooopsstudio/workspace-api';
+import { cmsPreviewPath } from '@ooopsstudio/workspace-cloudflare';
 import { createPreviewSession, type PreviewKind, readPreviewSession, serializePreviewSessionCookie } from './session';
 
 type RuntimeEnv = Record<string, string | undefined>;

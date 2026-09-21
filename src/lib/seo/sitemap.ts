@@ -3,4 +3,4 @@ export {
   mergeSitemapUrls,
   renderSitemapXml,
   type SitemapUrl
-} from '@ooopsstudio/cms-astro';
+} from '@ooopsstudio/workspace-astro';

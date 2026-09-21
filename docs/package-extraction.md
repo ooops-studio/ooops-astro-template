@@ -4,9 +4,9 @@ The template keeps UI/layout/styles local so client projects can edit them freel
 
 Code that may become reusable packages later:
 
-- `@ooopsstudio/cms-api`: CMS API client, content helpers and media helpers.
-- `@ooopsstudio/cms-astro`: Astro components and SEO/sitemap helpers.
-- `@ooopsstudio/cms-cloudflare`: encrypted Cloudflare preview sessions and private response helpers.
+- `@ooopsstudio/workspace-api`: CMS API client, content helpers and media helpers.
+- `@ooopsstudio/workspace-astro`: Astro components and SEO/sitemap helpers.
+- `@ooopsstudio/workspace-cloudflare`: encrypted Cloudflare preview sessions and private response helpers.
 - `@ooops/accessibility`: accessibility menu state and adapters.
 
 Do not extract packages until the API has been used by several real client projects.

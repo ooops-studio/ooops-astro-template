@@ -5,7 +5,7 @@ import {
   createCmsRebuildSignatureHeaders,
   serializeCmsRebuildEvent,
   type CmsRebuildEvent
-} from '@ooopsstudio/cms-cloudflare';
+} from '@ooopsstudio/workspace-cloudflare';
 
 import { handleCmsRebuildRequest, type CmsRebuildWorkerEnv } from '../../src/lib/cms-rebuild/handler';
 

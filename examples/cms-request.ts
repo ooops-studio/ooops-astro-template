@@ -1,4 +1,4 @@
-import { createCmsClient } from '@ooopsstudio/cms-api';
+import { createCmsClient } from '@ooopsstudio/workspace-api';
 
 export const cmsBaseUrl = (
   process.env.OOOPS_CMS_API_BASE_URL ??

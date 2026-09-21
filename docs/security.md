@@ -33,7 +33,7 @@ Preview tokens are server-only:
 
 Do not import these from browser components, islands, or client scripts.
 
-The Cloudflare Worker routes under `/preview/content/**` use `@ooopsstudio/cms-api` and `@ooopsstudio/cms-cloudflare` to validate a CMS-issued opaque token server-to-server, encrypt it into an `HttpOnly` preview-session cookie, and redirect to a tokenless URL. The browser never receives the CMS API token or the preview-session encryption secret.
+The Cloudflare Worker routes under `/preview/content/**` use `@ooopsstudio/workspace-api` and `@ooopsstudio/workspace-cloudflare` to validate a CMS-issued opaque token server-to-server, encrypt it into an `HttpOnly` preview-session cookie, and redirect to a tokenless URL. The browser never receives the CMS API token or the preview-session encryption secret.
 
 Preview is deny-by-default. Production must prove that an arbitrary opaque token receives a rejection before enabling `OOOPS_CMS_PREVIEW_ENABLED=true`.
 

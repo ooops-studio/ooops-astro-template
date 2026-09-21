@@ -3,9 +3,9 @@ import {
   articleJsonLd as createArticleJsonLd,
   websiteJsonLd as createWebsiteJsonLd,
   type JsonLdPayload
-} from '@ooopsstudio/cms-astro';
+} from '@ooopsstudio/workspace-astro';
 
-export type { JsonLdPayload } from '@ooopsstudio/cms-astro';
+export type { JsonLdPayload } from '@ooopsstudio/workspace-astro';
 
 export const websiteJsonLd = ({ name, url = siteUrl }: { name: string; url?: string }): JsonLdPayload =>
   createWebsiteJsonLd({ name, url });

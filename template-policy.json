@@ -23,9 +23,9 @@
   },
   "forbiddenFeatures": ["rss"],
   "canonicalPackages": {
-    "@ooopsstudio/cms-api": "^0.3.0",
-    "@ooopsstudio/cms-astro": "^0.2.2",
-    "@ooopsstudio/cms-cloudflare": "^0.3.2",
+    "@ooopsstudio/workspace-api": "^0.4.0",
+    "@ooopsstudio/workspace-astro": "^0.3.0",
+    "@ooopsstudio/workspace-cloudflare": "^0.4.0",
     "@ooopsstudio/analytics-consent": "^0.3.0",
     "@ooopsstudio/analytics-consent-astro": "^0.3.0",
     "@ooopsstudio/accessibility": "^0.2.0",
@@ -47,9 +47,9 @@
     }
   },
   "ownedImports": {
-    "src/lib/cms/client.ts": ["@ooopsstudio/cms-api", "@ooopsstudio/cms-astro"],
-    "src/lib/cms-preview/session.ts": ["@ooopsstudio/cms-cloudflare"],
-    "src/lib/cms-rebuild/handler.ts": ["@ooopsstudio/cms-cloudflare"],
+    "src/lib/cms/client.ts": ["@ooopsstudio/workspace-api", "@ooopsstudio/workspace-astro"],
+    "src/lib/cms-preview/session.ts": ["@ooopsstudio/workspace-cloudflare"],
+    "src/lib/cms-rebuild/handler.ts": ["@ooopsstudio/workspace-cloudflare"],
     "src/components/cms/AnalyticsConsent.astro": ["@ooopsstudio/analytics-consent-astro/CookieBanner.astro"],
     "src/components/cms/CmsAnalytics.astro": ["@ooopsstudio/analytics-consent-astro/AnalyticsRuntime.astro"],
     "src/components/AccessibilityMenu.astro": ["@ooopsstudio/accessibility-astro/AccessibilityMenu.astro"],

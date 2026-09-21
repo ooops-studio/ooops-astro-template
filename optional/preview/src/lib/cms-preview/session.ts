@@ -5,7 +5,7 @@ import {
   serializeCmsPreviewSessionCookie,
   type CmsPreviewKind,
   type CmsPreviewSession
-} from '@ooopsstudio/cms-cloudflare';
+} from '@ooopsstudio/workspace-cloudflare';
 
 const COOKIE_NAME = 'ooops_cms_preview';
 const SESSION_TTL_SECONDS = 30 * 60;

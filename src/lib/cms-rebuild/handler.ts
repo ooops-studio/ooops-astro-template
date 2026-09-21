@@ -2,7 +2,7 @@ import {
   createCmsRebuildHandler,
   type CmsRebuildClaimState,
   type CmsRebuildReplayStore
-} from '@ooopsstudio/cms-cloudflare';
+} from '@ooopsstudio/workspace-cloudflare';
 
 type DurableObjectStubLike = {
   fetch(request: Request): Promise<Response>;

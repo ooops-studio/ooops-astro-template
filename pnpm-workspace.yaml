@@ -9,9 +9,9 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - '@ooopsstudio/analytics-consent-astro@0.3.0'
   - '@ooopsstudio/analytics-consent@0.3.0'
-  - '@ooopsstudio/cms-api@0.3.0'
-  - '@ooopsstudio/cms-astro@0.2.2'
-  - '@ooopsstudio/cms-cloudflare@0.3.2'
+  - '@ooopsstudio/workspace-api@0.4.0'
+  - '@ooopsstudio/workspace-astro@0.3.0'
+  - '@ooopsstudio/workspace-cloudflare@0.4.0'
   - '@ooopsstudio/scene-gpu@0.1.0'
 
 overrides:

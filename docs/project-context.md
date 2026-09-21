@@ -24,3 +24,10 @@ Record the tested commit/date, exact commands and browser viewports, evidence pa
 ## Pending decisions
 
 List unresolved choices and the next concrete step. Client design/content decisions belong here, not in the reusable template's common rules.
+
+
+## Workspace SDK migration — 21 September 2026
+
+Migration prepared on `codex/workspace-sdk-rename` in an isolated checkout, preserving the original working tree. Imports and canonical dependency declarations use workspace-api 0.4.0, workspace-astro 0.3.0 and workspace-cloudflare 0.4.0; CMS HTTP paths and existing credentials remain unchanged. Single readers support the explicit current and legacy response types.
+
+The three Workspace SDKs were published to npm on 21 September 2026. Temporary SDK link overrides were removed, the lockfile was regenerated from npm, and pnpm validate passed against the published versions. Production deployment remains a separate pending step.

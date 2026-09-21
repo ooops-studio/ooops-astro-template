@@ -4,9 +4,10 @@ import {
   type CmsQuery,
   type CmsRecord,
   type CmsSingleResponse,
+  type CmsLegacySingleResponse,
   type OoopsCmsClient
-} from '@ooopsstudio/cms-api';
-import { createCmsClientFromAstroEnv } from '@ooopsstudio/cms-astro';
+} from '@ooopsstudio/workspace-api';
+import { createCmsClientFromAstroEnv } from '@ooopsstudio/workspace-astro';
 import { cmsApiBaseUrl, cmsApiToken, cmsRuntimeEnv } from './env';
 
 export type {
@@ -16,11 +17,11 @@ export type {
   CmsRecord,
   CmsSingleResponse,
   OoopsCmsClient
-} from '@ooopsstudio/cms-api';
+} from '@ooopsstudio/workspace-api';
 
 type CmsSingleRuntimeResponse =
   | CmsSingleResponse<CmsRecord>
-  | { ok: true; apiId?: string; data: CmsRecord };
+  | CmsLegacySingleResponse<CmsRecord>;
 
 export const hasCmsConfig = Boolean(cmsApiBaseUrl && cmsApiToken);
 

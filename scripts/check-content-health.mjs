@@ -8,13 +8,13 @@ const collections = (collectionsArg?.split('=')[1] || 'posts,projects')
 
 let cmsApi = null;
 try {
-	cmsApi = await import('@ooopsstudio/cms-api');
+	cmsApi = await import('@ooopsstudio/workspace-api');
 } catch {
 	cmsApi = null;
 }
 
 if (!cmsApi) {
-	const message = '[content-health] @ooopsstudio/cms-api is not installed; skipping live content audit.';
+	const message = '[content-health] @ooopsstudio/workspace-api is not installed; skipping live content audit.';
   if (strict) {
     console.error(message);
     process.exit(1);
