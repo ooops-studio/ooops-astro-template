@@ -24,7 +24,8 @@ function parseEnvFile(path) {
 
 const localEnv = parseEnvFile(envFile);
 const exampleEnv = parseEnvFile('.env.example');
-const env = { ...exampleEnv, ...localEnv, ...process.env };
+// Examples document development defaults; they must never satisfy a release gate.
+const env = { ...(strict ? {} : exampleEnv), ...localEnv, ...process.env };
 const enabledModules = getEnabledModulesFromConfig();
 const manifests = loadModuleManifests();
 const missing = [];
