@@ -35,3 +35,7 @@ The three Workspace SDKs were published to npm on 21 September 2026. Temporary S
 ### Workspace localized media adoption (2026-09-22)
 
 Media mappers now consume the shared Workspace API per-language media projection, preserving explicit hidden files and decorative empty alt text. Published registry dependencies are workspace-api 0.5.0, workspace-astro 0.3.1 and workspace-cloudflare 0.4.1. Registry installation and the complete pnpm validate workflow passed, including localized media regression tests. No local Workspace SDK overrides remain. Do not treat this source update as a production deployment.
+
+### Editor preview startup (2026-09-22)
+
+The Cloudflare SSR dependency optimizer now includes `astro/app/manifest` and `@astrojs/svelte/server.js` up front. This prevents repeated discovery/reloads from invalidating an in-flight optimized chunk during editor preview startup. Full template validation and all 15 Editor browser tests passed across Chromium, Firefox and WebKit against this checkout. Deployment and Apple desktop distribution remain separate gates.

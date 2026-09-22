@@ -15,6 +15,9 @@ export default defineConfig({
   adapter: cloudflare({ prerenderEnvironment: 'node' }),
   integrations: [svelte(), ...(ooopsEditor ? [ooopsEditor()] : [])],
   vite: {
+    environments: {
+      ssr: { optimizeDeps: { include: ['astro/app/manifest', '@astrojs/svelte/server.js'] } }
+    },
     resolve: {
       alias: {
         $lib: fileURLToPath(new URL('./src/lib', import.meta.url))
