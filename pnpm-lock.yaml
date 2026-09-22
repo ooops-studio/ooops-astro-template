@@ -41,14 +41,14 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0
       '@ooopsstudio/workspace-api':
-        specifier: ^0.4.0
-        version: 0.4.0
+        specifier: ^0.5.0
+        version: 0.5.0
       '@ooopsstudio/workspace-astro':
-        specifier: ^0.3.0
-        version: 0.3.0
+        specifier: ^0.3.1
+        version: 0.3.1
       '@ooopsstudio/workspace-cloudflare':
-        specifier: ^0.4.0
-        version: 0.4.0
+        specifier: ^0.4.1
+        version: 0.4.1
       astro:
         specifier: ^7.2.8
         version: 7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@22.20.1)(tsx@4.23.1)(yaml@2.9.0)
@@ -1048,16 +1048,16 @@ packages:
     resolution: {integrity: sha512-YHQ8MZ/NUdvm90Q/Q0RVMRcZEnLle1vpghSerG2nYZuhKybe24NNDtmm9oXvjYZoeyaloD7LWgua826AUclP5g==}
     engines: {node: '>=22.14.0'}
 
-  '@ooopsstudio/workspace-api@0.4.0':
-    resolution: {integrity: sha512-H548Upolkiw5vC/Ex880ti6qZJS55VyD1tV9hDVhqJgrRb+WQsR0Z5vd6Iq1d+/jm9J8xBnBJqQDp2ZDITw4hQ==}
+  '@ooopsstudio/workspace-api@0.5.0':
+    resolution: {integrity: sha512-o9STmwv1mgN2GTXMtueIR0UCTxxnjPUF4FKm+ISY3eqRg0iauTl5HZIigcViBvnZllBD/PjvFiADxB+oibroYQ==}
     engines: {node: '>=22.14.0'}
 
-  '@ooopsstudio/workspace-astro@0.3.0':
-    resolution: {integrity: sha512-nKnwybJoKJyILChC8xErm/vE4s6ZGnE/VEJLrtlviCEMX5HpUP149CSmjWaAjKRSEwN/CkaA1/ddUYMZ4GjeQQ==}
+  '@ooopsstudio/workspace-astro@0.3.1':
+    resolution: {integrity: sha512-WlGjj4c7Wig3l2V4h1YdC5AyMMbiKjcZuf71rUBixatyz1iWb/sbU3G9C+N6NNFF+nR5Dz9m4BmojbTybt47RQ==}
     engines: {node: '>=22.14.0'}
 
-  '@ooopsstudio/workspace-cloudflare@0.4.0':
-    resolution: {integrity: sha512-4cNph6e+d9h8x8XxoPHdW9g7vQTTCrSkAINSxBE+S4a9wcSulToUGqlqxD64kDVU4z9ozqk6h6bTM2TJPvZVXw==}
+  '@ooopsstudio/workspace-cloudflare@0.4.1':
+    resolution: {integrity: sha512-HidyY++LhrLvP6RJsfB9x7b32YjBe6u9I6vBtWLmoVN1CGtTnakL3ixUM5LjrFPZmwLXOGyXcwAuYgnKVJC2+w==}
     engines: {node: '>=22.14.0'}
 
   '@oslojs/encoding@1.1.0':
@@ -3638,15 +3638,15 @@ snapshots:
       '@ooopsstudio/accessibility': 0.2.0
       '@ooopsstudio/editor-contracts': 0.2.0
 
-  '@ooopsstudio/workspace-api@0.4.0': {}
+  '@ooopsstudio/workspace-api@0.5.0': {}
 
-  '@ooopsstudio/workspace-astro@0.3.0':
+  '@ooopsstudio/workspace-astro@0.3.1':
     dependencies:
-      '@ooopsstudio/workspace-api': 0.4.0
+      '@ooopsstudio/workspace-api': 0.5.0
 
-  '@ooopsstudio/workspace-cloudflare@0.4.0':
+  '@ooopsstudio/workspace-cloudflare@0.4.1':
     dependencies:
-      '@ooopsstudio/workspace-api': 0.4.0
+      '@ooopsstudio/workspace-api': 0.5.0
 
   '@oslojs/encoding@1.1.0': {}
 

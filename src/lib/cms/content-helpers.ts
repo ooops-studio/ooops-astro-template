@@ -80,6 +80,7 @@ export const mediaAlt = (value: unknown, fallback = '', mediaMap?: PublicMediaMa
   const record = resolveMediaRecord(value, mediaMap);
   if (mediaIsDecorative(record)) return '';
   const alt = record.alt ?? asRecord(record.metadata).alt;
+  if (alt === '') return '';
   return asString(alt) || localizedField(alt as LocalizedValue, locale) || localizedField(record.altText as LocalizedValue, locale) || asString(record[locale === 'el' ? 'altEl' : 'altEn']) || fallback;
 };
 

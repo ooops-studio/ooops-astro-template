@@ -1,3 +1,4 @@
+import { resolveWorkspaceContentMedia } from '@ooopsstudio/workspace-api';
 import { asRecord, asString, resolveMediaRecord, localizedField, mediaAlt, mediaUrl, type LocalizedValue, type PublicMediaMap } from './content-helpers';
 
 export type CmsEntry = Record<string, unknown>;
@@ -28,13 +29,15 @@ export const localizedEntryField = (
   fallbackKey?: string
 ) => localizedField(fields[key] as LocalizedValue, locale, fallbackKey ? (fields[fallbackKey] as LocalizedValue) : undefined);
 
-export const entryMedia = (entry: CmsEntry, key: string, fallbackAlt = '') => {
+export const entryMedia = (entry: CmsEntry, key: string, fallbackAlt = '', locale = 'en') => {
   const fields = entryFields(entry);
   const mediaMap = entryMediaMap(entry);
-  const value = fields[key];
+  const localized = resolveWorkspaceContentMedia({ ...entry, data: fields }, key, locale);
+  const value = localized === undefined ? fields[key] : localized;
+  const first = Array.isArray(localized) ? localized[0] : localized;
   return {
     value: resolveMediaRecord(value, mediaMap),
     url: mediaUrl(value, mediaMap),
-    alt: mediaAlt(value, fallbackAlt, mediaMap)
+    alt: typeof first?.alt === 'string' ? first.alt : mediaAlt(value, fallbackAlt, mediaMap, locale)
   };
 };

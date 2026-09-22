@@ -23,9 +23,9 @@
   },
   "forbiddenFeatures": ["rss"],
   "canonicalPackages": {
-    "@ooopsstudio/workspace-api": "^0.4.0",
-    "@ooopsstudio/workspace-astro": "^0.3.0",
-    "@ooopsstudio/workspace-cloudflare": "^0.4.0",
+    "@ooopsstudio/workspace-api": "^0.5.0",
+    "@ooopsstudio/workspace-astro": "^0.3.1",
+    "@ooopsstudio/workspace-cloudflare": "^0.4.1",
     "@ooopsstudio/analytics-consent": "^0.3.0",
     "@ooopsstudio/analytics-consent-astro": "^0.3.0",
     "@ooopsstudio/accessibility": "^0.2.0",

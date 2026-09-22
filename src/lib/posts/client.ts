@@ -1,6 +1,6 @@
-import { entryFields } from '../cms/mappers';
+import { entryFields, entryMedia } from '../cms/mappers';
 import { getCmsCollectionEntries, getCmsCollectionEntry } from '../cms/client';
-import { asRecord, asString, mediaAlt, mediaUrl, resolveMediaRecord, type PublicMediaMap } from '../cms/content-helpers';
+import { asRecord, asString, type PublicMediaMap } from '../cms/content-helpers';
 import { seoFromFields } from '../cms/seo';
 import type { SeoPayload } from '../cms/types';
 
@@ -30,19 +30,18 @@ const asDateString = (value: unknown): string | null => {
 
 const mapPostSummary = (entry: Record<string, unknown>): PostSummary => {
   const fields = entryFields(entry);
-  const mediaMap = asRecord(entry._media) as PublicMediaMap;
   const title = asString(fields.title) || 'Untitled post';
   const slug = asString(fields.slug) || asString(entry.slug) || asString(entry.id);
-  const heroImage = fields.heroImage || fields['hero-image'];
+  const heroImage = entryMedia(entry, Object.hasOwn(fields, 'heroImage') ? 'heroImage' : 'hero-image', title);
 
   return {
     id: asString(entry.id) || slug,
     title,
     slug,
     excerpt: asString(fields.excerpt),
-    heroImage: resolveMediaRecord(heroImage, mediaMap),
-    heroImageUrl: mediaUrl(heroImage, mediaMap),
-    heroImageAlt: mediaAlt(heroImage, title, mediaMap),
+    heroImage: heroImage.value,
+    heroImageUrl: heroImage.url,
+    heroImageAlt: heroImage.alt,
     publishedAt: asDateString(entry.publishedAt) || asDateString(fields.publishedAt),
     updatedAt: asDateString(entry.updatedAt) || asDateString(fields.updatedAt)
   };
