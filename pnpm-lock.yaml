@@ -5,6 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  devalue: 5.9.2
   esbuild: ^0.28.1
   js-yaml: ^4.3.2
   nanoid: ^3.3.18
@@ -35,8 +36,8 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0(astro@7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@22.20.1)(tsx@4.23.1)(yaml@2.9.0))
       '@ooopsstudio/cms-api':
-        specifier: ^0.3.0
-        version: 0.3.0
+        specifier: ^0.3.1
+        version: 0.3.1
       '@ooopsstudio/cms-astro':
         specifier: ^0.2.2
         version: 0.2.2
@@ -1020,8 +1021,8 @@ packages:
     resolution: {integrity: sha512-dZbLUtspKSlIev1bbv9miNYnrNGUDWQyexrBfBLg4FZtcudBXJDu5JKr3VWpxlvMHpdvFlt9N3uLNY/3G/M7Qw==}
     engines: {node: '>=20'}
 
-  '@ooopsstudio/cms-api@0.3.0':
-    resolution: {integrity: sha512-XkkxdRZZ/kx7jU+IKeNYZOESK1VzkR8o/LDGN7nWGUBweJ52+qK6FNuovDqWHJ1Ohdj8XhTvlCJooIYsQuWsYA==}
+  '@ooopsstudio/cms-api@0.3.1':
+    resolution: {integrity: sha512-YRcVBc16hKyiCHZDBKH4ifBa38ljILYEKFBk7zc5rI9nqdAlMOWz0Gb13XJSBAnZo3gej3ZnSgjy8+TlIXgE5w==}
     engines: {node: '>=22.14.0'}
 
   '@ooopsstudio/cms-astro@0.2.2':
@@ -1594,8 +1595,8 @@ packages:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
 
-  devalue@5.8.1:
-    resolution: {integrity: sha512-4CXDYRBGqN+57wVJkuXBYmpAVUSg3L6JAQa/DFqm238G73E1wuyc/JhGQJzN7vUf/CMphYau2zXbfWzDR5aTEw==}
+  devalue@5.9.2:
+    resolution: {integrity: sha512-po4PAY5c53tw5XMocSnf8A/5OHhbbUftpr93aEN6BBoAdntUmK7vu7wOATqvt7cXO7m1Cl4gMVn6p7n6n4mj0w==}
 
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
@@ -3614,15 +3615,15 @@ snapshots:
 
   '@ooopsstudio/analytics-consent@0.3.0': {}
 
-  '@ooopsstudio/cms-api@0.3.0': {}
+  '@ooopsstudio/cms-api@0.3.1': {}
 
   '@ooopsstudio/cms-astro@0.2.2':
     dependencies:
-      '@ooopsstudio/cms-api': 0.3.0
+      '@ooopsstudio/cms-api': 0.3.1
 
   '@ooopsstudio/cms-cloudflare@0.3.2':
     dependencies:
-      '@ooopsstudio/cms-api': 0.3.0
+      '@ooopsstudio/cms-api': 0.3.1
 
   '@ooopsstudio/editor-contracts@0.1.0': {}
 
@@ -4036,7 +4037,7 @@ snapshots:
       clsx: 2.1.1
       common-ancestor-path: 2.0.0
       cookie: 2.0.1
-      devalue: 5.8.1
+      devalue: 5.9.2
       diff: 9.0.0
       dset: 3.1.4
       es-module-lexer: 2.3.1
@@ -4248,7 +4249,7 @@ snapshots:
 
   detect-libc@2.1.2: {}
 
-  devalue@5.8.1: {}
+  devalue@5.9.2: {}
 
   devlop@1.1.0:
     dependencies:
@@ -5099,7 +5100,7 @@ snapshots:
       aria-query: 5.3.1
       axobject-query: 4.1.0
       clsx: 2.1.1
-      devalue: 5.8.1
+      devalue: 5.9.2
       esm-env: 1.2.2
       esrap: 2.3.0(@typescript-eslint/types@8.64.0)
       is-reference: 3.0.3

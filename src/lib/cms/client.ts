@@ -20,7 +20,8 @@ export type {
 
 type CmsSingleRuntimeResponse =
   | CmsSingleResponse<CmsRecord>
-  | { ok: true; apiId?: string; data: CmsRecord };
+  | { ok: true; apiId?: string; data: CmsRecord }
+  | { ok: true; content: CmsRecord };
 
 export const hasCmsConfig = Boolean(cmsApiBaseUrl && cmsApiToken);
 

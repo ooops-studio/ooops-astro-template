@@ -136,5 +136,5 @@ export function mediaVideo(value: unknown, mediaMap?: PublicMediaMap, locale = '
   const image = mediaMimeType(record)?.startsWith('image/') ? mediaUrl(record) : null;
   const video = asRecord(record.video);
   const source = (key: string) => normalizeAssetUrl(asString(asRecord(video[key]).url));
-  return { record, image, original: mediaUrl(record), mp4: image ? null : source('mp4'), hls: image ? null : source('hls'), poster: source('poster'), width: Number(video.width || record.width) || undefined, height: Number(video.height || record.height) || undefined };
+  return { record, image, playbackStatusUrl: image ? null : normalizeAssetUrl(asString(video.playbackStatusUrl)), original: mediaUrl(record), mp4: image ? null : source('mp4'), hls: image ? null : source('hls'), poster: source('poster'), width: Number(video.width || record.width) || undefined, height: Number(video.height || record.height) || undefined };
 }

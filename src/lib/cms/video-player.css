@@ -1,0 +1,8 @@
+.cms-video-container { max-width: 100%; }
+.cms-video-container [hidden] { display: none !important; }
+.cms-video-retained-poster { display: block; max-width: 100%; height: auto; border-radius: var(--radius-md, .5rem); }
+.cms-video-status { padding: 1rem; border: 1px solid currentColor; border-radius: var(--radius-md, .5rem); font: inherit; }
+.cms-video-status p { margin: 0 0 .75rem; }
+.cms-video-status button { padding: .5rem .9rem; border: 1px solid currentColor; border-radius: var(--radius-md, .5rem); color: inherit; background: transparent; font: inherit; cursor: pointer; }
+.cms-video-status button:disabled { opacity: .6; cursor: wait; }
+.cms-video-status button:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }

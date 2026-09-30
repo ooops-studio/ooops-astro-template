@@ -30,3 +30,12 @@ test('rich text resolves videos, preserves captions and explicit poster/source c
  assert.match(html,/data-cms-hls="https:\/\/media.example\/master.m3u8"/);assert.match(html,/preload="metadata"/);assert.match(html,/<track kind="captions" src="\/el.vtt">/);
  const explicit=responsiveRichTextImages('<video data-asset-id="video-el" poster="/mine.png"><source src="/mine.mp4"></video>',map);assert.doesNotMatch(explicit,/data-cms-hls/);assert.match(explicit,/poster="\/mine.png"/);
 });
+
+test('guarded rich text defers all source requests until playback status allows them', () => {
+ const guarded = { ...asset, video: { ...asset.video, playbackStatusUrl: 'https://media.example/assets/playback/video-el' } };
+ const html = responsiveRichTextImages('<video data-asset-id="video-el" src="https://media.example/original.mov"><track src="/el.vtt"></video>', { 'video-el': guarded }, 'el');
+ assert.match(html, /data-cms-status="https:\/\/media.example\/assets\/playback\/video-el"/);
+ assert.doesNotMatch(html, /<video[^>]*\ssrc=/);
+ assert.match(html, /data-cms-locale="el"/);
+ assert.match(html, /<track src="\/el.vtt">/);
+});

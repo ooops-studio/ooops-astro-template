@@ -14,14 +14,14 @@ const fallback = normalizeAssetUrl(src) || media.mp4 || media.original;
 const hls = !src ? media.hls : null;
 ---
 {!src && media.image ? <CmsImage asset={media.record} {locale} {width} {height} alt={Astro.props.alt} class={className} /> : fallback && <div class="cms-video-container">
-  <video class:list={['cms-video', className]} src={fallback} data-cms-video data-cms-hls={hls} data-cms-fallback={fallback}
+  <video class:list={['cms-video', className]} src={!src && media.playbackStatusUrl ? undefined : fallback} data-cms-status={!src ? media.playbackStatusUrl : undefined} data-cms-locale={locale} data-cms-video data-cms-hls={hls} data-cms-fallback={fallback}
     poster={normalizeAssetUrl(poster) || media.poster} width={width ?? media.width} height={height ?? media.height}
     controls={controls} autoplay={autoplay} muted={muted} loop={loop} playsinline preload={preload}>
     {tracks.map(track => <track {...track} />)}
     <slot />
-    <a href={src ? fallback : media.original || fallback}>Download video</a>
+    <a href={!src && media.playbackStatusUrl ? undefined : src ? fallback : media.original || fallback}>Download video</a>
   </video>
-  <a class="cms-video-download" href={src ? fallback : media.original || fallback} download>Download video</a>
+  <a class="cms-video-download" href={!src && media.playbackStatusUrl ? undefined : src ? fallback : media.original || fallback} data-cms-download={!src && media.playbackStatusUrl ? media.original || fallback : undefined} hidden={!src && !!media.playbackStatusUrl} download>Download video</a>
 </div>}
 <script>
   import { initializeCmsVideos } from '../../lib/cms/video-player';
