@@ -43,3 +43,12 @@ test('entry media respects translated overrides, hidden files and explicit empty
  assert.equal(entryMedia(entry, 'cover', 'Fallback', 'el').url, null);
  assert.equal(entryMedia(entry, 'cover', 'Fallback', 'fr').url, 'https://example.test/shared.png');
 });
+
+test('guarded rich text defers all source requests until playback status allows them', () => {
+ const guarded = { ...asset, video: { ...asset.video, playbackStatusUrl: 'https://media.example/assets/playback/video-el' } };
+ const html = responsiveRichTextImages('<video data-asset-id="video-el" src="https://media.example/original.mov"><track src="/el.vtt"></video>', { 'video-el': guarded }, 'el');
+ assert.match(html, /data-cms-status="https:\/\/media.example\/assets\/playback\/video-el"/);
+ assert.doesNotMatch(html, /<video[^>]*\ssrc=/);
+ assert.match(html, /data-cms-locale="el"/);
+ assert.match(html, /<track src="\/el.vtt">/);
+});

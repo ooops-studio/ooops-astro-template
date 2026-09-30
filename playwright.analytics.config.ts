@@ -25,7 +25,7 @@ export default defineConfig({
       timeout: 30_000
     },
     {
-      command: 'corepack pnpm exec astro preview --host 127.0.0.1 --port 4401',
+      command: 'node scripts/e2e-preview-server.mjs 4401',
       url: 'http://127.0.0.1:4401/',
       reuseExistingServer: false,
       timeout: 120_000

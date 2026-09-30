@@ -46,6 +46,9 @@ jobs:
       - name: Test real UI integration
         run: pnpm test:e2e
 
+      - name: Test private CMS preview contract
+        run: pnpm test:preview:e2e
+
   analytics-published-consumer:
     runs-on: ubuntu-latest
 

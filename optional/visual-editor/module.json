@@ -17,6 +17,7 @@
     "@ooopsstudio/editor-contracts": "^0.3.0"
   },
   "localOverrides": {
+    "@ooopsstudio/accessibility": "file:../ooops-accessibility/packages/accessibility",
     "@ooopsstudio/accessibility-editor-manifests": "file:../ooops-accessibility/packages/accessibility-editor-manifests",
     "@ooopsstudio/editor-astro": "file:../ooops-editor/packages/astro",
     "@ooopsstudio/editor-browser-runtime": "file:../ooops-editor/packages/browser-runtime",

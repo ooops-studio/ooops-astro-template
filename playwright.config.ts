@@ -45,7 +45,7 @@ export default defineConfig({
 		}] : [])
 	],
 	webServer: {
-		command: 'corepack pnpm exec astro preview --host 127.0.0.1 --port 4405',
+		command: 'node scripts/e2e-preview-server.mjs 4405',
 		url: 'http://127.0.0.1:4405/',
 		reuseExistingServer: false,
 		timeout: 120_000

@@ -21,6 +21,11 @@ export function responsiveRichTextImages(html: string, mediaMap: PublicMediaMap 
           const set = (name: string, value: string) => { child.attrs = child.attrs.filter(a => a.name !== name); child.attrs.push({ name, value }); };
           if (video.mp4) set('src', video.mp4);
           set('data-cms-video', '');
+          set('data-cms-locale', locale);
+          if (video.playbackStatusUrl) {
+            set('data-cms-status', video.playbackStatusUrl);
+            child.attrs = child.attrs.filter(a => a.name !== 'src');
+          }
           if (video.hls) set('data-cms-hls', video.hls);
           if (video.mp4 || video.original) set('data-cms-fallback', video.mp4 || video.original!);
           if (!attr('poster') && video.poster) set('poster', video.poster);
