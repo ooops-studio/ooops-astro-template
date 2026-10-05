@@ -25,6 +25,47 @@ Record the tested commit/date, exact commands and browser viewports, evidence pa
 
 List unresolved choices and the next concrete step. Client design/content decisions belong here, not in the reusable template's common rules.
 
+## Demo test-site migration candidate — 5 October 2026
+
+The user chose to preserve Demo for `test.ooops.studio`. Work is isolated on
+`codex/cms-retirement-test-site`, based on `8b2df0f`. The reusable starter keeps
+`homepage`/`posts` and static output. The explicit `demo` content profile maps
+the existing published `home-page` hero and `news` title, slug, description,
+body and `cover.image`, using English localization where present. Public routes
+remain `/` and `/posts/*`; stable entry IDs resolve localized article URLs.
+Per-language hidden media and empty decorative alt text remain authoritative.
+
+`pnpm build:test-site` uses `astro.test-site.config.mjs` and server output,
+matching the installed test site's runtime-secret model. The official SDK reads
+the existing Cloudflare credential at request time. Missing configuration and
+missing Demo hero content fail closed. Build-time defaults never substitute
+starter content for a failed configured Demo request. The candidate fixes the
+public API origin and canonical hostname to Workspace and `test.ooops.studio`.
+
+Full `pnpm validate` passed after the source changes; five focused model tests
+passed. A separate test-site build and Wrangler dry run passed. Local browser
+checks rendered the real published Demo snapshot through an isolated API fixture,
+including its five news articles and public media. Desktop and 390px checks
+passed. The private preview fixture rejects invalid tokens, redirects valid tokens
+to tokenless URLs, disables analytics, and exits to published home/article routes.
+These checks do not prove live authentication with the opaque production token.
+Private evidence lives in ignored `.cache/cms-migration/`.
+
+Production form inventory found no active matching contact form in Demo. The
+installed browser-facing share token returns the same invalid-link 404 from CMS
+and Workspace. Four other published Demo forms remain untouched. A reviewed
+dedicated contact form, with Name/Email/Message and notifications/newsletters
+disabled, was explicitly approved by the user on 5 October 2026. Creation is
+pending an actual Demo-owning Workspace session: the current Maria session only
+has InDancEdu membership. No form was created or submitted.
+
+No source push, provider installation, new credential, or shared-data mutation
+was performed by this candidate preparation. Production deployment must preserve
+all existing opaque secrets, the replay Durable Object, session KV, Images,
+custom domain, provider settings and schedules. Never install generic generated
+bindings over those existing resources. See the Workspace retirement runbook for
+the private baseline and exact acceptance boundary.
+
 
 ## Workspace SDK migration — 21 September 2026
 

@@ -4,6 +4,7 @@ import Section from "../../components/ui/Section.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getPosts } from "../../lib/posts/client";
 import { siteUrl } from "../../lib/cms/env";
+import { postPath } from "../../lib/cms/content-model";
 
 const posts = await getPosts();
 const seo = {
@@ -21,7 +22,7 @@ const seo = {
         posts.map((post) => (
           <article class="card">
             {post.heroImageUrl ? (
-              <a href={`/posts/${post.slug}`} aria-label={`Read ${post.title}`}>
+              <a href={postPath(post.slug)} aria-label={`Read ${post.title}`}>
                 <CmsImage
                   asset={post.heroImage}
                   alt={post.heroImageAlt}
@@ -35,7 +36,7 @@ const seo = {
                   : "Post"}
               </span>
               <h2>
-                <a href={`/posts/${post.slug}`}>{post.title}</a>
+                <a href={postPath(post.slug)}>{post.title}</a>
               </h2>
               <p>{post.excerpt}</p>
             </div>
