@@ -72,12 +72,60 @@ schedules and resource identities require exact post-install readback. The
 configuration passed a versions-upload dry run without uploading code. A fresh
 provider baseline and separate production approval are required before upload.
 
-No source push, provider installation or new private credential was performed.
-The approved form creation/publication is the production data change above. Production deployment must preserve
+The preceding paragraph describes the pre-install review. The approved installation
+and live acceptance below supersede its installation status. No new private
+credential was created. Production deployment must preserve
 all existing opaque secrets, the replay Durable Object, session KV, Images,
 custom domain, provider settings and schedules. Never install generic generated
 bindings over those existing resources. See the Workspace retirement runbook for
 the private baseline and exact acceptance boundary.
+
+
+### Approved test-site installation and live acceptance — 5 October 2026
+
+The human approved frozen installation plan SHA-256
+`508ccc7910abde9225d63fa111078b440299c8ba0ceb078cd78ce5684723269d`
+and one controlled synthetic submission. Version
+`4eaf8ae8-0328-4849-a108-9185390c9df1` is installed from source `03b622d`.
+The first public 500 was initially attributed to the candidate and prompted
+rollback. Historical Cloudflare logs identify that request as prior version
+`af89f4a8-3ae2-48ce-b929-7ec4df86b01c`, whose `homepage` lookup fails.
+The identical approved package was reactivated after exact artifact/resource
+preflight. Four subsequent GETs returned 200 and live tail identified the
+candidate version, with no exceptions. This confirms the first response did
+not establish a candidate-code failure; no speculative fix or key rotation was
+made. The rollback retained the current database and shared resources.
+
+Actual public browser acceptance shows the Demo home, four public news entries,
+an encoded-slug article and loaded media-origin images. Home/posts/contact GETs
+are 200 with correct test-site canonical URLs and no legacy origin. Invalid
+home/article preview requests return 404 with private/no-store and noindex.
+Desktop and actual 390px responsive rendering were inspected; a viewport helper
+that did not resize existing tabs was not counted as mobile evidence. CDP metrics
+and full-page captures supplied the verified narrow render, then were reset.
+
+The browser submitted exactly one synthetic contact request and displayed the
+real thank-you message. Production read-only verification found one `received`
+submission tied to published version `38572de0-784d-463f-950d-4d814c1accfa`,
+zero notifications, zero newsletter intakes/subscriptions, and all six other
+forms unchanged. The normal contact mapping created a linked synthetic contact.
+Provider readback confirms all existing bindings, namespaces, domains, schedules,
+compatibility and asset headers; only the upload-message annotation differs.
+Installed source has zero CMS-host literals. Private acceptance receipt and actual
+screenshots are in `.cache/cms-migration/test-site-install-review/`.
+
+Cloudflare Builds still points at `ooops-studio/ooops-ssg-test`. GitHub reads
+return 404; the human confirmed that repository was deleted. Its saved build
+origins and contact share also remain legacy. Do not trigger a rebuild until
+its source and build recipe are repaired. Prepared replacement: this existing
+`ooops-studio/ooops-astro-template` repository, branch
+`codex/cms-retirement-test-site`, repository root, build `pnpm build:test-site`,
+deploy `pnpm deploy:test-site`. The explicit `wrangler.test-site.jsonc` preserves
+the installed resources and all opaque runtime secrets; the generic starter
+config is unchanged. The test build requires the approved public contact share.
+Provider source connection, saved build origins/canonical/share, existing hook
+branch and a real signed rebuild need separate production approval and readback.
+Valid production preview acceptance and other retirement gates remain pending.
 
 
 ## Workspace SDK migration — 21 September 2026

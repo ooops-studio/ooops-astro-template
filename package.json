@@ -18,7 +18,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "pnpm typecheck && astro build",
-    "build:test-site": "pnpm typecheck && OOOPS_CMS_CONTENT_MODEL=demo PUBLIC_SITE_URL=https://test.ooops.studio PUBLIC_CMS_API_BASE_URL=https://workspace.ooops.studio/api/cms/v1 astro build --config astro.test-site.config.mjs",
+    "build:test-site": "node scripts/check-test-site-env.mjs && pnpm typecheck && OOOPS_CMS_CONTENT_MODEL=demo PUBLIC_SITE_URL=https://test.ooops.studio PUBLIC_CMS_API_BASE_URL=https://workspace.ooops.studio/api/cms/v1 astro build --config astro.test-site.config.mjs",
+    "deploy:test-site": "wrangler deploy --config wrangler.test-site.jsonc --keep-vars",
     "check": "pnpm typecheck && pnpm check:template",
     "check:content-health": "node scripts/check-content-health.mjs",
     "check:openapi": "node scripts/check-openapi-contract.mjs",

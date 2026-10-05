@@ -71,3 +71,37 @@ Run the local contract tests with:
 ```bash
 pnpm test:cms-rebuild
 ```
+
+
+## Existing Demo test site: replacement build source (prepared, not connected)
+
+The human confirmed that `ooops-studio/ooops-ssg-test` was deleted. Its Cloudflare
+Builds connection still references that repository. The separately approved
+manual release is serving successfully; this does not prove automatic rebuilding.
+
+Review the following replacement connection before a production change:
+
+- Repository: existing `ooops-studio/ooops-astro-template`.
+- Production and existing deploy-hook branch: `codex/cms-retirement-test-site`.
+- Repository root: `/`.
+- Build command: `pnpm build:test-site`.
+- Deploy command: `pnpm deploy:test-site`.
+- Build `OOOPS_CMS_API_BASE_URL` and `PUBLIC_CMS_API_BASE_URL`:
+  `https://workspace.ooops.studio/api/cms/v1`.
+- Build `PUBLIC_SITE_URL`: `https://test.ooops.studio`.
+- Build `PUBLIC_CONTACT_FORM_TOKEN`: the already approved dedicated Demo contact
+  share, supplied privately; a missing value fails the build.
+
+Retain the existing build API token, opaque CMS read token, runtime secrets,
+analytics settings, SESSION namespace, Images and replay namespace. Never deploy
+with the generic `wrangler.jsonc`: `deploy:test-site` explicitly selects the
+preservation configuration. Retain compatibility date and historical migration
+`v1`. The public resource IDs in that config are identities, not credentials.
+Do not recreate the Worker, DNS, storage, deployment hook or signing secrets
+merely to reconnect the repository. If the provider cannot retain a hook identity,
+prepare its exact replacement and matching Worker-secret change for review first.
+
+After separate approval, verify the saved connection and invoke the existing
+signed rebuild flow using an approved event. Require successful build/deployment,
+provider preservation readback and the same public content/contact checks. A
+successful local build or manually deployed Worker is not rebuild acceptance.
