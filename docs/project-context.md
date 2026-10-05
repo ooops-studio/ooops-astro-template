@@ -51,16 +51,29 @@ to tokenless URLs, disables analytics, and exits to published home/article route
 These checks do not prove live authentication with the opaque production token.
 Private evidence lives in ignored `.cache/cms-migration/`.
 
-Production form inventory found no active matching contact form in Demo. The
-installed browser-facing share token returns the same invalid-link 404 from CMS
-and Workspace. Four other published Demo forms remain untouched. A reviewed
-dedicated contact form, with Name/Email/Message and notifications/newsletters
-disabled, was explicitly approved by the user on 5 October 2026. Creation is
-pending an actual Demo-owning Workspace session: the current Maria session only
-has InDancEdu membership. No form was created or submitted.
+Production inventory initially found no matching contact form and the installed
+share returned invalid-link 404 on both origins. After explicit human approval,
+CMS Test Admin created and published **Demo — Test site contact** through the
+actual Demo Workspace session on 5 October 2026. Required fields are Name
+(`short_text`), Email (`email`) and Message (`long_text`). Notifications and
+newsletter topics are disabled; all six existing forms remained unchanged.
+One active public share is tied to the exact reviewed published version. Its
+Workspace public schema GET returns 200 and the browser handler's API-ID mapping
+matches. No submission was made. The candidate was rebuilt with the valid share;
+the frozen installation artifact contains no legacy CMS origins.
 
-No source push, provider installation, new credential, or shared-data mutation
-was performed by this candidate preparation. Production deployment must preserve
+A separate private installation package is frozen under
+`.cache/cms-migration/test-site-install-review/`: source commit `03b622d`, asset
+hashes, provider baseline, preservation config, origin-only secret input and
+rollback version. Existing session KV, replay namespace and historical `v1`
+migration declaration are preserved. All other opaque secrets are omitted from
+the additive secret input and retained by Wrangler. Provider settings, domains,
+schedules and resource identities require exact post-install readback. The
+configuration passed a versions-upload dry run without uploading code. A fresh
+provider baseline and separate production approval are required before upload.
+
+No source push, provider installation or new private credential was performed.
+The approved form creation/publication is the production data change above. Production deployment must preserve
 all existing opaque secrets, the replay Durable Object, session KV, Images,
 custom domain, provider settings and schedules. Never install generic generated
 bindings over those existing resources. See the Workspace retirement runbook for
