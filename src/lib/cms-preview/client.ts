@@ -2,6 +2,9 @@ import { env as cloudflareEnv } from 'cloudflare:workers';
 import { createCmsPreviewClient } from '@ooopsstudio/workspace-api';
 import { cmsPreviewPath } from '@ooopsstudio/workspace-cloudflare';
 import { createPreviewSession, type PreviewKind, readPreviewSession, serializePreviewSessionCookie } from './session';
+import { contentApiIds, contentModel, postPath, postRouteSlug } from '../cms/content-model';
+import { entryFields } from '../cms/mappers';
+import { localizedField, type LocalizedValue } from '../cms/content-helpers';
 
 type RuntimeEnv = Record<string, string | undefined>;
 
@@ -95,8 +98,12 @@ export const preparePreview = async ({
   };
 };
 
-export const publicPreviewPath = ({ apiId, kind, slug }: { apiId: string; kind: PreviewKind; slug?: string }) => {
-  if (kind === 'collection' && apiId === 'posts' && slug) return `/posts/${encodeURIComponent(slug)}`;
-  if (kind === 'single' && apiId === 'homepage') return '/';
+export const publicPreviewPath = ({ apiId, kind, slug, item }: { apiId: string; kind: PreviewKind; slug?: string; item?: Record<string, unknown> }) => {
+  const ids = contentApiIds(contentModel);
+  if (kind === 'collection' && apiId === ids.posts && slug) {
+    const publishedSlug = item ? localizedField(entryFields(item).slug as LocalizedValue) : '';
+    return postPath(postRouteSlug(publishedSlug || slug));
+  }
+  if (kind === 'single' && apiId === ids.home) return '/';
   return '/';
 };

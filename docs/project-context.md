@@ -25,6 +25,162 @@ Record the tested commit/date, exact commands and browser viewports, evidence pa
 
 List unresolved choices and the next concrete step. Client design/content decisions belong here, not in the reusable template's common rules.
 
+## Demo test-site migration candidate — 5 October 2026
+
+The user chose to preserve Demo for `test.ooops.studio`. Work is isolated on
+`codex/cms-retirement-test-site`, based on `8b2df0f`. The reusable starter keeps
+`homepage`/`posts` and static output. The explicit `demo` content profile maps
+the existing published `home-page` hero and `news` title, slug, description,
+body and `cover.image`, using English localization where present. Public routes
+remain `/` and `/posts/*`; stable entry IDs resolve localized article URLs.
+Per-language hidden media and empty decorative alt text remain authoritative.
+
+`pnpm build:test-site` uses `astro.test-site.config.mjs` and server output,
+matching the installed test site's runtime-secret model. The official SDK reads
+the existing Cloudflare credential at request time. Missing configuration and
+missing Demo hero content fail closed. Build-time defaults never substitute
+starter content for a failed configured Demo request. The candidate fixes the
+public API origin and canonical hostname to Workspace and `test.ooops.studio`.
+
+Full `pnpm validate` passed after the source changes; five focused model tests
+passed. A separate test-site build and Wrangler dry run passed. Local browser
+checks rendered the real published Demo snapshot through an isolated API fixture,
+including its five news articles and public media. Desktop and 390px checks
+passed. The private preview fixture rejects invalid tokens, redirects valid tokens
+to tokenless URLs, disables analytics, and exits to published home/article routes.
+These checks do not prove live authentication with the opaque production token.
+Private evidence lives in ignored `.cache/cms-migration/`.
+
+Production inventory initially found no matching contact form and the installed
+share returned invalid-link 404 on both origins. After explicit human approval,
+CMS Test Admin created and published **Demo — Test site contact** through the
+actual Demo Workspace session on 5 October 2026. Required fields are Name
+(`short_text`), Email (`email`) and Message (`long_text`). Notifications and
+newsletter topics are disabled; all six existing forms remained unchanged.
+One active public share is tied to the exact reviewed published version. Its
+Workspace public schema GET returns 200 and the browser handler's API-ID mapping
+matches. No submission was made. The candidate was rebuilt with the valid share;
+the frozen installation artifact contains no legacy CMS origins.
+
+A separate private installation package is frozen under
+`.cache/cms-migration/test-site-install-review/`: source commit `03b622d`, asset
+hashes, provider baseline, preservation config, origin-only secret input and
+rollback version. Existing session KV, replay namespace and historical `v1`
+migration declaration are preserved. All other opaque secrets are omitted from
+the additive secret input and retained by Wrangler. Provider settings, domains,
+schedules and resource identities require exact post-install readback. The
+configuration passed a versions-upload dry run without uploading code. A fresh
+provider baseline and separate production approval are required before upload.
+
+The preceding paragraph describes the pre-install review. The approved installation
+and live acceptance below supersede its installation status. No new private
+credential was created. Production deployment must preserve
+all existing opaque secrets, the replay Durable Object, session KV, Images,
+custom domain, provider settings and schedules. Never install generic generated
+bindings over those existing resources. See the Workspace retirement runbook for
+the private baseline and exact acceptance boundary.
+
+
+### Approved test-site installation and live acceptance — 5 October 2026
+
+The human approved frozen installation plan SHA-256
+`508ccc7910abde9225d63fa111078b440299c8ba0ceb078cd78ce5684723269d`
+and one controlled synthetic submission. Version
+`4eaf8ae8-0328-4849-a108-9185390c9df1` is installed from source `03b622d`.
+The first public 500 was initially attributed to the candidate and prompted
+rollback. Historical Cloudflare logs identify that request as prior version
+`af89f4a8-3ae2-48ce-b929-7ec4df86b01c`, whose `homepage` lookup fails.
+The identical approved package was reactivated after exact artifact/resource
+preflight. Four subsequent GETs returned 200 and live tail identified the
+candidate version, with no exceptions. This confirms the first response did
+not establish a candidate-code failure; no speculative fix or key rotation was
+made. The rollback retained the current database and shared resources.
+
+Actual public browser acceptance shows the Demo home, four public news entries,
+an encoded-slug article and loaded media-origin images. Home/posts/contact GETs
+are 200 with correct test-site canonical URLs and no legacy origin. Invalid
+home/article preview requests return 404 with private/no-store and noindex.
+Desktop and actual 390px responsive rendering were inspected; a viewport helper
+that did not resize existing tabs was not counted as mobile evidence. CDP metrics
+and full-page captures supplied the verified narrow render, then were reset.
+
+The browser submitted exactly one synthetic contact request and displayed the
+real thank-you message. Production read-only verification found one `received`
+submission tied to published version `38572de0-784d-463f-950d-4d814c1accfa`,
+zero notifications, zero newsletter intakes/subscriptions, and all six other
+forms unchanged. The normal contact mapping created a linked synthetic contact.
+Provider readback confirms all existing bindings, namespaces, domains, schedules,
+compatibility and asset headers; only the upload-message annotation differs.
+Installed source has zero CMS-host literals. Private acceptance receipt and actual
+screenshots are in `.cache/cms-migration/test-site-install-review/`.
+
+Cloudflare Builds still points at `ooops-studio/ooops-ssg-test`. GitHub reads
+return 404; the human confirmed that repository was deleted. Its saved build
+origins and contact share also remain legacy. Do not trigger a rebuild until
+its source and build recipe are repaired. Prepared replacement: this existing
+`ooops-studio/ooops-astro-template` repository, branch
+`codex/cms-retirement-test-site`, repository root, build `pnpm build:test-site`,
+deploy `pnpm deploy:test-site`. The explicit `wrangler.test-site.jsonc` preserves
+the installed resources and all opaque runtime secrets; the generic starter
+config is unchanged. The test build requires the approved public contact share.
+Provider source connection, saved build origins/canonical/share, existing hook
+branch and a real signed rebuild need separate production approval and readback.
+Valid production preview acceptance and other retirement gates remain pending.
+
+### Local validation in place of hosted GitHub validation — 6 October 2026
+
+The human accepted local validation for this connection because hosted GitHub
+`validate` could not acquire a runner. This changes the validation gate for this
+migration; it does not disable repository workflows or replace production checks.
+The dedicated branch update uses `[skip ci]` and remains a draft PR without a merge.
+
+The initial production dependency audit failed. Narrow overrides now pin
+`devalue` 5.9.3, `smol-toml` 1.9.0, `http-cache-semantics` 4.3.0 and
+`source-map-js` 1.2.2. Frozen installation and `pnpm audit --prod --audit-level
+moderate` pass with no known vulnerabilities. `pnpm validate`, six Chromium UI
+tests and three private-preview browser tests pass with `CI=true` on macOS,
+Node 22.22.1 and pnpm 11.13.1. Hosted CI uses Ubuntu/Node 22.14.0, so these are
+local results rather than an identical hosted environment. Live OpenAPI/content
+checks lack credentials and are skipped, not passed. `pnpm build:test-site` with
+the approved contact share and the preservation-config deployment dry run also
+pass. Receipts and logs are private under `test-site-install-review/`.
+
+The existing approval to repair Cloudflare Builds and run a real signed rebuild
+remains valid. Its saved connection, retained resources/credentials, successful
+provider build and public production behavior still require acceptance; no local
+test establishes that acceptance or CMS retirement readiness.
+
+### Approved persistent build installation accepted — 6 October 2026
+
+Cloudflare Builds is now connected to this repository and the dedicated
+`codex/cms-retirement-test-site` branch with `pnpm build:test-site` and
+`pnpm deploy:test-site`. Saved API origins/canonical/contact share use the
+approved Workspace/Demo configuration; analytics and watch-path exclusions are
+retained. The existing deployment token and hook identities are unchanged.
+The human approved omission of the obsolete build-time read-token copy; all
+operating Worker secrets remain intact. No API key was rotated or revoked.
+
+The existing Demo rebuild integration was enabled with its original signing
+credential. The normal UI pause/resume flow for only the approved test form
+emitted a real publish event while retaining the same published version, schema,
+share and one submission; the other six forms are unchanged. The pause occurred
+while the integration was disabled, so only the subsequent publish queued a build.
+Event `ed301cdf-e4be-4542-b076-e326b9893430` returned HTTP 202 on its first attempt,
+and its stored response links to successful Cloudflare build `04b1af7a` (49s).
+The reviewed branch head was `f79a352`; Cloudflare used Node 24.18.0/pnpm 11.13.1.
+Active version `98f125a8-c06b-4b9f-9105-6b32c529c4c7` serves 100% of traffic.
+
+Provider readback preserves every binding, schedules, compatibility,
+observability, custom domain and disabled extra hostnames. All seven public
+home/posts/contact/article routes return 200 with correct canonicals and no CMS
+host literals. Two invalid previews return 404/private/no-store/noindex. The
+actual contact form renders at desktop/390px without overflow or browser errors,
+and the real article image loads from the media origin. No new submission or
+GitHub Actions run was made. Acceptance receipt and screenshots are private under
+`test-site-install-review/`. The prior manual version remains available for
+rollback. Valid private production preview and remaining retirement gates still
+block CMS deletion and the observation window.
+
 
 ## Workspace SDK migration — 21 September 2026
 

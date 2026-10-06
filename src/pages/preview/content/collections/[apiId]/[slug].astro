@@ -43,7 +43,7 @@ if (!result.payload?.item) return new Response('Preview not found.', {
 });
 
 const content = previewContent(result.payload.item, Astro.url.pathname, slug || apiId);
-const exitPath = publicPreviewPath({ apiId, kind: 'collection', slug });
+const exitPath = publicPreviewPath({ apiId, kind: 'collection', slug, item: result.payload.item });
 ---
 
 <BaseLayout seo={content.seo} preview={true} previewExitPath={exitPath}>

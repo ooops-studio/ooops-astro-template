@@ -1,4 +1,5 @@
-import { asRecord, asString, type PublicMediaMap } from '../cms/content-helpers';
+import { asRecord, asString, localizedField, type LocalizedValue, type PublicMediaMap } from '../cms/content-helpers';
+import { contentModel } from '../cms/content-model';
 import { seoFromFields } from '../cms/seo';
 import type { SeoPayload } from '../cms/types';
 
@@ -20,9 +21,12 @@ const displayValue = (value: unknown) => {
 
 export const previewContent = (data: Record<string, unknown>, path: string, fallbackTitle: string): PreviewContent => {
   const fields = asRecord(data.input || data.fields || data);
-  const title = asString(data.title) || asString(fields.title) || asString(fields.heading) || fallbackTitle;
-  const description = asString(data.description) || asString(fields.description) || asString(fields.excerpt);
-  const body = asString(data.body) || asString(fields.body);
+  const text = (value: unknown) => localizedField(value as LocalizedValue);
+  const heroValue = asRecord(fields.hero);
+  const hero = contentModel === 'demo' ? asRecord(heroValue.en || heroValue) : {};
+  const title = text(fields.title) || text(data.title) || asString(hero.title) || asString(fields.heading) || fallbackTitle;
+  const description = text(fields.description) || text(data.description) || text(fields.excerpt) || asString(hero.description);
+  const body = text(fields.body) || text(data.body);
   const ignored = new Set(['input', 'fields', '_media', 'title', 'description', 'excerpt', 'body']);
   return {
     title,

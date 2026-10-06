@@ -6,11 +6,11 @@ import { getPost, getPosts } from '../../lib/posts/client';
 
 export const getStaticPaths = async () => {
   const posts = await getPosts();
-  return posts.map((post) => ({ params: { slug: post.slug } }));
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { entryId: post.id } }));
 };
 
 const { slug } = Astro.params;
-const post = slug ? await getPost(slug) : null;
+const post = slug ? await getPost(Astro.props.entryId || slug) : null;
 const editorMode = import.meta.env.DEV && import.meta.env.OOOPS_EDITOR_MODE === '1';
 
 if (!post) {

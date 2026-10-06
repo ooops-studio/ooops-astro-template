@@ -1,5 +1,7 @@
 import { getCmsSingle } from './client';
-import { asRecord, asString, htmlToText } from './content-helpers';
+import { asRecord, asString, htmlToText, localizedField, type LocalizedValue } from './content-helpers';
+import { entryFields } from './mappers';
+import { contentApiIds, contentModel, type ContentModel } from './content-model';
 import { seoFromFields } from './seo';
 import type { HomepageContent } from './types';
 import { alternateLocales } from '../i18n/routing';
@@ -17,14 +19,21 @@ const safeCmsHref = (value: unknown, fallback: string) => {
   }
 };
 
-export const getHome = async (): Promise<HomepageContent> => {
-  const content = await getCmsSingle('homepage');
-  const fields = asRecord(content?.fields || content);
-  const heading = asString(fields.heading) || asString(fields.title) || 'Ooops CMS Astro Site';
-  const description = htmlToText(asString(fields.description)) || 'Public website powered by Ooops CMS.';
+export const mapHome = (content: unknown, model: ContentModel): HomepageContent => {
+  const fields = entryFields(asRecord(content));
+  const heroValue = asRecord(fields.hero);
+  const hero = asRecord(heroValue.en || heroValue);
+  const text = (value: unknown) => localizedField(value as LocalizedValue);
+  const heading = model === 'demo'
+    ? asString(hero.title) || text(fields['page-title'])
+    : asString(fields.heading) || asString(fields.title) || 'Ooops CMS Astro Site';
+  const description = model === 'demo'
+    ? htmlToText(asString(hero.description) || text(fields['organization-summary']))
+    : htmlToText(asString(fields.description)) || 'Public website powered by Ooops CMS.';
+  if (model === 'demo' && !heading) throw new Error('Demo home-page has no published hero title.');
 
   return {
-    eyebrow: asString(fields.title) || asString(fields.eyebrow) || 'Ooops CMS + Astro',
+    eyebrow: model === 'demo' ? text(fields['page-title']) : asString(fields.title) || asString(fields.eyebrow) || 'Ooops CMS + Astro',
     heading,
     description,
     proofText: asString(fields['proof-text']) || '',
@@ -42,3 +51,6 @@ export const getHome = async (): Promise<HomepageContent> => {
     }
   };
 };
+
+export const getHome = async (): Promise<HomepageContent> =>
+  mapHome(await getCmsSingle(contentApiIds(contentModel).home), contentModel);

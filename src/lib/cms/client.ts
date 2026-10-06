@@ -9,6 +9,7 @@ import {
 } from '@ooopsstudio/workspace-api';
 import { createCmsClientFromAstroEnv } from '@ooopsstudio/workspace-astro';
 import { cmsApiBaseUrl, cmsApiToken, cmsRuntimeEnv } from './env';
+import { contentModel } from './content-model';
 
 export type {
   CmsCollectionEntryResponse,
@@ -25,26 +26,33 @@ type CmsSingleRuntimeResponse =
 
 export const hasCmsConfig = Boolean(cmsApiBaseUrl && cmsApiToken);
 
-export const createCmsClient = (): OoopsCmsClient | null => {
-  return createCmsClientFromAstroEnv(cmsRuntimeEnv);
+export const createCmsClient = async (): Promise<OoopsCmsClient | null> => {
+  const runtime = contentModel === 'demo'
+    ? (await import('cloudflare:workers')).env as unknown as Record<string, string | undefined>
+    : {};
+  return createCmsClientFromAstroEnv({ ...cmsRuntimeEnv, ...runtime }, {
+    strict: contentModel === 'demo',
+    // Cloudflare fetch is brand-checked; the SDK must not change its receiver.
+    fetch: (input, init) => globalThis.fetch(input, init)
+  });
 };
 
 export const getCmsSingle = async (apiId: string) => {
-  const cms = createCmsClient();
+  const cms = await createCmsClient();
   if (!cms) return null;
   const response = await cms.content.getSingle<CmsSingleRuntimeResponse>(apiId);
   return 'content' in response ? response.content : response.data;
 };
 
 export const getCmsCollectionEntries = async (apiId: string, query?: CmsQuery) => {
-  const cms = createCmsClient();
+  const cms = await createCmsClient();
   if (!cms) return [];
   const response = await cms.content.listCollectionEntries<CmsCollectionResponse<CmsRecord>>(apiId, query);
   return response.items;
 };
 
 export const getCmsCollectionEntry = async (apiId: string, idOrSlug: string) => {
-  const cms = createCmsClient();
+  const cms = await createCmsClient();
   if (!cms) return null;
   const response = await cms.content.getCollectionEntry<CmsCollectionEntryResponse<CmsRecord>>(apiId, idOrSlug);
   return response.item;
