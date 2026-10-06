@@ -105,3 +105,12 @@ After separate approval, verify the saved connection and invoke the existing
 signed rebuild flow using an approved event. Require successful build/deployment,
 provider preservation readback and the same public content/contact checks. A
 successful local build or manually deployed Worker is not rebuild acceptance.
+
+For this migration only, the human accepted the full local validation pipeline
+in place of hosted GitHub `validate` on 6 October 2026. Audit, validation, six UI
+browser tests, three preview browser tests, the exact test-site build and the
+preservation-config deployment dry run pass. Live API/content checks without
+credentials remain skipped. Push this reviewed branch with `[skip ci]`; leave
+normal workflows enabled and do not merge around required checks. The separately
+approved Cloudflare connection and real signed rebuild still require provider
+readback and public production acceptance.

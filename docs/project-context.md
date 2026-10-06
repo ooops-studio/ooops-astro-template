@@ -127,6 +127,29 @@ Provider source connection, saved build origins/canonical/share, existing hook
 branch and a real signed rebuild need separate production approval and readback.
 Valid production preview acceptance and other retirement gates remain pending.
 
+### Local validation in place of hosted GitHub validation — 6 October 2026
+
+The human accepted local validation for this connection because hosted GitHub
+`validate` could not acquire a runner. This changes the validation gate for this
+migration; it does not disable repository workflows or replace production checks.
+The dedicated branch update uses `[skip ci]` and remains a draft PR without a merge.
+
+The initial production dependency audit failed. Narrow overrides now pin
+`devalue` 5.9.3, `smol-toml` 1.9.0, `http-cache-semantics` 4.3.0 and
+`source-map-js` 1.2.2. Frozen installation and `pnpm audit --prod --audit-level
+moderate` pass with no known vulnerabilities. `pnpm validate`, six Chromium UI
+tests and three private-preview browser tests pass with `CI=true` on macOS,
+Node 22.22.1 and pnpm 11.13.1. Hosted CI uses Ubuntu/Node 22.14.0, so these are
+local results rather than an identical hosted environment. Live OpenAPI/content
+checks lack credentials and are skipped, not passed. `pnpm build:test-site` with
+the approved contact share and the preservation-config deployment dry run also
+pass. Receipts and logs are private under `test-site-install-review/`.
+
+The existing approval to repair Cloudflare Builds and run a real signed rebuild
+remains valid. Its saved connection, retained resources/credentials, successful
+provider build and public production behavior still require acceptance; no local
+test establishes that acceptance or CMS retirement readiness.
+
 
 ## Workspace SDK migration — 21 September 2026
 
