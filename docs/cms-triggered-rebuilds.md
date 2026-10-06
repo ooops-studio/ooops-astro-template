@@ -73,13 +73,15 @@ pnpm test:cms-rebuild
 ```
 
 
-## Existing Demo test site: replacement build source (prepared, not connected)
+## Existing Demo test site: Workspace build source connected — 6 October 2026
 
-The human confirmed that `ooops-studio/ooops-ssg-test` was deleted. Its Cloudflare
-Builds connection still references that repository. The separately approved
-manual release is serving successfully; this does not prove automatic rebuilding.
+The human confirmed that `ooops-studio/ooops-ssg-test` was deleted. Its obsolete
+connection was replaced through the existing Worker's Cloudflare Builds UI after
+separate approval. A real Workspace publish event successfully built and deployed
+the replacement source; the earlier manual installation remains available for
+rollback.
 
-Review the following replacement connection before a production change:
+The saved connection is:
 
 - Repository: existing `ooops-studio/ooops-astro-template`.
 - Production and existing deploy-hook branch: `codex/cms-retirement-test-site`.
@@ -92,7 +94,7 @@ Review the following replacement connection before a production change:
 - Build `PUBLIC_CONTACT_FORM_TOKEN`: the already approved dedicated Demo contact
   share, supplied privately; a missing value fails the build.
 
-Retain the existing build API token, opaque CMS read token, runtime secrets,
+Retain the existing deployment API token, opaque runtime CMS read token, runtime secrets,
 analytics settings, SESSION namespace, Images and replay namespace. Never deploy
 with the generic `wrangler.jsonc`: `deploy:test-site` explicitly selects the
 preservation configuration. Retain compatibility date and historical migration
@@ -101,10 +103,33 @@ Do not recreate the Worker, DNS, storage, deployment hook or signing secrets
 merely to reconnect the repository. If the provider cannot retain a hook identity,
 prepare its exact replacement and matching Worker-secret change for review first.
 
-After separate approval, verify the saved connection and invoke the existing
-signed rebuild flow using an approved event. Require successful build/deployment,
-provider preservation readback and the same public content/contact checks. A
-successful local build or manually deployed Worker is not rebuild acceptance.
+The human separately approved proceeding without the obsolete encrypted build-time
+read-token copy if reconnection did not retain it. The test-site server build does
+not require that copy; the operating read credential remains a Worker secret.
+No credential was rotated or revoked. The existing deployment token and deploy
+hook identities were retained; only the hook's branch changed.
+
+The existing Demo integration was enabled with its original signing credential.
+A brief pause/resume of the approved test contact form through the normal
+Workspace UI emitted a new publish event while retaining its published version,
+schema, active share and one submission. The pause occurred while the integration
+was disabled, so it queued no build. Publish event
+`ed301cdf-e4be-4542-b076-e326b9893430` succeeded on its first delivery with HTTP
+202; its response identifies Cloudflare build
+`04b1af7a-bfd6-4cff-a72a-178ce89d763e`, which completed in 49 seconds. Version
+`98f125a8-c06b-4b9f-9105-6b32c529c4c7` serves 100% of traffic. The reviewed source
+branch head at this cutover was `f79a352`.
+
+Provider readback confirms identical bindings, schedules, compatibility and
+observability, the existing custom domain and disabled extra public hostnames.
+Public home/posts/contact and all four encoded article URLs return 200, with
+correct canonicals and no legacy host. Invalid home/article preview links return
+404 with private/no-store and noindex/nofollow. Contact renders at desktop and
+390px without overflow or browser errors; the actual article image loads from
+the media origin. No second submission was made; other six forms are unchanged.
+Private receipts/screenshots are under `test-site-install-review/`, including
+`persistent-build-installation-acceptance-20261006.private.json`. Valid private
+production preview acceptance and the other CMS retirement gates remain pending.
 
 For this migration only, the human accepted the full local validation pipeline
 in place of hosted GitHub `validate` on 6 October 2026. Audit, validation, six UI

@@ -150,6 +150,37 @@ remains valid. Its saved connection, retained resources/credentials, successful
 provider build and public production behavior still require acceptance; no local
 test establishes that acceptance or CMS retirement readiness.
 
+### Approved persistent build installation accepted — 6 October 2026
+
+Cloudflare Builds is now connected to this repository and the dedicated
+`codex/cms-retirement-test-site` branch with `pnpm build:test-site` and
+`pnpm deploy:test-site`. Saved API origins/canonical/contact share use the
+approved Workspace/Demo configuration; analytics and watch-path exclusions are
+retained. The existing deployment token and hook identities are unchanged.
+The human approved omission of the obsolete build-time read-token copy; all
+operating Worker secrets remain intact. No API key was rotated or revoked.
+
+The existing Demo rebuild integration was enabled with its original signing
+credential. The normal UI pause/resume flow for only the approved test form
+emitted a real publish event while retaining the same published version, schema,
+share and one submission; the other six forms are unchanged. The pause occurred
+while the integration was disabled, so only the subsequent publish queued a build.
+Event `ed301cdf-e4be-4542-b076-e326b9893430` returned HTTP 202 on its first attempt,
+and its stored response links to successful Cloudflare build `04b1af7a` (49s).
+The reviewed branch head was `f79a352`; Cloudflare used Node 24.18.0/pnpm 11.13.1.
+Active version `98f125a8-c06b-4b9f-9105-6b32c529c4c7` serves 100% of traffic.
+
+Provider readback preserves every binding, schedules, compatibility,
+observability, custom domain and disabled extra hostnames. All seven public
+home/posts/contact/article routes return 200 with correct canonicals and no CMS
+host literals. Two invalid previews return 404/private/no-store/noindex. The
+actual contact form renders at desktop/390px without overflow or browser errors,
+and the real article image loads from the media origin. No new submission or
+GitHub Actions run was made. Acceptance receipt and screenshots are private under
+`test-site-install-review/`. The prior manual version remains available for
+rollback. Valid private production preview and remaining retirement gates still
+block CMS deletion and the observation window.
+
 
 ## Workspace SDK migration — 21 September 2026
 
